@@ -13,7 +13,7 @@
 </style>
 </header>
 <body>
-  <div th:fragment="navFragment" class="container-fluid">
+  <div th:fragment="navFragment" class="container-fluid" style="width: 1500px; height: 220px;">
     <div class="mb-2 d-flex justify-content-between">
       <div class="col-12 text-end">
         <ul class="navbar-nav">
@@ -21,7 +21,9 @@
           <a href="#" class="me-3 link-secondary" style="font-size:13px">로그인</a>
           <a href="#" class="me-3 link-secondary" style="font-size:13px">회원가입</a>
           <a href="#" class="me-3 link-secondary" style="font-size:13px">장바구니</a>
-          <a href="#" class="me-4 link-secondary" style="font-size:13px">마이페이지</a>
+          <a href="#" class="me-3 link-secondary" style="font-size:13px">마이페이지</a>
+          <!-- 관리자만 보이게 구현 -->
+          <a href="#" class="me-3 link-secondary" style="font-size:13px">도서등록</a>
         </div>
         </ul>
       </div>
@@ -30,7 +32,7 @@
     <!-- 로고, 검색창 -->
     <div class="border-bottom">
       <div class="ms-5 mb-2 d-flex justify-content-between">
-          <span class="fw-bold fs-1" style="vertical-align:middle">YES48</span>
+          <span class="fw-bold fs-1 text-primary" style="vertical-align:middle">YES48</span>
         <span> <!--  class="mt-2" -->
           <!-- 검색창 -->
           <div class="input-group ms-5 mt-3"> <!-- mt-1 -->
@@ -61,7 +63,7 @@
          <a href="#" class="me-3 link-dark" style="font-size:17px">음반</a>
        </div>
     </div>
-      <div class="border-bottom border-primary border-2"></div>
+      <div class="mb-3 border-bottom border-primary"></div>
     </div>
   </nav>
 </body>
