@@ -15,6 +15,7 @@
 <body>
   <div th:fragment="navFragment" class="container-fluid" style="width: 1500px; height: 220px;">
     <div class="mb-2 d-flex justify-content-between">
+      <!-- 최상단 바 시작 -->
       <div class="col-12 text-end">
         <ul class="navbar-nav">
         <div class="mt-2">
@@ -22,8 +23,7 @@
           <a href="#" class="me-3 link-secondary" style="font-size:13px">회원가입</a>
           <a href="#" class="me-3 link-secondary" style="font-size:13px">장바구니</a>
           <a href="#" class="me-3 link-secondary" style="font-size:13px">마이페이지</a>
-          <!-- 관리자만 보이게 구현 -->
-          <a href="#" class="me-3 link-secondary" style="font-size:13px">도서등록</a>
+          <a href="#" class="me-3 link-secondary" style="font-size:13px">도서등록</a> <!-- 관리자만 보이게 구현 -->
         </div>
         </ul>
       </div>
@@ -33,9 +33,9 @@
     <div class="border-bottom">
       <div class="ms-5 mb-2 d-flex justify-content-between">
           <span class="fw-bold fs-1 text-primary" style="vertical-align:middle">YES48</span>
-        <span> <!--  class="mt-2" -->
+        <span>
           <!-- 검색창 -->
-          <div class="input-group ms-5 mt-3"> <!-- mt-1 -->
+          <div class="input-group ms-5 mt-3">
             <input class="input-group-text bg-white border border-end-0 border-primary border border-3"
                    type="text" style="width: 350px; height: 36px;">
             <span type="button" class="bg-primary input-group-text border border-start-0 border-primary border border-3"
@@ -43,7 +43,7 @@
           </div>
         </span>
         <div class="me-5">
-          <!-- 기후책 링크 넣기 -->
+          <!-- 기후책 이미지 링크 넣기 -->
           <a href="#" class="me-5"><img th:src="@{images/logoBook.jpg}" style="width: 120px; height: 70px;"></a>
         </div>
       </div>
