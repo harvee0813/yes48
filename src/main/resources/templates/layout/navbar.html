@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <header>
-  <div th:replace="~{/layout/header :: headFragment}"></div>
+  <style>
+      a {
+          text-decoration: none;
+      }
+  </style>
 </header>
 <body>
   <div th:fragment="navFragment" class="container-fluid" style="width: 1500px; height: 220px;">
@@ -12,7 +16,7 @@
         <div class="mt-2">
           <a href="/login" class="me-3 link-secondary" style="font-size:13px">로그인</a>
           <a href="/" class="me-3 link-secondary" style="font-size:13px">로그아웃</a>
-          <a href="#" class="me-3 link-secondary" style="font-size:13px">회원가입</a>
+          <a href="/join" class="me-3 link-secondary" style="font-size:13px">회원가입</a>
           <a href="#" class="me-3 link-secondary" style="font-size:13px">장바구니</a>
           <a href="#" class="me-3 link-secondary" style="font-size:13px">마이페이지</a>
           <a href="#" class="me-3 link-secondary" style="font-size:13px">관리자 페이지</a> <!-- 관리자만 보이게 구현 -->
