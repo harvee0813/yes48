@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headFragment">
+  <style>
+     th { width:225px; height: 60.4px;
+          background-color: #F8F9FA  }
+     td { width:475px; height: 60.4px;
+          }
+     input { width: 251px; height: 36px; }
+  </style>
+  <div th:replace="~{/layout/header :: headFragment}"></div>
+</head>
+<body>
+<div th:replace="~{/layout/navbar :: navFragment}"></div>
+<div class="container">
+  <div class="row">
+    <div class="col-8 offset-2">
+      <div>
+        <p class="fw-bold fs-3" style="vertical-align:middle">회원 가입</p>
+      </div>
+      <div>
+        <table>
+          <tr class="border-top border-bottom">
+            <th>
+              <strong class="ms-2 me-1 text-danger">*</strong>아이디</th>
+            <td>
+              <input class="ms-2 border border-light-subtle" type="text">
+            </td>
+          </tr>
+          <tr class="border-bottom">
+            <th>
+              <strong class="ms-2 me-1 text-danger">*</strong>비밀번호</th>
+            <td>
+              <input class="ms-2 border border-light-subtle" type="text">
+            </td>
+          </tr>
+          <tr class="border-bottom">
+            <th>
+              <strong class="ms-2 me-1 text-danger">*</strong>비밀번호 확인</th>
+            <td>
+              <input class="ms-2 border border-light-subtle" type="text">
+            </td>
+          </tr>
+          <tr class="border-bottom">
+            <th>
+              <strong class="ms-2 me-1 text-danger">*</strong>이름</th>
+            <td>
+              <input class="ms-2 border border-light-subtle" type="text">
+            </td>
+          </tr>
+          <tr class="border-bottom">
+            <th>
+              <strong class="ms-2 me-1 text-danger">*</strong>이메일</th>
+            <td>
+<!--              <input class="ms-2 border border-light-subtle" type="text">-->
+              <div class="input-group ms-2 me-2">
+                <input type="text" class="border border-light-subtle"
+                       style="width: 151px; height: 38px;" placeholder="Username">
+                <span class="input-group-text">@</span>
+                <input type="text" class="border border-light-subtle"
+                       style="width: 151px; height: 38px;" placeholder="Server">
+              </div>
+            </td>
+          </tr>
+          <tr class="border-bottom">
+            <th>
+              <strong class="ms-2 me-1 text-danger">*</strong>휴대폰</th>
+            <td>
+              <input class="ms-2 border border-light-subtle" type="text">
+            </td>
+          </tr>
+          <tr class="border-bottom">
+            <th>
+              <strong class="ms-2 me-1 text-danger">*</strong>배송 주소</th>
+            <td>
+              <input class="mt-1 ms-2 mb-1 border border-light-subtle" type="text"
+                     name="postcode" readonly="readonly" id="zipCode">
+              <button type="button" class="btn btn-secondary btn-sm"
+                      id="btn-search-postcode">우편번호검색</button>
+              <input type="text" class="ms-2 mb-1 border border-light-subtle" style="width: 460px; height: 36px;"
+                     name="basicAddress" id="basic-address" />
+              <input type="text" class="ms-2 mb-1 border border-light-subtle" style="width: 460px; height: 36px;"
+                     name="detailAddress" id="detail-address"/>
+          </tr>
+        </table>
+        <div class="text-center mt-3">
+          <button class="border-0 bg-primary rounded"
+                  style="color: #ffffff; width: 212px; height: 50px;">회원 가입</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<div th:insert="~{/layout/footer :: footerFragment}"></div>
+<script>
+ 다음 주소 넣기
+</script>
+</html>
