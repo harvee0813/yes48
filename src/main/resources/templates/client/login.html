@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:replace="~{/layout/header :: headFragment}"></div>
+</head>
+<body>
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-6 offset-3">
+      <div class="border-bottom mb-3">
+        <a href="/"><span class="fw-bold fs-1 text-primary" style="vertical-align:middle">YES48</span></a>
+      </div>
+      <form class="border bg-light p-3" method="post" action="/login">
+        <div class="d-flex justify-content-between">
+          <h5>
+            <div class="fw-bold mb-3">로그인</div>
+          </h5>
+          <a href="#" class="mt-4 me-1 text-decoration-none text-secondary" style="font-size: 14px;">회원가입</a>
+        </div>
+        <div class="input-group mb-1">
+          <div class="input-group-text bg-white"><i class="bi bi-person-circle"></i></div>
+          <input type="text" class="form-control" name="id" value="" placeholder="아이디">
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-text bg-white"><i class="bi bi-lock-fill"></i></div>
+          <input type="password" class="form-control" name="password" value="" placeholder="비밀번호">
+        </div>
+        <div>
+          <button id="login" type="submit" class="form-control btn btn-primary"
+                  style="background-color: #196AB3">로그인</button>
+        </div>
+        <div class="mt-2 text-end">
+           <span class="border-secondary">
+             <a href="#" class="me-1 text-decoration-none text-secondary" style="font-size: 14px;">아이디 찾기</a>
+             <a href="#" class="me-1 text-decoration-none text-secondary" style="font-size: 14px;">비밀번호 찾기</a>
+           </span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
