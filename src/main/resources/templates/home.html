@@ -7,7 +7,7 @@
 <div th:replace="~{/layout/navbar :: navFragment}"></div>
 <div class="container">
     <div class="row bg-primary-subtle rounded mb-4 ms-5">
-        <div class="col bg-white mt-1 ms-1 me-1 rounded">
+        <div class="col bg-white mt-1 ms-1 me-1 mb-1 rounded">
             <!-- 편집장의 추전 도서 & 최신 도서 시작 -->
             <div class="row text-center mt-5 mb-4">
                 <span class="col-3 text-center">
@@ -37,17 +37,13 @@
             </div>
             <!-- 버튼 a 태그로 할지, button으로 할지 고민해보기-->
             <div class="row">
-                <div class="col-6 bg-primary-subtle text-center" style="height: 35px;" name="backgroundButton">
-                    <a href="#">
-                        <button id="recommend-button" class="mt-1 border-0 bg-primary-subtle fw-bold"
-                                style="color: #2A68B9;">편집장의 추천 도서</button>
-                    </a>
+                <div id="suggestion-book" class="col-6 text-center">
+                    <button id="suggestion-button" class="border-0 fw-bold"
+                            style="width: 566px; height:30px; background-color: #ffffff;">편집장의 추천 도서</button>
                 </div>
-                <div class="col-6 bg-primary-subtle text-center" name="backgroundButton">
-                    <a href="#">
-                        <button id="new-button" class="mt-1 border-0 bg-primary-subtle fw-bold"
-                                style="color: #2A68B9;">최신 도서</button>
-                    </a>
+                <div class="col-6 text-center">
+                    <button id="new-button" class="border-0 fw-bold"
+                            style="width: 555px; height:30px; background-color: #CFE2FF;">최신 도서</button>
                 </div>
             </div>
         </div>
@@ -127,6 +123,23 @@
             </div>
     </div>
 </div>
+<script>
+    var suggestionButton = document.querySelector('#suggestion-button');
+    var newButton = document.querySelector('#new-button');
+    var suggestionBook = document.querySelector('#suggestion-book');
+    newButton.onclick = function() {
+        newButton.style.backgroundColor = "#ffffff";
+        suggestionButton.style.backgroundColor = "#CFE2FF";
+        suggestionBook.style.backgroundColor = "#CFE2FF";
+    }
+
+    suggestionButton.onclick = function() {
+        newButton.style.backgroundColor = "#CFE2FF";
+        suggestionButton.style.backgroundColor = "#ffffff";
+        suggestionBook.style.backgroundColor = "#ffffff";
+    }
+
+</script>
 </body>
 <div th:insert="~{/layout/footer :: footerFragment}"></div>
 </html>
