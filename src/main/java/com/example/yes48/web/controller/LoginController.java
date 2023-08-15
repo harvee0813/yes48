@@ -10,4 +10,14 @@ public class LoginController {
     public String login() {
         return "login/login";
     }
+
+    @GetMapping("/login/findId")
+    public String findId() {
+        return "login/find-id";
+    }
+
+    @GetMapping("/login/findPassword")
+    public String findPassword() {
+        return "login/find-password";
+    }
 }
