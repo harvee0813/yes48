@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{/layout/header :: headFragment}"></div>
+</head>
+<body>
+    <div th:replace="~{/layout/navbar :: navFragment}"></div>
+    <div class="container">
+        <div class="col-6 offset-3">
+            <div>
+                <p class="fw-bold fs-4" style="vertical-align:middle">아이디 찾기</p>
+            </div>
+            <div>
+                <div class="form-control">
+                    <div id="find-email" onclick="findEmail" class="d-flex justify-content-between">
+                        <a class="text-start border-0 form-control">회원 정보에 등록된 이메일로 찾기</a>
+                        <i class="me-2 mt-1 bi bi-chevron-down"></i>
+                    </div>
+                        <div id="find-email-form" class="mt-2 ms-2 me-2 mb-2" style="display:none;">
+                            <form method="" action="">
+                                <input type="text" class="mb-2 form-control" placeholder="이름">
+                                <input type="text" class="mb-2 form-control" placeholder="이메일">
+                                <button type="button" class="bg-primary form-control" style="color: #ffffff">찾기</button>
+                            </form>
+                        </div>
+                </div>
+                <div class="form-control">
+                    <div id="find-phone" class="d-flex justify-content-between">
+                        <a class="text-start border-0 form-control">회원 정보에 등록된 휴대폰으로 찾기</a>
+                        <i class="me-2 mt-1 bi bi-chevron-down"></i>
+                    </div>
+                    <div id="find-phone-form" class="mt-2 ms-2 me-2 mb-2" style="display:none;">
+                        <form method="" action="">
+                            <input type="text" class="mb-2 form-control" placeholder="이름">
+                            <input type="text" class="mb-2 form-control" placeholder="휴대폰">
+                            <button type="button" class="bg-primary form-control" style="color: #ffffff">찾기</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<div th:insert="~{/layout/footer :: footerFragment}"></div>
+<script>
+    var findEmail = document.querySelector('#find-email');
+    var findEmailForm = document.querySelector('#find-email-form');
+    var findPhone = document.querySelector('#find-phone');
+    var findPhoneForm = document.querySelector('#find-phone-form');
+
+    var emailState = "off";
+    var phoneState = "off";
+
+    <!-- 이메일로 찾기 토글 -->
+    findEmail.onclick = function() {
+        if(emailState == "off") {
+            findEmailForm.style.display = "block";
+            findPhoneForm.style.display = "none";
+            emailState = "on";
+        } else if(emailState = "on") {
+            findEmailForm.style.display = "none";
+            emailState = "off";
+        }
+    }
+
+    <!-- 핸드폰 번호로 찾기 토글 -->
+    findPhone.onclick = function() {
+        if(phoneState == "off") {
+            findPhoneForm.style.display = "block";
+            findEmailForm.style.display = "none";
+            phoneState = "on";
+        } else if(phoneState = "on") {
+            findPhoneForm.style.display = "none";
+            phoneState = "off";
+        }
+    }
+</script>
+</html>
