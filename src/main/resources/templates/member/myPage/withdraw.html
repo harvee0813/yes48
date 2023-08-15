@@ -1,30 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<!--    -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-        crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <title>yes48</title>
-  <style>
-      a {
-          text-decoration: none;
-      }
-      ol{
-         list-style:none;
-       }
-   .container {
-      width: 1200px;
-      max-width: none !important;
-    }
-    </style>
+  <div th:replace="~{/layout/header :: headFragment}"></div>
   <style>
     button { width: 100px; height: 37.5px; }
   </style>
-<!--    -->
-  <div th:replace="~{/layout/header :: headFragment}"></div>
 </head>
 <body>
 <div th:replace="~{/layout/navbar :: navFragment}"></div>
