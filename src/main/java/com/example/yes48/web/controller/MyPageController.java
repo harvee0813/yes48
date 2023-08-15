@@ -15,4 +15,9 @@ public class MyPageController {
     public String information() {
         return "/member/myPage/information";
     }
+
+    @GetMapping("/myPage/withdraw")
+    public String withdraw() {
+        return "/member/myPage/withdraw";
+    }
 }
