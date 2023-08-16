@@ -3,8 +3,8 @@
 <head>
   <div th:replace="~{/layout/header :: headFragment}"></div>
 </head>
-<div th:replace="~{/layout/navbar :: navFragment}"></div>
 <body>
+<div th:replace="~{/layout/navbar :: navFragment}"></div>
 <div class="container">
   <div class="row ms-5">
     <!-- 책 이미지 -->
@@ -70,8 +70,16 @@
           </div>
           <div class="row">
             <div class="text-center">
-              <button type="button" class="mb-1 btn btn-primary form-control" style="background-color: #196AB3">장바구니 담기</button>
-              <button type="button" class="btn btn-primary form-control" style="background-color: #199DB3">바로 구매</button>
+              <a href="/order/myCart" style=" color: #ffffff;">
+                <button type="button" class="mb-1 btn btn-primary form-control" style="background-color: #196AB3;">
+                장바구니 담기
+                </button>
+              </a>
+              <a href="/order" style=" color: #ffffff;">
+                <button type="button" class="btn btn-primary form-control" style="background-color: #199DB3;">
+                  바로 구매
+                </button>
+              </a>
             </div>
           </div>
         </div>
