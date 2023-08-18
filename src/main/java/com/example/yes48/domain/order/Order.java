@@ -1,9 +1,10 @@
-package com.example.yes48.domain;
+package com.example.yes48.domain.order;
 
+import com.example.yes48.domain.BaseTimeEntity;
+import com.example.yes48.domain.member.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-import java.sql.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Getter
-public class Order extends BaseTimeEntity{
+public class Order extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")

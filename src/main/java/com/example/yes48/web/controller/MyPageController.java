@@ -2,21 +2,23 @@ package com.example.yes48.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/myPage")
 public class MyPageController {
 
-    @GetMapping("/myPage/orderHistoryList")
+    @GetMapping("/orderHistoryList")
     public String orderHistoryList() {
         return "/member/myPage/orderHistoryList";
     }
 
-    @GetMapping("/myPage/information")
+    @GetMapping("/information")
     public String information() {
         return "/member/myPage/information";
     }
 
-    @GetMapping("/myPage/withdraw")
+    @GetMapping("/withdraw")
     public String withdraw() {
         return "/member/myPage/withdraw";
     }
