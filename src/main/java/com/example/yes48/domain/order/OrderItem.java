@@ -1,11 +1,14 @@
-package com.example.yes48.domain;
+package com.example.yes48.domain.order;
 
+import com.example.yes48.domain.BaseTimeEntity;
+import com.example.yes48.domain.goods.Goods;
+import com.example.yes48.domain.order.Order;
 import jakarta.persistence.*;
 import lombok.Getter;
 
 @Entity
 @Getter
-public class OrderItem extends BaseTimeEntity{
+public class OrderItem extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id")

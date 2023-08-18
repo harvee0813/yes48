@@ -1,5 +1,7 @@
-package com.example.yes48.domain;
+package com.example.yes48.domain.member;
 
+import com.example.yes48.domain.BaseTimeEntity;
+import com.example.yes48.domain.order.Order;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -8,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Getter
-public class Member extends BaseTimeEntity{
+public class Member extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")

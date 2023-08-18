@@ -1,4 +1,4 @@
-package com.example.yes48.domain;
+package com.example.yes48.domain.order;
 
 public enum OrderStatus {
 
