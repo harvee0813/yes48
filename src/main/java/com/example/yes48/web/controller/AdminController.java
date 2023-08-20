@@ -1,7 +1,7 @@
 package com.example.yes48.web.controller;
 
 import com.example.yes48.Service.AdminService;
-import com.example.yes48.domain.goods.Goods;
+import com.example.yes48.Service.FileStoreService;
 import com.example.yes48.domain.goods.GoodsSaveForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,24 +21,25 @@ import java.io.IOException;
 public class AdminController {
 
     @Autowired private final AdminService goodsService;
+    @Autowired private final FileStoreService fileService;
 
     @GetMapping("/goods")
     public String product() {
         return "admin/goods";
     }
 
-    @GetMapping("/addGoods")
-    public String saveGoods(Model model) { //@pathVariable Long itemId
+    @GetMapping("/saveGoods")
+    public String saveGoods(Model model) { //@pathVariable Long itemId 추가하기
 
         model.addAttribute("form", new GoodsSaveForm());
 
-        return "admin/addGoods";
+        return "admin/saveGoods";
     }
 
-    @PostMapping("/addGoods")
+    @PostMapping("/saveGoods")
     public String saveGoods(@ModelAttribute GoodsSaveForm form, BindingResult result, MultipartFile file) throws IOException {
 
-        goodsService.addGoods(form, file);
+        goodsService.saveGoods(form, file);
 
         return "redirect:/admin/goods";
     }

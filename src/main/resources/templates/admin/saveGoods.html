@@ -10,7 +10,7 @@
       <p class="fw-bold fs-4 border-bottom" style="vertical-align:middle">상품 등록</p>
     </div>
     <div>
-      <form th:action="@{/admin/addGoods}" th:object="${form}" method="post" enctype="multipart/form-data">
+      <form th:action="@{/admin/saveGoods}" th:object="${form}" method="post" enctype="multipart/form-data">
         <table class="table table-sm table-borderless">
           <tr>
             <th class="text-center" th:for="sort">상품 종류</th>
