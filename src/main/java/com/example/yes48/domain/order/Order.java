@@ -29,6 +29,6 @@ public class Order extends BaseTimeEntity {
     private int totalPrice;
     private LocalDateTime orderDate;
 
-    // Enum 선언
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 }
