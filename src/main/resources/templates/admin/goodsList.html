@@ -1,26 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<!--  -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-        crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <title>yes48</title>
-  <style>
-      a {
-          text-decoration: none;
-      }
-      ol{
-         list-style:none;
-       }
-   .container {
-      width: 1200px;
-      max-width: none !important;
-    }
-    </style>
-<!--  -->
   <div th:replace="~{/layout/header :: headFragment}"></div>
 </head>
 <body>
@@ -43,41 +23,40 @@
         </div>
       </form>
     </div>
-<!--    <div class="mb-3">-->
-<!--      <form class="d-flex" role="search">-->
-<!--        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
-<!--        <button class="btn btn-dark" type="submit">검색</button>-->
-<!--      </form>-->
-<!--    </div>-->
     <div>
       <table class="table table-sm table-striped table-hover">
-        <tr class="text-center table-dark">
-          <th><input type="checkbox" checked></th>
-          <th>상품 종류</th>
-          <th>상품 이름</th>
-          <th>저자</th>
-          <th>출판사</th>
-          <th>출판일</th>
-          <th>가격</th>
-          <th>수량</th>
-          <th>이벤트 유/무</th>
-          <th>상태</th>
-        </tr>
-        <tr class="text-center">
-          <td><input type="checkbox" checked></td>
-          <td>도서/음반</td>
-          <td>Html 웹 표준의 정석</td>
-          <td>고경희</td>
-          <td>이지스퍼블리싱</td>
-          <td>2023.08.17</td>
-          <td>30,000</td>
-          <td>100</td>
-          <td>N</td>
-          <td>Y</td>
-        </tr>
+        <thead>
+          <tr class="text-center table-dark">
+            <th>상품 종류</th>
+            <th>상품 이름</th>
+            <th>저자</th>
+            <th>출판사</th>
+            <th>출판일</th>
+            <th>가격</th>
+            <th>수량</th>
+            <th>이벤트 유/무</th>
+            <th>비고</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="text-center" th:each="goods : ${goodsList}" style="width:100%;cursor:pointer;">
+            <td th:text="${goods.sort}">도서/음반</td>
+            <td th:text="${goods.name}">Html 웹 표준의 정석</td>
+            <td th:text="${goods.author}">고경희</td>
+            <td th:text="${goods.publisher}">이지스퍼블리싱</td>
+            <td th:text="${goods.publisherDate}">2023.08.17</td>
+            <td th:text="${goods.price}">30,000</td>
+            <td th:text="${goods.stockQuantity}">100</td>
+            <td th:text="${goods.event}">N</td>
+            <td>
+              <a th:href="@{/admin/editGoods/{goodsId}(goodsId=${goods.id})}">
+              <button class="btn btn-sm btn-secondary"><label>상세 정보</label></button>
+              </a>
+            </td>
+          </tr>
+        </tbody>
       </table>
       <div class="text-end mb-2">
-        <button type="button" class="btn btn-secondary btn-sm">삭제</button>
         <a href="/admin/saveGoods"><button type="button" class="btn btn-primary btn-sm">상품 등록</button></a>
       </div>
     </div>
@@ -99,7 +78,6 @@
           </ul>
         </nav>
       </div>
-    </div>
   </div>
 </body>
 </html>

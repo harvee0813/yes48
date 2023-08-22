@@ -4,9 +4,11 @@ import com.example.yes48.domain.FileStore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Goods {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

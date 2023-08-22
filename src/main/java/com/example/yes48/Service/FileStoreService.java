@@ -2,6 +2,7 @@ package com.example.yes48.Service;
 
 import com.example.yes48.domain.FileStore;
 import com.example.yes48.repository.FileStoreRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,10 +14,11 @@ import java.util.UUID;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class FileStoreService {
 
     @Autowired
-    FileStoreRepository fileStoreRepository;
+    private final FileStoreRepository fileStoreRepository;
 
     /**
      * 파일 등록
