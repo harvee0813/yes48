@@ -31,13 +31,14 @@ public class AdminRepository {
         return em.find(Goods.class, id);
     }
 
-    //
+    // 상품이름으로 찾기
     public List<Goods> findByName(String name) {
         return em.createQuery("select g from Goods g where g.name = :name", Goods.class)
                 .setParameter("name", name)
                 .getResultList();
     }
 
+    // 전체 상품 조회
     public List<AdminGoodsDto> findAll() {
         return em.createQuery("select g from Goods g")
                 .getResultList();
