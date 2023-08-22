@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:replace="~{/layout/header :: headFragment}"></div>
+<!--  -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+        crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <title>yes48</title>
+  <style>
+      a {
+          text-decoration: none;
+      }
+      ol{
+         list-style:none;
+       }
+   .container {
+      width: 1200px;
+      max-width: none !important;
+    }
+    </style>
+<!--  -->
+</head>
+<body>
+<div th:replace="~{/layout/adminNavbar :: adminNavFragment}"></div>
+<div class="container">
+  <div class="mt-3">
+    <p class="fw-bold fs-4 border-bottom" style="vertical-align:middle">상품 상세</p>
+  </div>
+  <div>
+  <div class="row">
+    <div class="col-2">
+      <img scr="" style="width: 200px; height: 220px;">
+    </div>
+    <div class="col-10">
+    <form th:action="@{/admin/saveGoods}" th:object="${form}" method="post" enctype="multipart/form-data">
+      <table class="table table-sm table-borderless">
+        <tr>
+          <th class="text-center" th:for="sort">상품 종류</th>
+          <td>
+            <select class="text-center" th:field="*{sort}">
+              <option value="국내 도서" selected>국내 도서</option>
+              <option value="외국 도서">외국 도서</option>
+              <option value="음반">음반</option>
+            </select>
+          </td>
+          <th class="text-center">이미지</th>
+          <td><input type="file" name="file"></td>
+        </tr>
+        <tr>
+          <th class="text-center" th:for="name">상품 이름</th>
+          <td>
+            <input class="form-control" th:field="*{name}">
+          </td>
+          <th class="text-center" th:for="author">저자</th>
+          <td>
+            <input class="form-control" th:field="*{author}">
+          </td>
+        </tr>
+        <tr>
+          <th class="text-center" th:for="publisherDate">출판일</th>
+          <td>
+            <input type="date" class="form-control" th:field="*{publisherDate}" name="publisherDate">
+          </td>
+          <th class="text-center" th:for="publisher">출판사</th>
+          <td>
+            <input class="form-control" th:field="*{publisher}" name="publisher">
+          </td>
+        </tr>
+        <tr>
+          <th class="text-center" th:for="price">가격</th>
+          <td>
+            <input class="form-control" th:field="*{price}" name="price">
+          </td>
+          <th class="text-center" th:for="stockQuantity">수량</th>
+          <td>
+            <input class="form-control" th:field="*{stockQuantity}" name="stockQuantity">
+          </td>
+        </tr>
+        <tr>
+          <th class="text-center" th:for="event">이벤트 유/무</th>
+          <td>
+            <select class="text-center" name="event" th:field="*{event}">
+              <option value="N" selected>없음</option>
+              <option value="Y">편집장의 추천 도서</option>
+            </select>
+          </td>
+          <th class="text-center" th:for="state">상태</th>
+          <td>
+            <select class="text-center" name="state" th:field="*{state}">
+              <option value="Y" selected>Y</option>
+              <option value="N">N</option>
+            </select>
+          </td>
+        </tr>
+      </table>
+      <div class="text-end border-top">
+        <button type="submit" class="mt-2 btn btn-primary btn-sm">수정</button>
+        <button type="submit" class="mt-2 btn btn-danger btn-sm">삭제</button>
+      </div>
+    </form>
+    </div>
+  </div>
+  </div>
+</div>
+</body>
+</html>
