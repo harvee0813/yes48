@@ -1,14 +1,15 @@
-package com.example.yes48.domain.goods;
+package com.example.yes48.domain.goods.admin;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
-public class GoodsSaveForm {
+/**
+ * 상품 등록 및 수정 전용 폼
+ */
+@Getter
+public class AdminGoodsSaveForm {
 
     private String name;
     private String sort;
-    private String filename;
-    private String filepath;
     private String author;
     private String publisher;
     private String publisherDate;

@@ -2,7 +2,6 @@ package com.example.yes48.domain.order;
 
 import com.example.yes48.domain.BaseTimeEntity;
 import com.example.yes48.domain.goods.Goods;
-import com.example.yes48.domain.order.Order;
 import jakarta.persistence.*;
 import lombok.Getter;
 
