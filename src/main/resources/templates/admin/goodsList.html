@@ -49,7 +49,7 @@
             <td th:text="${goods.stockQuantity}">100</td>
             <td th:text="${goods.event}">N</td>
             <td>
-              <a th:href="@{/admin/editGoods/{goodsId}(goodsId=${goods.id})}">
+              <a th:href="@{/admin/{goodsId}/edit(goodsId=${goods.id})}">
               <button class="btn btn-sm btn-secondary"><label>상세 정보</label></button>
               </a>
             </td>

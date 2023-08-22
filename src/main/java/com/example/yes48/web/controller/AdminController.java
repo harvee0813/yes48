@@ -1,8 +1,6 @@
 package com.example.yes48.web.controller;
 
 import com.example.yes48.Service.AdminService;
-import com.example.yes48.Service.FileStoreService;
-import com.example.yes48.domain.FileStore;
 import com.example.yes48.domain.goods.Goods;
 import com.example.yes48.domain.goods.admin.AdminGoodsSaveForm;
 import com.example.yes48.domain.goods.admin.AdminGoodsDto;
@@ -27,10 +25,9 @@ public class AdminController {
 
     @Autowired private final AdminRepository adminRepository;
     @Autowired private final AdminService goodsService;
-    @Autowired private final FileStoreService fileStoreService;
 
     /**
-     * 등록된 상품 리스트 확인
+     * 등록된 상품 리스트
      */
     @GetMapping("/goodsList")
     public String product(Model model) {
@@ -43,8 +40,11 @@ public class AdminController {
      * 상품 등록 폼 이동
      */
     @GetMapping("/saveGoods")
-    public String saveGoods(Model model) { //@pathVariable Long itemId 추가하기
-        model.addAttribute("form", new AdminGoodsSaveForm());
+    public String saveGoods(Model model) {
+
+        AdminGoodsSaveForm form = AdminGoodsSaveForm.builder().build();
+
+        model.addAttribute("form", form);
 
         return "admin/saveGoods";
     }
@@ -59,8 +59,6 @@ public class AdminController {
             return "admin/saveGoods";
         }
 
-        FileStore saveFile = fileStoreService.save(file);
-
         Goods save = Goods.builder()
                 .name(form.getName())
                 .sort(form.getSort())
@@ -71,7 +69,7 @@ public class AdminController {
                 .stockQuantity(form.getStockQuantity())
                 .event(form.getEvent())
                 .state(form.getState())
-                .fileStore(saveFile)
+                .fileStore(form.file(file))
                 .build();
 
         goodsService.saveGoods(save);
@@ -82,11 +80,11 @@ public class AdminController {
     /**
      * 상품 상세 정보
      */
-    @GetMapping("/{goodsId}/editGoods")
+    @GetMapping("/{goodsId}/edit")
     public String detailGoods(@PathVariable Long goodsId, Model model) {
         Goods findGoods = adminRepository.findOne(goodsId);
 
-        AdminGoodsDto dto = AdminGoodsDto.builder()
+        AdminGoodsDto dtoForm = AdminGoodsDto.builder()
                 .id(findGoods.getId())
                 .name(findGoods.getName())
                 .sort(findGoods.getSort())
@@ -100,9 +98,9 @@ public class AdminController {
                 .fileStore(findGoods.getFileStore())
                 .build();
 
-        model.addAttribute("goods", findGoods);
+        model.addAttribute("form", dtoForm);
 
-        return "admin/goodsList";
+        return "admin/editGoods";
     }
 
 }
