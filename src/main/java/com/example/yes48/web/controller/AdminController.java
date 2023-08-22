@@ -1,9 +1,9 @@
 package com.example.yes48.web.controller;
 
 import com.example.yes48.Service.AdminService;
-import com.example.yes48.domain.goods.Goods;
-import com.example.yes48.domain.goods.admin.AdminGoodsSaveForm;
-import com.example.yes48.domain.goods.admin.AdminGoodsDto;
+import com.example.yes48.Entity.goods.Goods;
+import com.example.yes48.Entity.goods.form.AdminGoodsSaveForm;
+import com.example.yes48.Entity.goods.form.AdminGoodsDto;
 import com.example.yes48.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

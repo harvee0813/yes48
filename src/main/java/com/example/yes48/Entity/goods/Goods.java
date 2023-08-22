@@ -1,6 +1,6 @@
-package com.example.yes48.domain.goods;
+package com.example.yes48.Entity.goods;
 
-import com.example.yes48.domain.FileStore;
+import com.example.yes48.Entity.FileStore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.example.yes48.domain;
+package com.example.yes48.Entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

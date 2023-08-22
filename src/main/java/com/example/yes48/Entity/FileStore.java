@@ -1,6 +1,6 @@
-package com.example.yes48.domain;
+package com.example.yes48.Entity;
 
-import com.example.yes48.domain.goods.Goods;
+import com.example.yes48.Entity.goods.Goods;
 import jakarta.persistence.*;
 import lombok.*;
 
