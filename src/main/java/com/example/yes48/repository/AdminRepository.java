@@ -1,7 +1,7 @@
 package com.example.yes48.repository;
 
-import com.example.yes48.domain.goods.Goods;
-import com.example.yes48.domain.goods.admin.AdminGoodsDto;
+import com.example.yes48.Entity.goods.Goods;
+import com.example.yes48.Entity.goods.form.AdminGoodsDto;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

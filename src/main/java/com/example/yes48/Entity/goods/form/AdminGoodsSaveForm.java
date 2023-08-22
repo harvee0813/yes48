@@ -1,6 +1,6 @@
-package com.example.yes48.domain.goods.admin;
+package com.example.yes48.Entity.goods.form;
 
-import com.example.yes48.domain.FileStore;
+import com.example.yes48.Entity.FileStore;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 

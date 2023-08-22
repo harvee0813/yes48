@@ -1,7 +1,7 @@
-package com.example.yes48.domain.order;
+package com.example.yes48.Entity.order;
 
-import com.example.yes48.domain.BaseTimeEntity;
-import com.example.yes48.domain.member.Member;
+import com.example.yes48.Entity.BaseTimeEntity;
+import com.example.yes48.Entity.member.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 

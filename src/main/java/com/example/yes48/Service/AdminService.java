@@ -1,7 +1,7 @@
 package com.example.yes48.Service;
 
-import com.example.yes48.domain.FileStore;
-import com.example.yes48.domain.goods.Goods;
+import com.example.yes48.Entity.FileStore;
+import com.example.yes48.Entity.goods.Goods;
 import com.example.yes48.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
