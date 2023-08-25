@@ -13,7 +13,7 @@
       <form th:action="@{/admin/saveGoods}" th:object="${form}" method="post" enctype="multipart/form-data">
         <table class="table table-sm table-borderless">
           <tr>
-            <th class="text-center" th:for="sort">상품 종류</th>
+            <th class="text-center" th:for="sort"><strong class="ms-2 me-1 text-danger">*</strong>상품 종류</th>
             <td>
               <select class="text-center" th:field="*{sort}">
                 <option value="국내 도서" selected>국내 도서</option>
@@ -21,48 +21,48 @@
                 <option value="음반">음반</option>
               </select>
             </td>
-            <th class="text-center">이미지</th>
-            <td><input type="file" name="file"></td>
+            <th class="text-center"><strong class="ms-2 me-1 text-danger">*</strong>이미지</th>
+            <td><input type="file" name="file" accept="image/*"></td>
           </tr>
           <tr>
-            <th class="text-center" th:for="name">상품 이름</th>
+            <th class="text-center" th:for="name"><strong class="ms-2 me-1 text-danger">*</strong>상품 이름</th>
             <td>
               <input class="form-control" th:field="*{name}">
             </td>
-            <th class="text-center" th:for="author">저자</th>
+            <th class="text-center" th:for="author"><strong class="ms-2 me-1 text-danger">*</strong>저자</th>
             <td>
               <input class="form-control" th:field="*{author}">
             </td>
           </tr>
           <tr>
-            <th class="text-center" th:for="publisherDate">출판일</th>
+            <th class="text-center" th:for="publisherDate"><strong class="ms-2 me-1 text-danger">*</strong>출판일</th>
             <td>
               <input type="date" class="form-control" th:field="*{publisherDate}" name="publisherDate">
             </td>
-            <th class="text-center" th:for="publisher">출판사</th>
+            <th class="text-center" th:for="publisher"><strong class="ms-2 me-1 text-danger">*</strong>출판사</th>
             <td>
               <input class="form-control" th:field="*{publisher}" name="publisher">
             </td>
           </tr>
           <tr>
-            <th class="text-center" th:for="price">가격</th>
+            <th class="text-center" th:for="price"><strong class="ms-2 me-1 text-danger">*</strong>가격</th>
             <td>
               <input class="form-control" th:field="*{price}" name="price">
             </td>
-            <th class="text-center" th:for="stockQuantity">수량</th>
+            <th class="text-center" th:for="stockQuantity"><strong class="ms-2 me-1 text-danger">*</strong>수량</th>
             <td>
               <input class="form-control" th:field="*{stockQuantity}" name="stockQuantity">
             </td>
           </tr>
           <tr>
-            <th class="text-center" th:for="event">이벤트 유/무</th>
+            <th class="text-center" th:for="event"><strong class="ms-2 me-1 text-danger">*</strong>이벤트 유/무</th>
             <td>
               <select class="text-center" name="event" th:field="*{event}">
                 <option value="N" selected>없음</option>
                 <option value="Y">편집장의 추천 도서</option>
               </select>
             </td>
-            <th class="text-center" th:for="state">상태</th>
+            <th class="text-center" th:for="state"><strong class="ms-2 me-1 text-danger">*</strong>상태</th>
             <td>
               <select class="text-center" name="state" th:field="*{state}">
                 <option value="Y" selected>Y</option>
