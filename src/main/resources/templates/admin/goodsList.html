@@ -13,10 +13,9 @@
       <form method="" action="">
         <div class="input-group mb-3">
             <select class="border-light-subtle text-center rounded-start">
-              <option>상품 종류</option>
-              <option>상품 이름</option>
-              <option>상태</option>
-              <option>이벤트 유/무</option>
+              <option th:value="name">상품 이름</option>
+              <option th:value="state">상태</option>
+              <option th:value="event">이벤트 유/무</option>
             </select>
             <input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="button-addon2">
             <button class="btn btn-dark" type="button" id="button-addon2">검색</button>
@@ -27,6 +26,8 @@
       <table class="table table-sm table-striped table-hover">
         <thead>
           <tr class="text-center table-dark">
+            <th><input type="checkbox"></th>
+            <th>상품 번호</th>
             <th>상품 종류</th>
             <th>상품 이름</th>
             <th>저자</th>
@@ -35,11 +36,14 @@
             <th>가격</th>
             <th>수량</th>
             <th>이벤트 유/무</th>
+            <th>상태</th>
             <th>비고</th>
           </tr>
         </thead>
-        <tbody>
-          <tr class="text-center" th:each="goods : ${goodsList}" style="width:100%;cursor:pointer;">
+        <tbody class="text-center">
+          <tr th:each="goods : ${goodsList}" style="width:100%;cursor:pointer;">
+            <td><input type="checkbox"></td>
+            <td th:text="${goods.id}">도서/음반</td>
             <td th:text="${goods.sort}">도서/음반</td>
             <td th:text="${goods.name}">Html 웹 표준의 정석</td>
             <td th:text="${goods.author}">고경희</td>
@@ -48,8 +52,9 @@
             <td th:text="${goods.price}">30,000</td>
             <td th:text="${goods.stockQuantity}">100</td>
             <td th:text="${goods.event}">N</td>
+            <td th:text="${goods.state}">Y</td>
             <td>
-              <a th:href="@{/admin/{goodsId}/edit(goodsId=${goods.id})}">
+              <a th:href="@{/admin/{goodsId}/editGoods(goodsId=${goods.id})}">
               <button class="btn btn-sm btn-secondary"><label>상세 정보</label></button>
               </a>
             </td>
@@ -60,18 +65,20 @@
         <a href="/admin/saveGoods"><button type="button" class="btn btn-primary btn-sm">상품 등록</button></a>
       </div>
     </div>
-      <div>
+    <!-- 페이징 시작 -->
+      <div th:with="start=${(goodsList.number/maxPage)*maxPage + 1}, end=(${(goodsList.totalPages == 0) ? 1 : (start + (maxPage - 1) < goodsList.totalPages ? start + (maxPage - 1) : goodsList.totalPages)})">
         <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-center">
-            <li class="page-item">
-              <a class="page-link" href="#" style="color: #000000" aria-label="Previous">
+            <li class="page-item" th:classappend="${goodsList.first}?'disabled'">
+              <a class="page-link" th:onclick="'javascript:page(' + ${goodsList.number} + ')'" style="color: #000000" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
-            <li class="page-item"><a class="page-link" href="#" style="color: #000000">1</a></li>
-            <li class="page-item"><a class="page-link" href="#" style="color: #000000">2</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next" style="color: #000000">
+            <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${goodsList.number eq page-1}?'active':''">
+              <a class="page-link" th:inline="text" th:onclick="'javascript:page(' + ${page} + ')'" style="color: #000000">[[${page}]]</a>
+            </li>
+            <li class="page-item" th:classappend="${goodsList.last}?'disabled'">
+              <a class="page-link" th:onclick="'javascript:page(' + ${goodsList.number} + ')'" aria-label="Next" style="color: #000000">
                 <span aria-hidden="true">&raquo;</span>
               </a>
             </li>
@@ -79,5 +86,11 @@
         </nav>
       </div>
   </div>
+<script>
+// 페이징 - 쿼리스트링 변경
+function page(page){
+       location.href="/admin/goodsList?page=" + page;
+   }
+</script>
 </body>
 </html>
