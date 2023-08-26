@@ -19,7 +19,7 @@ public class Yes48Application {
 	public PageableHandlerMethodArgumentResolverCustomizer customize() {
 		return p -> {
 			p.setOneIndexedParameters(true);	// 1부터 시작
-			p.setMaxPageSize(10);				// size=10
+			p.setMaxPageSize(12);				// size=12
 		};
 	}
 }

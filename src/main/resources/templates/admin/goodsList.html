@@ -24,6 +24,20 @@
     </div>
     <div>
       <table class="table table-sm table-striped table-hover">
+        <colgroup>
+          <col style="width: 1%;">
+          <col style="width: 5%;">
+          <col style="width: 7%;">
+          <col style="width: 30%;">
+          <col style="width: 6%;">
+          <col style="width: 12%;">
+          <col style="width: 8%;">
+          <col style="width: 7%;">
+          <col style="width: 6%;">
+          <col style="width: 5%;">
+          <col style="width: 5%;">
+          <col style="width: 8%;">
+        </colgroup>
         <thead>
           <tr class="text-center table-dark">
             <th><input type="checkbox"></th>
@@ -78,7 +92,7 @@
               <a class="page-link" th:inline="text" th:onclick="'javascript:page(' + ${page} + ')'" style="color: #000000">[[${page}]]</a>
             </li>
             <li class="page-item" th:classappend="${goodsList.last}?'disabled'">
-              <a class="page-link" th:onclick="'javascript:page(' + ${goodsList.number} + ')'" aria-label="Next" style="color: #000000">
+              <a class="page-link" th:onclick="'javascript:page(' + ${goodsList.number + 2} + ')'" aria-label="Next" style="color: #000000">
                 <span aria-hidden="true">&raquo;</span>
               </a>
             </li>
