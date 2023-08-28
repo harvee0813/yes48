@@ -1,4 +1,4 @@
-package Book.yes48.Entity.goods.form;
+package Book.yes48.form.admin;
 
 import Book.yes48.Entity.FileStore;
 import com.querydsl.core.annotations.QueryProjection;

@@ -1,13 +1,13 @@
 package Book.yes48.repository.admin;
 
-import Book.yes48.Entity.FileStore;
 import Book.yes48.Entity.goods.Goods;
-import Book.yes48.Entity.goods.QGoods;
-import Book.yes48.Entity.goods.form.AdminGoodsDto;
-import Book.yes48.Entity.goods.form.AdminGoodsSearchDto;
-import Book.yes48.Entity.goods.form.AdminSearchCondition;
-import Book.yes48.Entity.goods.form.QAdminGoodsDto;
+import Book.yes48.form.admin.AdminGoodsDto;
+import Book.yes48.form.admin.search.AdminGoodsSearch;
+import Book.yes48.form.admin.search.AdminSearchCondition;
+import Book.yes48.form.admin.search.SearchType;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -19,8 +19,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 import static Book.yes48.Entity.goods.QGoods.goods;
+import static org.springframework.util.StringUtils.containsWhitespace;
 import static org.springframework.util.StringUtils.hasText;
 
 @RequiredArgsConstructor
@@ -34,7 +36,7 @@ public class AdminRepositoryImpl implements AdminRepositoryCustom {
     @Override
     public AdminGoodsDto getId(Long id) {
        AdminGoodsDto dto = queryFactory
-                .select(new QAdminGoodsDto(goods.id, goods.name, goods.sort, goods.author,
+                .select(Projections.constructor(AdminGoodsDto.class, goods.id, goods.name, goods.sort, goods.author,
                         goods.publisher, goods.publisherDate, goods.price,
                         goods.stockQuantity, goods.event, goods.state, goods.fileStore)
                 )
@@ -56,7 +58,7 @@ public class AdminRepositoryImpl implements AdminRepositoryCustom {
     @Override
     public List<AdminGoodsDto> getAll() {
         List<AdminGoodsDto> dtos = queryFactory
-                .select(new QAdminGoodsDto(goods.id, goods.name, goods.sort, goods.author,
+                .select(Projections.constructor(AdminGoodsDto.class, goods.id, goods.name, goods.sort, goods.author,
                         goods.publisher, goods.publisherDate, goods.price,
                         goods.stockQuantity, goods.event, goods.state, goods.fileStore)
                 )
@@ -68,99 +70,33 @@ public class AdminRepositoryImpl implements AdminRepositoryCustom {
     }
 
     @Override
-    public Page<AdminGoodsDto> searchPageComplex(AdminGoodsSearchDto goodsSearchDto, AdminSearchCondition condition, Pageable pageable) {
-        QGoods goods = QGoods.goods;
-
-        List<AdminGoodsDto> fetch = queryFactory
-                .select(new QAdminGoodsDto(
-                        goods.id, goods.name, goods.sort, goods.author,
-                        goods.publisher, goods.publisherDate, goods.price,
-                        goods.stockQuantity, goods.event, goods.state, goods.fileStore
-                    )
-                )
-                .from(goods)
-                .where(
-                        nameEq(condition.getName()),
-                        sortEq(condition.getSort()),
-                        authorEq(condition.getAuthor()),
-                        publisherEq(condition.getPublisher()),
-                        publisherDateEq(condition.getPublisherDate()),
-                        priceGoe(condition.getPrice()),
-                        stockQuantityLoe(condition.getStockQuantity()),
-                        eventEq(condition.getEvent()),
-                        stateEq(condition.getState()),
-                        fileStoreEq(condition.getFileStore())
-                )
-//                .where(searchByLike(goodsSearchDto.getSearchQuery(), goodsSearchDto.getSearchBy()))
-                .orderBy(goods.id.desc())
+    public Page<Goods> findAllPageAndSearch(Pageable pageable, AdminGoodsSearch adminGoodsSearch) {
+        List<Goods> result = queryFactory.selectFrom(goods)
+                .where(searchTypeAndWord(adminGoodsSearch))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
+                .orderBy(goods.id.desc())
                 .fetch();
 
-        JPAQuery<Goods> count = queryFactory
-                .selectFrom(goods)
-                .where(
-                        nameEq(condition.getName()),
-                        sortEq(condition.getSort()),
-                        authorEq(condition.getAuthor()),
-                        publisherEq(condition.getPublisher()),
-                        publisherDateEq(condition.getPublisherDate()),
-                        priceGoe(condition.getPrice()),
-                        stockQuantityLoe(condition.getStockQuantity()),
-                        eventEq(condition.getEvent()),
-                        stateEq(condition.getState()),
-                        fileStoreEq(condition.getFileStore())
-                );
+        JPAQuery<Long> count = queryFactory.select(goods.count())
+                .from(goods)
+                .where(searchTypeAndWord(adminGoodsSearch));
 
-        return PageableExecutionUtils.getPage(fetch, pageable, () -> count.fetch().size());
+        return PageableExecutionUtils.getPage(result, pageable, count::fetchOne);
     }
 
-//    private BooleanExpression searchByLike(String searchBy, String searchQuery) {
-//        switch (searchBy) {
-//            case "name" : return goods.name.like("%" + searchQuery + "%");
-//            case "state" : return goods.state.like("%" + searchQuery + "%");
-//            case "event" : return goods.event.like("%" + searchQuery + "%");
-//            default: return null;
-//        }
-//    }
+    private BooleanExpression searchTypeAndWord(AdminGoodsSearch adminGoodsSearch) {
+        if (adminGoodsSearch.isEmpty()) return null;
 
-    private BooleanExpression nameEq(String name) {
-        return hasText(name) ? goods.name.eq(name): null;
-    }
-
-    private BooleanExpression sortEq(String sort) {
-        return hasText(sort) ? goods.name.eq(sort): null;
-    }
-
-    private BooleanExpression authorEq(String author) {
-        return hasText(author) ? goods.name.eq(author): null;
-    }
-
-    private BooleanExpression publisherEq(String publisher) {
-        return hasText(publisher) ? goods.name.eq(publisher): null;
-    }
-
-    private BooleanExpression publisherDateEq(String publisherDate) {
-        return hasText(publisherDate) ? goods.name.eq(publisherDate): null;
-    }
-
-    private BooleanExpression priceGoe(Integer priceGoe) {
-        return priceGoe != null ? goods.price.goe(priceGoe) : null;
-    }
-
-    private BooleanExpression stockQuantityLoe(Integer stockQuantityLoe) {
-        return stockQuantityLoe != null ? goods.stockQuantity.loe(stockQuantityLoe) : null;
-    }
-
-    private BooleanExpression eventEq(String eventEq) {
-        return hasText(eventEq) ? goods.name.eq(eventEq): null;
-    }
-
-    private BooleanExpression stateEq(String stateEq) {
-        return hasText(stateEq) ? goods.name.eq(stateEq): null;
-    }
-
-    private BooleanExpression fileStoreEq(FileStore fileStoreEq) {
-        return hasText((CharSequence) fileStoreEq) ? goods.name.eq((Expression<? super String>) fileStoreEq): null;
+        if (adminGoodsSearch.getSearchType().equals(SearchType.sort)) {
+            return goods.sort.contains(adminGoodsSearch.getSearchBy());
+        }
+        if (adminGoodsSearch.getSearchType().equals(SearchType.name)) {
+            return goods.name.contains(adminGoodsSearch.getSearchBy());
+        }
+        if (adminGoodsSearch.getSearchType().equals(SearchType.state)) {
+            return goods.state.contains(adminGoodsSearch.getSearchBy());
+        }
+        return null;
     }
 }

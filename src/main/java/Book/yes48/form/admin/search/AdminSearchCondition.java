@@ -1,4 +1,4 @@
-package Book.yes48.Entity.goods.form;
+package Book.yes48.form.admin.search;
 
 import Book.yes48.Entity.FileStore;
 import lombok.Getter;
@@ -19,9 +19,10 @@ public class AdminSearchCondition {
     private String state;
     private FileStore fileStore;
     private String searchBy;
-    private String searchQuery = "";
+    private SearchType searchType;
 
-    public AdminSearchCondition(Long id, String name, String sort, String author, String publisher, String publisherDate, Integer price, Integer stockQuantity, String event, String state, FileStore fileStore, String searchBy, String searchQuery) {
+    public AdminSearchCondition(Long id, String name, String sort, String author, String publisher, String publisherDate, Integer price, Integer stockQuantity, String event,
+                                String state, FileStore fileStore, String searchBy, SearchType searchType) {
         this.id = id;
         this.name = name;
         this.sort = sort;
@@ -34,6 +35,7 @@ public class AdminSearchCondition {
         this.state = state;
         this.fileStore = fileStore;
         this.searchBy = searchBy;
-        this.searchQuery = searchQuery;
+        this.searchType = searchType;
     }
+
 }

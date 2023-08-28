@@ -1,15 +1,7 @@
 package Book.yes48.repository.admin;
 
-import Book.yes48.Entity.FileStore;
-import Book.yes48.Entity.goods.Goods;
-import Book.yes48.Entity.goods.form.AdminGoodsDto;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 @SpringBootTest
 @Transactional
