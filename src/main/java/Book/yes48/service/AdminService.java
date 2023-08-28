@@ -1,9 +1,9 @@
-package Book.yes48.Service;
+package Book.yes48.service;
 
-import Book.yes48.Entity.goods.form.AdminGoodsDto;
-import Book.yes48.Entity.goods.form.AdminGoodsSearchDto;
-import Book.yes48.Entity.goods.form.AdminGoodsUpdateForm;
-import Book.yes48.Entity.goods.form.AdminSearchCondition;
+import Book.yes48.form.admin.AdminGoodsDto;
+import Book.yes48.form.admin.AdminGoodsUpdateForm;
+import Book.yes48.form.admin.search.AdminGoodsSearch;
+import Book.yes48.form.admin.search.AdminSearchCondition;
 import Book.yes48.repository.admin.AdminRepository;
 import Book.yes48.Entity.goods.Goods;
 import lombok.extern.slf4j.Slf4j;
@@ -52,10 +52,6 @@ public class AdminService {
         }
     }
 
-    public Page<AdminGoodsDto> getAdminGoodsPage(AdminGoodsSearchDto goodsSearchDto, AdminSearchCondition condition, Pageable pageable) {
-        return adminRepository.searchPageComplex(goodsSearchDto, condition, pageable);
-    }
-
     // 상품 업데이트 - fileStore 있을 때
     private static void UpdateGoodsAndFile(AdminGoodsUpdateForm form, MultipartFile file, Goods findGoods) throws IOException {
         findGoods.updateGoodsAndFile(
@@ -93,5 +89,10 @@ public class AdminService {
         if (!findGoods.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 상품입니다.");
         }
+    }
+
+    public Page<AdminGoodsDto> findList(Pageable pageable, AdminGoodsSearch adminGoodsSearch) {
+        Page<Goods> find = adminRepository.findAllPageAndSearch(pageable, adminGoodsSearch);
+        return find.map(AdminGoodsDto::new);
     }
 }

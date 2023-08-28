@@ -1,11 +1,12 @@
-package Book.yes48.Entity.goods.form;
+package Book.yes48.form.admin;
 
 import Book.yes48.Entity.FileStore;
+import Book.yes48.Entity.goods.Goods;
+import Book.yes48.form.admin.search.SearchType;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
 
 /**
  * 상품 조회 전용 폼
@@ -26,10 +27,10 @@ public class AdminGoodsDto {
     private String state;
     private FileStore fileStore;
     private String searchBy;
-    private String searchQuery = "";
+    private SearchType searchType;
 
     public AdminGoodsDto(Long id, String name, String sort, String author, String publisher, String publisherDate,
-                         int price, int stockQuantity, String event, String state, String searchBy, String searchQuery) {
+                         int price, int stockQuantity, String event, String state, String searchBy, SearchType searchType) {
         this.id = id;
         this.name = name;
         this.sort = sort;
@@ -41,10 +42,9 @@ public class AdminGoodsDto {
         this.event = event;
         this.state = state;
         this.searchBy = searchBy;
-        this.searchQuery = searchQuery;
+        this.searchType = searchType;
     }
 
-    @QueryProjection
     public AdminGoodsDto(Long id, String name, String sort, String author, String publisher, String publisherDate, int price,
                          int stockQuantity, String event, String state, FileStore fileStore) {
         this.id = id;
@@ -58,5 +58,19 @@ public class AdminGoodsDto {
         this.event = event;
         this.state = state;
         this.fileStore = fileStore;
+    }
+
+    public AdminGoodsDto(Goods goods) {
+        this.id = goods.getId();
+        this.name = goods.getName();
+        this.sort = goods.getSort();
+        this.author = goods.getAuthor();
+        this.publisher = goods.getPublisher();
+        this.publisherDate = goods.getPublisherDate();
+        this.price = goods.getPrice();
+        this.stockQuantity = goods.getStockQuantity();
+        this.event = goods.getEvent();
+        this.state = goods.getState();
+        this.fileStore = goods.getFileStore();
     }
 }

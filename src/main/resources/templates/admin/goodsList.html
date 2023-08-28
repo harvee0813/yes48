@@ -9,27 +9,25 @@
     <div class="mt-3 mb-3">
       <p class="fw-bold fs-4 border-bottom" style="vertical-align:middle">상품 관리</p>
     </div>
+    <form method="get" th:action="@{/admin/goodsList/}" th:objec="${adminGoodsSearch}">
     <div>
-      <form method="" action="">
         <div class="input-group mb-3">
-            <select class="border-light-subtle text-center rounded-start">
-              <option th:value="name">상품 이름</option>
-              <option th:value="state">상태</option>
-              <option th:value="event">이벤트 유/무</option>
-            </select>
-            <input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="button-addon2">
-            <button class="btn btn-dark" type="button" id="button-addon2">검색</button>
+          <select class="border-light-subtle text-center rounded-start">
+            <option th:if="*{searchType}" th:value="*{searchType}" th:text="#{*{searchType.name()}}" selected>상품 종류</option>
+            <option th:unless="${type} == *{searchType}" th:each="type : ${searchTypes}" th:value="${type}" th:text="#{${type}}">상품 이름</option>
+          </select>
+            <input id="search" type="text" th:if="*{searchBy}" th:value="*{searchBy}" class="form-control" aria-describedby="button-addon2">
+            <input type="text" th:unless="*{searchBy}" th:value="*{searchBy}" class="form-control" aria-describedby="button-addon2">
+            <button class="btn btn-dark" type="submit">검색</button>
         </div>
-      </form>
     </div>
     <div>
       <table class="table table-sm table-striped table-hover">
         <colgroup>
-          <col style="width: 1%;">
           <col style="width: 5%;">
           <col style="width: 7%;">
           <col style="width: 30%;">
-          <col style="width: 6%;">
+          <col style="width: 7%;">
           <col style="width: 12%;">
           <col style="width: 8%;">
           <col style="width: 7%;">
@@ -40,23 +38,21 @@
         </colgroup>
         <thead>
           <tr class="text-center table-dark">
-            <th><input type="checkbox"></th>
-            <th>상품 번호</th>
-            <th>상품 종류</th>
-            <th>상품 이름</th>
+            <th>번호</th>
+            <th>종류</th>
+            <th>이름</th>
             <th>저자</th>
             <th>출판사</th>
             <th>출판일</th>
             <th>가격</th>
             <th>수량</th>
-            <th>이벤트 유/무</th>
+            <th>이벤트</th>
             <th>상태</th>
             <th>비고</th>
           </tr>
         </thead>
         <tbody class="text-center">
           <tr th:each="goods : ${goodsList}" style="width:100%;cursor:pointer;">
-            <td><input type="checkbox"></td>
             <td th:text="${goods.id}">도서/음반</td>
             <td th:text="${goods.sort}">도서/음반</td>
             <td th:text="${goods.name}">Html 웹 표준의 정석</td>
@@ -79,32 +75,32 @@
         <a href="/admin/saveGoods"><button type="button" class="btn btn-primary btn-sm">상품 등록</button></a>
       </div>
     </div>
-    <!-- 페이징 시작 -->
-      <div th:with="start=${(goodsList.number/maxPage)*maxPage + 1}, end=(${(goodsList.totalPages == 0) ? 1 : (start + (maxPage - 1) < goodsList.totalPages ? start + (maxPage - 1) : goodsList.totalPages)})">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${goodsList.first}?'disabled'">
-              <a class="page-link" th:onclick="'javascript:page(' + ${goodsList.number} + ')'" style="color: #000000" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${goodsList.number eq page-1}?'active':''">
-              <a class="page-link" th:inline="text" th:onclick="'javascript:page(' + ${page} + ')'" style="color: #000000">[[${page}]]</a>
-            </li>
-            <li class="page-item" th:classappend="${goodsList.last}?'disabled'">
-              <a class="page-link" th:onclick="'javascript:page(' + ${goodsList.number + 2} + ')'" aria-label="Next" style="color: #000000">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+            <a class="page-link" th:if="${startPage}" th:href="@{/admin/goodsList(page=${startPage})}">First</a>
+          </li>
+          <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+            <a class="page-link" th:href="@{/admin/goodsList(page=${currentPage - 1})}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item" th:each="page : ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == currentPage} ? 'active'">
+            <a class="page-link" th:text="${page}" th:href="@{/admin/goodsList(page=${page})}" >1</a>
+          </li>
+          <li class="page-item" th:classappend="${currentPage == endPage} ? 'disabled'">
+            <a class="page-link" th:href="@{/admin/goodsList(page=${currentPage + 1})}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+          <li class="page-item" th:classappend="${currentPage == endPage} ? 'disabled'">
+            <a class="page-link" th:if="${endPage}" th:href="@{/admin/goodsList(page=${endPage})}">End</a>
+          </li>
+        </ul>
+      </nav>
+    </form>
       </div>
+    </form>
   </div>
-<script>
-// 페이징 - 쿼리스트링 변경
-function page(page){
-       location.href="/admin/goodsList?page=" + page;
-   }
-</script>
 </body>
 </html>
