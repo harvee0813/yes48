@@ -5,14 +5,20 @@ import Book.yes48.form.admin.AdminGoodsSaveForm;
 import Book.yes48.form.admin.AdminGoodsUpdateForm;
 import Book.yes48.form.admin.search.AdminGoodsSearch;
 import Book.yes48.form.admin.search.SearchType;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.apache.bcel.classfile.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import Book.yes48.Entity.goods.Goods;
@@ -20,6 +26,8 @@ import Book.yes48.service.AdminService;
 import Book.yes48.repository.admin.AdminRepository;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -82,16 +90,17 @@ public class AdminController {
      * 상품 등록
      */
     @PostMapping("/saveGoods")
-    public String saveGoods(@ModelAttribute AdminGoodsSaveForm form, BindingResult result, MultipartFile file) throws IOException {
+    public String saveGoods(@Validated @ModelAttribute("form") AdminGoodsSaveForm form, BindingResult bindingResult, MultipartFile file) throws IOException {
 
-        if (result.hasErrors()) {
-            return "admin/saveGoods";
+        //  파일 검증 로직
+        if (file.isEmpty()) {
+            bindingResult.addError(new ObjectError("form", "이미지는 필수입니다."));
         }
 
-        //        if(file.isEmpty() && form.getId() == null){
-//            model.addAttribute("errorMessage", "첫번째 상품 이미지는 필수 입력 값 입니다.");
-//            return "item/itemForm";
-//        }
+        if (bindingResult.hasErrors()) {
+            log.info("errors = {}", bindingResult);
+            return "admin/saveGoods";
+        }
 
         Goods save = Goods.builder()
                 .name(form.getName())
@@ -126,7 +135,12 @@ public class AdminController {
 
 
     @PostMapping("/{goodsId}/editGoods")
-    public String updateGoods(@ModelAttribute AdminGoodsUpdateForm form, BindingResult result, MultipartFile file) throws IOException {
+    public String updateGoods(@Validated @ModelAttribute("form") AdminGoodsUpdateForm form, BindingResult bindingResult, MultipartFile file) throws IOException {
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors = {}", bindingResult);
+            return "admin/saveGoods";
+        }
 
         adminService.updateGoods(form.getId(), form, file);
 
