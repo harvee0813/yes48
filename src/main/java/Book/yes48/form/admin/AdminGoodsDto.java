@@ -3,9 +3,7 @@ package Book.yes48.form.admin;
 import Book.yes48.Entity.FileStore;
 import Book.yes48.Entity.goods.Goods;
 import Book.yes48.form.admin.search.SearchType;
-import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 /**

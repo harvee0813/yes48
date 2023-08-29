@@ -3,7 +3,7 @@ package Book.yes48.service;
 import Book.yes48.form.admin.AdminGoodsDto;
 import Book.yes48.form.admin.AdminGoodsUpdateForm;
 import Book.yes48.form.admin.search.AdminGoodsSearch;
-import Book.yes48.form.admin.search.AdminSearchCondition;
+import Book.yes48.form.admin.search.SearchType;
 import Book.yes48.repository.admin.AdminRepository;
 import Book.yes48.Entity.goods.Goods;
 import lombok.extern.slf4j.Slf4j;
@@ -95,4 +95,5 @@ public class AdminService {
         Page<Goods> find = adminRepository.findAllPageAndSearch(pageable, adminGoodsSearch);
         return find.map(AdminGoodsDto::new);
     }
+
 }

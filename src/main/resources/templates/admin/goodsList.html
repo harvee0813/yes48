@@ -9,17 +9,17 @@
     <div class="mt-3 mb-3">
       <p class="fw-bold fs-4 border-bottom" style="vertical-align:middle">상품 관리</p>
     </div>
-    <form method="get" th:action="@{/admin/goodsList/}" th:objec="${adminGoodsSearch}">
     <div>
+      <form method="get" th:action="@{/admin/goodsList}" th:object="${adminGoodsSearch}">
         <div class="input-group mb-3">
-          <select class="border-light-subtle text-center rounded-start">
-            <option th:if="*{searchType}" th:value="*{searchType}" th:text="#{*{searchType.name()}}" selected>상품 종류</option>
-            <option th:unless="${type} == *{searchType}" th:each="type : ${searchTypes}" th:value="${type}" th:text="#{${type}}">상품 이름</option>
+          <select th:field="*{searchType}" class="border-light-subtle text-center rounded-start">
+            <option th:each="type : ${searchTypes}" th:value="${type.name()}" th:name="${type}"
+                    th:text="${type.description}">상품 이름</option>
           </select>
-            <input id="search" type="text" th:if="*{searchBy}" th:value="*{searchBy}" class="form-control" aria-describedby="button-addon2">
-            <input type="text" th:unless="*{searchBy}" th:value="*{searchBy}" class="form-control" aria-describedby="button-addon2">
-            <button class="btn btn-dark" type="submit">검색</button>
+            <input type="text" th:field="*{searchBy}" class="form-control" aria-describedby="button-addon2">
+            <button class="btn btn-dark" type="submit" >검색</button>
         </div>
+      </form>
     </div>
     <div>
       <table class="table table-sm table-striped table-hover">
@@ -78,29 +78,27 @@
       <nav aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-            <a class="page-link" th:if="${startPage}" th:href="@{/admin/goodsList(page=${startPage})}">First</a>
+            <a class="page-link" th:if="${startPage}" th:href="@{/admin/goodsList(page=${startPage}, searchType=${param.searchType} , searchBy = ${param.searchBy})}">First</a>
           </li>
           <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-            <a class="page-link" th:href="@{/admin/goodsList(page=${currentPage - 1})}" aria-label="Previous">
+            <a class="page-link" th:href="@{/admin/goodsList(page=${currentPage - 1}, searchType=${param.searchType} , searchBy = ${param.searchBy})}" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
           <li class="page-item" th:each="page : ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == currentPage} ? 'active'">
-            <a class="page-link" th:text="${page}" th:href="@{/admin/goodsList(page=${page})}" >1</a>
+            <a class="page-link" th:text="${page}" th:href="@{/admin/goodsList(page = ${page}, searchType=${param.searchType} , searchBy = ${param.searchBy})}" >1</a>
           </li>
           <li class="page-item" th:classappend="${currentPage == endPage} ? 'disabled'">
-            <a class="page-link" th:href="@{/admin/goodsList(page=${currentPage + 1})}" aria-label="Next">
+            <a class="page-link" th:href="@{/admin/goodsList(page=${currentPage + 1}, searchType=${param.searchType} , searchBy = ${param.searchBy})}" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>
           <li class="page-item" th:classappend="${currentPage == endPage} ? 'disabled'">
-            <a class="page-link" th:if="${endPage}" th:href="@{/admin/goodsList(page=${endPage})}">End</a>
+            <a class="page-link" th:if="${endPage}" th:href="@{/admin/goodsList(page=${endPage}, searchType=${param.searchType} , searchBy = ${param.searchBy})}">End</a>
           </li>
         </ul>
       </nav>
-    </form>
       </div>
-    </form>
   </div>
 </body>
 </html>

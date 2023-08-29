@@ -3,10 +3,8 @@ package Book.yes48.repository.admin;
 import Book.yes48.Entity.goods.Goods;
 import Book.yes48.form.admin.AdminGoodsDto;
 import Book.yes48.form.admin.search.AdminGoodsSearch;
-import Book.yes48.form.admin.search.AdminSearchCondition;
 import Book.yes48.form.admin.search.SearchType;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -19,11 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 import static Book.yes48.Entity.goods.QGoods.goods;
-import static org.springframework.util.StringUtils.containsWhitespace;
-import static org.springframework.util.StringUtils.hasText;
 
 @RequiredArgsConstructor
 public class AdminRepositoryImpl implements AdminRepositoryCustom {
@@ -88,13 +83,13 @@ public class AdminRepositoryImpl implements AdminRepositoryCustom {
     private BooleanExpression searchTypeAndWord(AdminGoodsSearch adminGoodsSearch) {
         if (adminGoodsSearch.isEmpty()) return null;
 
-        if (adminGoodsSearch.getSearchType().equals(SearchType.sort)) {
+        if (adminGoodsSearch.getSearchType().equals(SearchType.SORT)) {
             return goods.sort.contains(adminGoodsSearch.getSearchBy());
         }
-        if (adminGoodsSearch.getSearchType().equals(SearchType.name)) {
+        if (adminGoodsSearch.getSearchType().equals(SearchType.NAME)) {
             return goods.name.contains(adminGoodsSearch.getSearchBy());
         }
-        if (adminGoodsSearch.getSearchType().equals(SearchType.state)) {
+        if (adminGoodsSearch.getSearchType().equals(SearchType.STATE)) {
             return goods.state.contains(adminGoodsSearch.getSearchBy());
         }
         return null;
