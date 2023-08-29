@@ -1,8 +1,12 @@
 package Book.yes48.form.admin;
 
 import Book.yes48.Entity.FileStore;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -13,13 +17,30 @@ import java.util.UUID;
 public class AdminGoodsUpdateForm {
 
     private Long id;
+
+    @NotNull
+    @NotBlank(message = "상품 이름을 입력해주세요")
     private String name;
     private String sort;
+
+    @NotNull
+    @NotBlank(message = "저자를 입력해주세요")
     private String author;
+
+    @NotNull
+    @NotBlank(message = "촐판사를 입력해주세요")
     private String publisher;
+
+    @NotNull
+    @NotBlank(message = "출판일을 입력해주세요")
     private String publisherDate;
+
+    @Range(min = 1000, max = 200000)
     private int price;
+
+    @Max(value = 200)
     private int stockQuantity;
+
     private String event;
     private String state;
     private FileStore fileStore;
