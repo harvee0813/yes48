@@ -4,15 +4,12 @@ import Book.yes48.form.admin.AdminGoodsDto;
 import Book.yes48.form.admin.AdminGoodsSaveForm;
 import Book.yes48.form.admin.AdminGoodsUpdateForm;
 import Book.yes48.form.admin.search.AdminGoodsSearch;
-import Book.yes48.form.admin.search.AdminSearchCondition;
 import Book.yes48.form.admin.search.SearchType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -47,12 +44,14 @@ public class AdminController {
         Page<AdminGoodsDto> goodsList = adminService.findList(pageable, adminGoodsSearch);
         model.addAttribute("goodsList", goodsList.getContent());
 
+        log.info("adminGoodsSearch.searchBy={}", adminGoodsSearch.getSearchBy());
+        log.info("adminGoodsSearch.searchType={}", adminGoodsSearch.getSearchType());
+
         int startPage = getStartPage(goodsList);
 
         model.addAttribute("startPage", getStartPage(goodsList));
         model.addAttribute("currentPage", goodsList.getNumber() + 1);
         model.addAttribute("endPage", getEndPage(goodsList, startPage));
-        model.addAttribute("searchTypes", SearchType.values());
 
         return "admin/goodsList";
     }
