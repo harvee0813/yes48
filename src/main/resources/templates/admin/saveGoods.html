@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <div th:replace="~{/layout/header :: headFragment}"></div>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <style>
     .field-error {
        border-color: #dc3545;
@@ -38,8 +39,9 @@
           <tr>
             <th class="text-center" th:for="name"><strong class="ms-2 me-1 text-danger">*</strong>상품 이름</th>
             <td>
-              <input class="form-control" th:field="*{name}" th:errorclass="field-error">
+              <input class="form-control" id="name" onblur="nameCheck()" th:field="*{name}" th:errorclass="field-error">
               <div class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">상품 이름 오류 메시지</div>
+              <span id="checkName" class="mt-1 ms-1"></span>
             </td>
             <th class="text-center" th:for="author"><strong class="ms-2 me-1 text-danger">*</strong>저자</th>
             <td>
@@ -89,10 +91,42 @@
           </tr>
         </table>
         <div class="text-end border-top">
-          <button onclick="saveForm()" type="submit" class="mt-2 btn btn-primary btn-sm">상품 등록</button>
+          <button id="saveForm" type="submit" class="mt-2 btn btn-primary btn-sm">상품 등록</button>
         </div>
       </form>
     </div>
   </div>
 </body>
+<script th:inline="javascript">
+// 상품 이름 중복 알림
+const nameCheck = () => {
+  const name = document.getElementById("name").value;
+  const checkName = document.getElementById("checkName");
+  var saveForm = document.getElementById("saveForm");
+
+  console.log("입력값: ", name);
+  $.ajax ({
+    type: "post",
+    url: "/admin/goodsNameCheck",
+    data: {
+      "name" : name
+    },
+    success: function(res) {
+      console.log("요청성공", res);
+      if (res == "ok") {
+          console.log("등록 가능한 상품입니다.");
+          checkName.style.color = "green";
+          checkName.innerHTML = "등록 가능한 상품입니다.";
+      } else {
+           console.log("이미 등록된 상품입니다.");
+           checkName.style.color = "red";
+           checkName.innerHTML = "이미 등록된 상품입니다.";
+      }
+    },
+    error: function(err) {
+      console.log("에러발생", err);
+    }
+  });
+}
+</script>
 </html>

@@ -5,18 +5,15 @@ import Book.yes48.form.admin.AdminGoodsSaveForm;
 import Book.yes48.form.admin.AdminGoodsUpdateForm;
 import Book.yes48.form.admin.search.AdminGoodsSearch;
 import Book.yes48.form.admin.search.SearchType;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.apache.bcel.classfile.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +23,7 @@ import Book.yes48.service.AdminService;
 import Book.yes48.repository.admin.AdminRepository;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -38,16 +34,24 @@ public class AdminController {
     @Autowired private final AdminRepository adminRepository;
     @Autowired private final AdminService adminService;
 
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(IllegalStateException.class)
+    public String illegalExHandler(IllegalArgumentException ex) {
+        log.error("[exceptionHandler] ex", ex);
+        return "error/500";
+    }
+
     @ModelAttribute("searchTypes")
     public SearchType[] searchType() {
         return SearchType.values();
     }
 
     /**
-     * 등록된 상품 리스트
+     * 상품 목록 폼
      */
     @GetMapping("/goodsList")
-        public String goods(Model model, @ModelAttribute("adminGoodsSearch")AdminGoodsSearch adminGoodsSearch, Pageable pageable) {
+        public String goods(@ModelAttribute("adminGoodsSearch")AdminGoodsSearch adminGoodsSearch,
+                            Pageable pageable, Model model) {
 
         Page<AdminGoodsDto> goodsList = adminService.findList(pageable, adminGoodsSearch);
         model.addAttribute("goodsList", goodsList.getContent());
@@ -64,18 +68,8 @@ public class AdminController {
         return "admin/goodsList";
     }
 
-    // 페이지네이션
-    private static int getStartPage(Page<AdminGoodsDto> goodsList) {
-        return ((goodsList.getNumber() / 5) * 5) + 1;
-    }
-
-    private static int getEndPage(Page<AdminGoodsDto> goodList, int startPage) {
-        if (goodList.getTotalPages() == 0) return 1;
-        return Math.min(goodList.getTotalPages(), startPage + 4);
-    }
-
     /**
-     * 상품 등록 폼 이동
+     * 상품 등록 폼
      */
     @GetMapping("/saveGoods")
     public String saveGoods(Model model) {
@@ -90,7 +84,8 @@ public class AdminController {
      * 상품 등록
      */
     @PostMapping("/saveGoods")
-    public String saveGoods(@Validated @ModelAttribute("form") AdminGoodsSaveForm form, BindingResult bindingResult, MultipartFile file) throws IOException {
+    public String saveGoods(@Validated @ModelAttribute("form") AdminGoodsSaveForm form,
+                            BindingResult bindingResult, MultipartFile file) throws IOException {
 
         //  파일 검증 로직
         if (file.isEmpty()) {
@@ -102,20 +97,10 @@ public class AdminController {
             return "admin/saveGoods";
         }
 
-        Goods save = Goods.builder()
-                .name(form.getName())
-                .sort(form.getSort())
-                .author(form.getAuthor())
-                .publisher(form.getPublisher())
-                .publisherDate(form.getPublisherDate())
-                .price(form.getPrice())
-                .stockQuantity(form.getStockQuantity())
-                .event(form.getEvent())
-                .state(form.getState())
-                .fileStore(form.file(file))
-                .build();
+        // 상품 이름 중복 검증 로직
+        duplicationCheckGoodsName(form.getName());
 
-        adminService.saveGoods(save);
+        adminService.saveGoods(form, file);
 
         return "redirect:/admin/goodsList";
     }
@@ -133,18 +118,49 @@ public class AdminController {
         return "admin/editGoods";
     }
 
-
+    /**
+     * 상품 상세 정보 수정
+     */
     @PostMapping("/{goodsId}/editGoods")
-    public String updateGoods(@Validated @ModelAttribute("form") AdminGoodsUpdateForm form, BindingResult bindingResult, MultipartFile file) throws IOException {
+    public String updateGoods(@Validated @ModelAttribute("form") AdminGoodsUpdateForm form,
+                              BindingResult bindingResult, MultipartFile file) throws IOException {
 
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
             return "admin/saveGoods";
         }
 
+        duplicationCheckGoodsName(form.getName());
+
         adminService.updateGoods(form.getId(), form, file);
 
         return "redirect:/admin/goodsList";
     }
 
+    @PostMapping("/goodsNameCheck")
+    @ResponseBody
+    public String nameCheck(@RequestParam("name") String name) {
+        log.info("goodsName = {}", name);
+        String checkResult = adminService.nameCheck(name);
+        return checkResult;
+    }
+
+    // 페이지네이션 - 첫 페이지 구하기
+    private static int getStartPage(Page<AdminGoodsDto> goodsList) {
+        return ((goodsList.getNumber() / 5) * 5) + 1;
+    }
+
+    // 페이지네이션 - 마지막 페이지 구하기
+    private static int getEndPage(Page<AdminGoodsDto> goodList, int startPage) {
+        if (goodList.getTotalPages() == 0) return 1;
+        return Math.min(goodList.getTotalPages(), startPage + 4);
+    }
+
+    // 상품 이름 중복 검증 로직
+    private void duplicationCheckGoodsName(String form) {
+        List<Goods> findGoods = adminRepository.findByName(form);
+        if (!findGoods.isEmpty()) {
+            throw new IllegalStateException("이미 존재하는 상품입니다.");
+        }
+    }
 }

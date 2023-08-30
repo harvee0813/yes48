@@ -5,7 +5,6 @@ import com.querydsl.core.annotations.QueryProjection;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,10 +36,10 @@ public class AdminGoodsSaveForm {
     @NotBlank(message = "출판일을 입력해주세요")
     private String publisherDate;
 
-    @Range(min = 1000, max = 200000)
+    @Range(min = 1000, max = 200000, message = "가격은 1000원이상 200,000원이하로 입력해주세요.")
     private int price;
 
-    @Max(value = 200)
+    @Max(value = 200, message = "수량은 최대 200개로 입력해주세요.")
     private int stockQuantity;
 
     private String event;
