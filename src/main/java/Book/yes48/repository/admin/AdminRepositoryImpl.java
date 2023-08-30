@@ -4,7 +4,6 @@ import Book.yes48.Entity.goods.Goods;
 import Book.yes48.form.admin.AdminGoodsDto;
 import Book.yes48.form.admin.search.AdminGoodsSearch;
 import Book.yes48.form.admin.search.SearchType;
-import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -28,6 +27,9 @@ public class AdminRepositoryImpl implements AdminRepositoryCustom {
     @Autowired
     JPAQueryFactory queryFactory;
 
+    /**
+     * 상품 id에 맞는 상품 조회
+     */
     @Override
     public AdminGoodsDto getId(Long id) {
        AdminGoodsDto dto = queryFactory
@@ -43,6 +45,10 @@ public class AdminRepositoryImpl implements AdminRepositoryCustom {
        return dto;
     }
 
+    /**
+     * 상품 이름으로 상품 가져오기
+     * @param name 상품 이름
+     */
     @Override
     public List<Goods> findByName(String name) {
         return em.createQuery("select g from Goods g where g.name = :name", Goods.class)
@@ -50,6 +56,9 @@ public class AdminRepositoryImpl implements AdminRepositoryCustom {
                 .getResultList();
     }
 
+    /**
+     * 상품 전체 조회
+     */
     @Override
     public List<AdminGoodsDto> getAll() {
         List<AdminGoodsDto> dtos = queryFactory
@@ -64,6 +73,9 @@ public class AdminRepositoryImpl implements AdminRepositoryCustom {
         return dtos;
     }
 
+    /**
+     * 상품 목록 페이지네이션 및 상품 검색
+     */
     @Override
     public Page<Goods> findAllPageAndSearch(Pageable pageable, AdminGoodsSearch adminGoodsSearch) {
         List<Goods> result = queryFactory.selectFrom(goods)
