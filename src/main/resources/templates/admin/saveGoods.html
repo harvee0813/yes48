@@ -13,96 +13,106 @@
 <body>
   <div th:replace="~{/layout/adminNavbar :: adminNavFragment}"></div>
   <div class="container">
-    <div class="mt-3">
-      <p class="fw-bold fs-4 border-bottom" style="vertical-align:middle">상품 등록</p>
-    </div>
-    <div>
-      <form th:action="@{/admin/saveGoods}" th:object="${form}" method="post" enctype="multipart/form-data">
-        <table class="table table-sm table-borderless">
-          <tr>
-            <th class="text-center" th:for="sort"><strong class="ms-2 me-1 text-danger">*</strong>상품 종류</th>
-            <td>
-              <select class="text-center" th:field="*{sort}">
-                <option value="국내도서" selected>국내 도서</option>
-                <option value="외국도서">외국 도서</option>
-                <option value="음반">음반</option>
-              </select>
-            </td>
-            <th class="text-center"><strong class="ms-2 me-1 text-danger">*</strong>이미지</th>
-            <td>
-              <input id="file" type="file" name="file" accept="image/*">
-              <div th:if="${#fields.hasGlobalErrors()}">
-                <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">이미지 오류 메시지</p>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <th class="text-center" th:for="name"><strong class="ms-2 me-1 text-danger">*</strong>상품 이름</th>
-            <td>
-              <input class="form-control" id="name" onblur="nameCheck()" th:field="*{name}" th:errorclass="field-error">
-              <div class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">상품 이름 오류 메시지</div>
-              <span id="checkName" class="mt-1 ms-1"></span>
-            </td>
-            <th class="text-center" th:for="author"><strong class="ms-2 me-1 text-danger">*</strong>저자</th>
-            <td>
-              <input class="form-control" th:field="*{author}" th:errorclass="field-error">
-              <div class="field-error" th:errors="*{author}">저자 명 오류 메세지</div>
-            </td>
-          </tr>
-          <tr>
-            <th class="text-center" th:for="publisherDate"><strong class="ms-2 me-1 text-danger">*</strong>출판일</th>
-            <td>
-              <input type="date" class="form-control" th:field="*{publisherDate}" name="publisherDate" th:errorclass="field-error">
-              <div class="field-error" th:errors="*{publisherDate}">출판일 오류 메시지</div>
-            </td>
-            <th class="text-center" th:for="publisher"><strong class="ms-2 me-1 text-danger">*</strong>출판사</th>
-            <td>
-              <input class="form-control" th:field="*{publisher}" name="publisher" th:errorclass="field-error">
-              <div class="field-error" th:errors="*{publisher}">출판사 오류 메시지</div>
-            </td>
-          </tr>
-          <tr>
-            <th class="text-center" th:for="price"><strong class="ms-2 me-1 text-danger">*</strong>가격</th>
-            <td>
-              <input class="form-control" th:field="*{price}" name="price" type="number" th:errorclass="field-error">
-              <div class="field-error" th:errors="*{price}">가격 오류 메시지</div>
-            </td>
-            <th class="text-center" th:for="stockQuantity"><strong class="ms-2 me-1 text-danger">*</strong>수량</th>
-            <td>
-              <input class="form-control" th:field="*{stockQuantity}" type="number" name="stockQuantity" th:errorclass="field-error">
-              <div class="field-error" th:errors="*{stockQuantity}">수량 오류 메시지</div>
-            </td>
-          </tr>
-          <tr>
-            <th class="text-center" th:for="event"><strong class="ms-2 me-1 text-danger">*</strong>이벤트 유/무</th>
-            <td>
-              <select class="text-center" name="event" th:field="*{event}">
-                <option value="N" selected>없음</option>
-                <option value="Y">편집장의 추천 도서</option>
-              </select>
-            </td>
-            <th class="text-center" th:for="state"><strong class="ms-2 me-1 text-danger">*</strong>상태</th>
-            <td>
-              <select class="text-center" name="state" th:field="*{state}">
-                <option value="Y" selected>Y</option>
-                <option value="N">N</option>
-              </select>
-            </td>
-          </tr>
-        </table>
-        <div class="text-end border-top">
-          <button id="saveForm" type="submit" class="mt-2 btn btn-primary btn-sm">상품 등록</button>
+    <div class="row">
+      <div class="col-2 mt-5">
+        <img class="mt-4" th:src="@{/images/basicImage.jpg}" id="imgPreview" style="width: 200px; height: 220px;">
+      </div>
+      <div class="col-10">
+        <div class="mt-3">
+          <p class="fw-bold fs-4 border-bottom" style="vertical-align:middle">상품 등록</p>
         </div>
-      </form>
+        <div>
+          <form th:action="@{/admin/saveGoods}" th:object="${form}" method="post" enctype="multipart/form-data">
+            <table class="table table-sm table-borderless">
+              <tr>
+                <th class="text-center" th:for="sort"><strong class="ms-2 me-1 text-danger">*</strong>상품 종류</th>
+                <td>
+                  <select class="text-center" th:field="*{sort}">
+                    <option value="국내도서" selected>국내 도서</option>
+                    <option value="외국도서">외국 도서</option>
+                    <option value="음반">음반</option>
+                  </select>
+                </td>
+                <th class="text-center"><strong class="ms-2 me-1 text-danger">*</strong>이미지</th>
+                <td>
+                  <input id="file" type="file" name="file" accept="image/*" onchange="readURL(this)">
+                  <div th:if="${#fields.hasGlobalErrors()}">
+                    <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">이미지 오류 메시지</p>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th class="text-center" th:for="name"><strong class="ms-2 me-1 text-danger">*</strong>상품 이름</th>
+                <td>
+                  <input class="form-control" id="name" onblur="nameCheck()" th:field="*{name}" th:errorclass="field-error">
+                  <div class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">상품 이름 오류 메시지</div>
+                  <span id="checkName" class="mt-1 ms-1"></span>
+                </td>
+                <th class="text-center" th:for="author"><strong class="ms-2 me-1 text-danger">*</strong>저자</th>
+                <td>
+                  <input class="form-control" th:field="*{author}" th:errorclass="field-error">
+                  <div class="field-error" th:errors="*{author}">저자 명 오류 메세지</div>
+                </td>
+              </tr>
+              <tr>
+                <th class="text-center" th:for="publisherDate"><strong class="ms-2 me-1 text-danger">*</strong>출판일</th>
+                <td>
+                  <input type="date" class="form-control" th:field="*{publisherDate}" name="publisherDate" th:errorclass="field-error">
+                  <div class="field-error" th:errors="*{publisherDate}">출판일 오류 메시지</div>
+                </td>
+                <th class="text-center" th:for="publisher"><strong class="ms-2 me-1 text-danger">*</strong>출판사</th>
+                <td>
+                  <input class="form-control" th:field="*{publisher}" name="publisher" th:errorclass="field-error">
+                  <div class="field-error" th:errors="*{publisher}">출판사 오류 메시지</div>
+                </td>
+              </tr>
+              <tr>
+                <th class="text-center" th:for="price"><strong class="ms-2 me-1 text-danger">*</strong>가격</th>
+                <td>
+                  <input class="form-control" th:field="*{price}" name="price" type="number" th:errorclass="field-error">
+                  <div class="field-error" th:errors="*{price}">가격 오류 메시지</div>
+                </td>
+                <th class="text-center" th:for="stockQuantity"><strong class="ms-2 me-1 text-danger">*</strong>수량</th>
+                <td>
+                  <input class="form-control" th:field="*{stockQuantity}" type="number" name="stockQuantity" th:errorclass="field-error">
+                  <div class="field-error" th:errors="*{stockQuantity}">수량 오류 메시지</div>
+                </td>
+              </tr>
+              <tr>
+                <th class="text-center" th:for="event"><strong class="ms-2 me-1 text-danger">*</strong>이벤트 유/무</th>
+                <td>
+                  <select class="text-center" name="event" th:field="*{event}">
+                    <option value="N" selected>없음</option>
+                    <option value="Y">편집장의 추천 도서</option>
+                  </select>
+                </td>
+                <th class="text-center" th:for="state"><strong class="ms-2 me-1 text-danger">*</strong>상태</th>
+                <td>
+                  <select class="text-center" name="state" th:field="*{state}">
+                    <option value="Y" selected>Y</option>
+                    <option value="N">N</option>
+                  </select>
+                </td>
+              </tr>
+            </table>
+            <div class="text-end border-top">
+              <button id="saveButton" onclick="saveGoodsAlert" type="submit" class="mt-2 btn btn-primary btn-sm">상품 등록</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </body>
 <script th:inline="javascript">
-// 상품 이름 중복 알림
-const nameCheck = () => {
+  // 상품 등록 버튼
+  const saveButton = document.getElementById("saveButton");
+
+  // 상품 이름 중복 알림
+  const nameCheck = () => {
   const name = document.getElementById("name").value;
   const checkName = document.getElementById("checkName");
-  var saveForm = document.getElementById("saveForm");
+
 
   $.ajax ({
     type: "post",
@@ -114,15 +124,28 @@ const nameCheck = () => {
       if (res == "ok") {
           checkName.style.color = "green";
           checkName.innerHTML = "등록 가능한 상품입니다.";
+          saveButton.setAttribute('type', 'submit');
       } else {
            checkName.style.color = "red";
            checkName.innerHTML = "이미 등록된 상품입니다.";
+           saveButton.setAttribute('type', 'button');
       }
     },
     error: function(err) {
       console.log("에러발생", err);
     }
   });
+}
+
+// 이미지 프리뷰
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('imgPreview').src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
 }
 </script>
 </html>

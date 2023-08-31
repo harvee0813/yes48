@@ -12,6 +12,10 @@
         overflow: hidden;
         border: 0;
     }
+    .field-error {
+       border-color: #dc3545;
+       color: #dc3545;
+     }
   </style>
 </head>
 <body>
@@ -22,10 +26,10 @@
   </div>
   <div>
     <form id="form" th:object="${form}" method="post" enctype="multipart/form-data">
-      <input type="hidden" th:field="*{id}">
+    <input type="hidden" th:field="*{id}">
   <div class="row">
     <div class="col-2">
-      <img th:src="@{|/admin/${form.fileStore.filename}|}" id="imgPreview" style="width: 200px; height: 220px; filter: drop-shadow(10px 6px 6px #c3c3c3);">
+      <img th:if="*{fileStore}" th:src="@{|/admin/${form.fileStore.filename}|}" id="imgPreview" style="width: 200px; height: 220px; filter: drop-shadow(10px 6px 6px #c3c3c3);">
     </div>
     <div class="col-10">
       <table class="table table-sm table-borderless">
@@ -49,7 +53,7 @@
         <tr>
           <th class="text-center" th:for="name"><strong class="ms-2 me-1 text-danger">*</strong>상품 이름</th>
           <td>
-            <input class="form-control" id="name" onblur="nameCheck()" th:field="*{name}" th:errorclass="field-error">
+            <input class="form-control" id="name" th:field="*{name}" th:errorclass="field-error">
             <div class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">상품 이름 오류 메시지</div>
             <span id="checkName" class="mt-1 ms-1"></span>
           </td>
@@ -74,12 +78,12 @@
         <tr>
           <th class="text-center" th:for="price"><strong class="ms-2 me-1 text-danger">*</strong>가격</th>
           <td>
-            <input class="form-control" th:field="*{price}" name="price" th:errorclass="field-error">
+            <input class="form-control" th:field="*{price}" name="price" type="number" th:errorclass="field-error">
             <div class="field-error" th:errors="*{price}">가격 오류 메시지</div>
           </td>
           <th class="text-center" th:for="stockQuantity"><strong class="ms-2 me-1 text-danger">*</strong>수량</th>
           <td>
-            <input class="form-control" th:field="*{stockQuantity}" name="stockQuantity" th:errorclass="field-error">
+            <input class="form-control" th:field="*{stockQuantity}" type="number" name="stockQuantity" th:errorclass="field-error">
             <div class="field-error" th:errors="*{stockQuantity}">수량 오류 메시지</div>
           </td>
         </tr>
@@ -101,7 +105,7 @@
         </tr>
       </table>
       <div class="text-end border-top">
-        <button type="submit" class="mt-2 btn btn-primary btn-sm">수정</button>
+        <button id="updateButton" onclick="nameCheck()" type="submit" class="mt-2 btn btn-primary btn-sm">수정</button>
       </div>
     </div>
   </div>
@@ -124,10 +128,8 @@ const nameCheck = () => {
     success: function(res) {
       if (res == "ok") {
           checkName.style.color = "green";
-          checkName.innerHTML = "등록 가능한 상품입니다.";
+          checkName.innerHTML = "수정 가능한 상품명입니다.";
       } else {
-           checkName.style.color = "red";
-           checkName.innerHTML = "";
       }
     },
     error: function(err) {

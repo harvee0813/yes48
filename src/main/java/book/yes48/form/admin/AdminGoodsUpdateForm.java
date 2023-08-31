@@ -13,6 +13,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+/**
+ * 상품 수정 폼
+ */
 @Getter
 public class AdminGoodsUpdateForm {
 
@@ -35,19 +38,21 @@ public class AdminGoodsUpdateForm {
     @NotBlank(message = "출판일을 입력해주세요")
     private String publisherDate;
 
-    @Range(min = 1000, max = 200000)
+    @Range(min = 1000, max = 200000, message = "가격은 1000원이상 200,000원이하로 입력해주세요.")
     private int price;
 
-    @Max(value = 200)
+    @Max(value = 200, message = "수량은 최대 200개로 입력해주세요.")
     private int stockQuantity;
 
     private String event;
     private String state;
     private FileStore fileStore;
+    private String filename;
 
     @Builder
     public AdminGoodsUpdateForm(Long id, String name, String sort, String author, String publisher,
-                                String publisherDate, int price, int stockQuantity, String event, String state, FileStore fileStore) {
+                                String publisherDate, int price, int stockQuantity, String event, String state,
+                                FileStore fileStore) {
         this.id = id;
         this.name = name;
         this.sort = sort;
@@ -58,6 +63,10 @@ public class AdminGoodsUpdateForm {
         this.stockQuantity = stockQuantity;
         this.event = event;
         this.state = state;
+        this.fileStore = fileStore;
+    }
+
+    public void setFileStore(FileStore fileStore) {
         this.fileStore = fileStore;
     }
 
