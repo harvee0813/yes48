@@ -77,8 +77,12 @@ public class AdminRepositoryImpl implements AdminRepositoryCustom {
      * 상품 목록 페이지네이션 및 상품 검색
      */
     @Override
-    public Page<Goods> findAllPageAndSearch(Pageable pageable, AdminGoodsSearch adminGoodsSearch) {
-        List<Goods> result = queryFactory.selectFrom(goods)
+    public Page<AdminGoodsDto> findAllPageAndSearch(Pageable pageable, AdminGoodsSearch adminGoodsSearch) {
+        List<AdminGoodsDto> result = queryFactory
+                .select(Projections.constructor(AdminGoodsDto.class,
+                goods.id, goods.name, goods.sort, goods.author, goods.publisher, goods.publisherDate,
+                        goods.price, goods.stockQuantity, goods.event, goods.state, goods.fileStore))
+                .from(goods)
                 .where(searchTypeAndWord(adminGoodsSearch))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())

@@ -12,5 +12,5 @@ public interface AdminRepositoryCustom {
     AdminGoodsDto getId(Long id);
     List<Goods> findByName(String name);
     List<AdminGoodsDto> getAll();
-    Page<Goods> findAllPageAndSearch(Pageable pageable, AdminGoodsSearch adminGoodsSearch);
+    Page<AdminGoodsDto> findAllPageAndSearch(Pageable pageable, AdminGoodsSearch adminGoodsSearch);
 }

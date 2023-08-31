@@ -1,4 +1,4 @@
-package book.yes48.repository;
+package book.yes48.repository.fileStore;
 
 import book.yes48.entity.FileStore;
 import org.springframework.data.jpa.repository.JpaRepository;
