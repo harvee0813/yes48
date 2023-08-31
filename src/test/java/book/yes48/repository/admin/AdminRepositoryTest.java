@@ -1,5 +1,6 @@
 package book.yes48.repository.admin;
 
+import book.yes48.SampleGoods;
 import book.yes48.entity.FileStore;
 import book.yes48.entity.goods.Goods;
 import book.yes48.form.admin.AdminGoodsDto;
@@ -26,6 +27,8 @@ class AdminRepositoryTest {
     AdminRepository adminRepository;
     @Autowired
     EntityManager em;
+    @Autowired
+    SampleGoods sampleGoods;
 
     @AfterEach
     public void clearTest() {
@@ -36,7 +39,7 @@ class AdminRepositoryTest {
     @DisplayName("관리자 상품 등록 테스트")
     public void 상품등록() {
         // given
-        Goods goods = getGoodsOne();
+        Goods goods = sampleGoods.getGoodsOne();
 
         // when
         Long savedId = adminRepository.save(goods).getId();
@@ -59,8 +62,8 @@ class AdminRepositoryTest {
     @DisplayName("페이징 확인 테스트")
     public void searchWithPage() {
         // given
-        Goods goods1 = getGoodsOne();
-        Goods goods2 = getGoodsTwo();
+        Goods goods1 = sampleGoods.getGoodsOne();
+        Goods goods2 = sampleGoods.getGoodsTwo();
 
         em.persist(goods1);
         em.persist(goods2);
@@ -69,60 +72,11 @@ class AdminRepositoryTest {
         PageRequest pageRequest = PageRequest.of(1, 12);
 
         // when
-        Page<Goods> results = adminRepository.findAllPageAndSearch(pageRequest, search);
+        Page<AdminGoodsDto> results = adminRepository.findAllPageAndSearch(pageRequest, search);
 
         // then
         assertThat(results.getSize()).isEqualTo(12);
         assertThat(results.getContent()).extracting("id").hasSize(12);
 
-    }
-
-    // 테스트용 file
-    private static FileStore getFile() {
-        FileStore fileStore = FileStore.builder()
-                .filename("스프링부트와 AWS")
-                .filepath("/files/" + UUID.randomUUID())
-                .build();
-
-        return fileStore;
-    }
-
-    // 테스트용 상품
-    private static Goods getGoodsOne() {
-        FileStore file = getFile();
-
-        Goods goods = Goods.builder()
-                .name("스프링 부트")
-                .sort("국내 도서")
-                .author("이동욱")
-                .publisher("프리렉")
-                .publisherDate("20191129")
-                .price(22000)
-                .stockQuantity(20)
-                .fileStore(file)
-                .event("N")
-                .state("Y")
-                .build();
-
-        return goods;
-    }
-
-    private static Goods getGoodsTwo() {
-        FileStore file = getFile();
-
-        Goods goods = Goods.builder()
-                .name("스프링")
-                .sort("국내 도서")
-                .author("이동욱")
-                .publisher("프리렉")
-                .publisherDate("20191129")
-                .price(22000)
-                .stockQuantity(20)
-                .fileStore(file)
-                .event("N")
-                .state("Y")
-                .build();
-
-        return goods;
     }
 }

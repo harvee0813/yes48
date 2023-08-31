@@ -4,12 +4,11 @@ import book.yes48.form.admin.AdminGoodsDto;
 import book.yes48.form.admin.AdminGoodsSaveForm;
 import book.yes48.form.admin.AdminGoodsUpdateForm;
 import book.yes48.form.admin.search.AdminGoodsSearch;
-import book.yes48.repository.FileRepository;
+import book.yes48.repository.fileStore.FileRepository;
 import book.yes48.repository.admin.AdminRepository;
 import book.yes48.entity.goods.Goods;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -20,10 +19,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -92,7 +89,7 @@ public class AdminService {
      * @param adminGoodsSearch 검색 조건 및 내용
      */
     public Page<AdminGoodsDto> findList(Pageable pageable, AdminGoodsSearch adminGoodsSearch) {
-        Page<Goods> find = adminRepository.findAllPageAndSearch(pageable, adminGoodsSearch);
+        Page<AdminGoodsDto> find = adminRepository.findAllPageAndSearch(pageable, adminGoodsSearch);
         return find.map(AdminGoodsDto::new);
     }
 
@@ -149,7 +146,7 @@ public class AdminService {
     }
 
     // 상품 이름 중복 검증 로직
-    private void duplicationCheckGoodsName(String form) {
+    public void duplicationCheckGoodsName(String form) {
         List<Goods> findGoods = adminRepository.findByName(form);
         if (!findGoods.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 상품입니다.");

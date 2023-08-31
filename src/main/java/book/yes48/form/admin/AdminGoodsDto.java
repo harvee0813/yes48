@@ -58,17 +58,17 @@ public class AdminGoodsDto {
         this.fileStore = fileStore;
     }
 
-    public AdminGoodsDto(Goods goods) {
-        this.id = goods.getId();
-        this.name = goods.getName();
-        this.sort = goods.getSort();
-        this.author = goods.getAuthor();
-        this.publisher = goods.getPublisher();
-        this.publisherDate = goods.getPublisherDate();
-        this.price = goods.getPrice();
-        this.stockQuantity = goods.getStockQuantity();
-        this.event = goods.getEvent();
-        this.state = goods.getState();
-        this.fileStore = goods.getFileStore();
+    public AdminGoodsDto(AdminGoodsDto adminGoodsDto) {
+        this.id = adminGoodsDto.getId();
+        this.name = adminGoodsDto.getName();
+        this.sort = adminGoodsDto.getSort();
+        this.author = adminGoodsDto.getAuthor();
+        this.publisher = adminGoodsDto.getPublisher();
+        this.publisherDate = adminGoodsDto.getPublisherDate();
+        this.price = adminGoodsDto.getPrice();
+        this.stockQuantity = adminGoodsDto.getStockQuantity();
+        this.event = adminGoodsDto.getEvent();
+        this.state = adminGoodsDto.getState();
+        this.fileStore = adminGoodsDto.getFileStore();
     }
 }

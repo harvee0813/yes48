@@ -11,21 +11,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import book.yes48.entity.goods.Goods;
 import book.yes48.service.AdminService;
-import book.yes48.repository.admin.AdminRepository;
 
 import java.io.IOException;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -51,7 +46,7 @@ public class AdminController {
      * 상품 목록 폼
      */
     @GetMapping("/goodsList")
-        public String goods(@ModelAttribute("adminGoodsSearch")AdminGoodsSearch adminGoodsSearch,
+        public String goods(@ModelAttribute("adminGoodsSearch") AdminGoodsSearch adminGoodsSearch,
                             Pageable pageable, Model model) {
 
         Page<AdminGoodsDto> goodsList = adminService.findList(pageable, adminGoodsSearch);
