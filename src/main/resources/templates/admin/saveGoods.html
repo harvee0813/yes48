@@ -104,7 +104,6 @@ const nameCheck = () => {
   const checkName = document.getElementById("checkName");
   var saveForm = document.getElementById("saveForm");
 
-  console.log("입력값: ", name);
   $.ajax ({
     type: "post",
     url: "/admin/goodsNameCheck",
@@ -112,13 +111,10 @@ const nameCheck = () => {
       "name" : name
     },
     success: function(res) {
-      console.log("요청성공", res);
       if (res == "ok") {
-          console.log("등록 가능한 상품입니다.");
           checkName.style.color = "green";
           checkName.innerHTML = "등록 가능한 상품입니다.";
       } else {
-           console.log("이미 등록된 상품입니다.");
            checkName.style.color = "red";
            checkName.innerHTML = "이미 등록된 상품입니다.";
       }
