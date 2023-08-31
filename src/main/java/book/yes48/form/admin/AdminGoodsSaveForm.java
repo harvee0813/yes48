@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 /**
- * 상품 등록, 수정 폼
+ * 상품 등록 폼
  */
 @Getter
 public class AdminGoodsSaveForm {
@@ -45,9 +45,12 @@ public class AdminGoodsSaveForm {
     private String event;
     private String state;
 
+    private FileStore fileStore;
+
     @Builder
     @QueryProjection
-    public AdminGoodsSaveForm(String name, String sort, String author, String publisher, String publisherDate, int price, int stockQuantity, String event, String state) {
+    public AdminGoodsSaveForm(String name, String sort, String author, String publisher, String publisherDate,
+                              int price, int stockQuantity, String event, String state, FileStore flieStore) {
         this.name = name;
         this.sort = sort;
         this.author = author;
@@ -57,6 +60,7 @@ public class AdminGoodsSaveForm {
         this.stockQuantity = stockQuantity;
         this.event = event;
         this.state = state;
+        this.fileStore = fileStore;
     }
     
     // 파일 업로드

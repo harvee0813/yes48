@@ -4,10 +4,12 @@ import book.yes48.form.admin.AdminGoodsDto;
 import book.yes48.form.admin.AdminGoodsSaveForm;
 import book.yes48.form.admin.AdminGoodsUpdateForm;
 import book.yes48.form.admin.search.AdminGoodsSearch;
+import book.yes48.repository.FileRepository;
 import book.yes48.repository.admin.AdminRepository;
 import book.yes48.entity.goods.Goods;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -18,8 +20,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -28,6 +32,7 @@ public class AdminService {
 
     @Autowired
     private AdminRepository adminRepository;
+    @Autowired private FileRepository fileRepository;
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(IllegalStateException.class)
@@ -76,6 +81,7 @@ public class AdminService {
         if (file.isEmpty()) {
             updateGoods(form, findGoods);
         } else if (!file.isEmpty()) {
+            fileRepository.deleteById(findGoods.getFileStore().getId()); // 기존 파일 삭제
             UpdateGoodsAndFile(form, file, findGoods);
         }
     }

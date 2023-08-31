@@ -1,5 +1,6 @@
 package book.yes48.web.controller;
 
+import book.yes48.entity.FileStore;
 import book.yes48.form.admin.AdminGoodsDto;
 import book.yes48.form.admin.AdminGoodsSaveForm;
 import book.yes48.form.admin.AdminGoodsUpdateForm;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminController {
+
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler(IllegalStateException.class)
+//    public String illegalExHandler(IllegalArgumentException ex) {
+//        log.error("[exceptionHandler] ex", ex);
+//        return "error/500";
+//    }
 
     @Autowired private final AdminService adminService;
 
@@ -116,14 +125,23 @@ public class AdminController {
 
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
-            return "admin/saveGoods";
+
+            // form에 fileStore를 넣어주기 위한 코드 -> editGoods에서 이미지가 보여진다.
+            AdminGoodsDto getFilenameByGoodsId = adminService.getId(form.getId());
+            form.setFileStore(getFilenameByGoodsId.getFileStore());
+            return "admin/editGoods";
         }
 
         adminService.updateGoods(form.getId(), form, file);
 
+
         return "redirect:/admin/goodsList";
     }
 
+    /**
+     * 등록시 상품 이름 중복 확인
+     * @param name 상품 이름
+     */
     @PostMapping("/goodsNameCheck")
     @ResponseBody
     public String nameCheck(@RequestParam("name") String name) {
