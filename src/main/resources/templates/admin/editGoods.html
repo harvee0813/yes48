@@ -53,7 +53,7 @@
         <tr>
           <th class="text-center" th:for="name"><strong class="ms-2 me-1 text-danger">*</strong>상품 이름</th>
           <td>
-            <input class="form-control" id="name" th:field="*{name}" th:errorclass="field-error">
+            <input class="form-control" id="name" onblur="nameCheck()" th:field="*{name}" th:errorclass="field-error">
             <div class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">상품 이름 오류 메시지</div>
             <span id="checkName" class="mt-1 ms-1"></span>
           </td>
@@ -105,7 +105,7 @@
         </tr>
       </table>
       <div class="text-end border-top">
-        <button id="updateButton" onclick="nameCheck()" type="submit" class="mt-2 btn btn-primary btn-sm">수정</button>
+        <button id="updateButton" type="submit" class="mt-2 btn btn-primary btn-sm">수정</button>
       </div>
     </div>
   </div>

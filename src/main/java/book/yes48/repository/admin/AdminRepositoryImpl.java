@@ -99,7 +99,7 @@ public class AdminRepositoryImpl implements AdminRepositoryCustom {
     private BooleanExpression searchTypeAndWord(AdminGoodsSearch adminGoodsSearch) {
         if (adminGoodsSearch.isEmpty()) return null;
 
-        if (adminGoodsSearch.getSearchType().equals(SearchType.SORT)) {
+        if (adminGoodsSearch.getSearchType().equals(SearchType.sort)) {
             return goods.sort.contains(adminGoodsSearch.getSearchBy());
         }
         if (adminGoodsSearch.getSearchType().equals(SearchType.NAME)) {

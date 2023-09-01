@@ -26,6 +26,7 @@ public class Goods extends BaseTimeEntity {
     private int stockQuantity;
     private String event;
     private String state;
+    private int sellCount;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "file_store_id", unique = true)
