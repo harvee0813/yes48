@@ -99,12 +99,12 @@ public class AdminController {
     }
 
     /**
-     * 상품 상세 정보
+     * 상품 상세 정보 폼
      */
     @GetMapping("/{goodsId}/editGoods")
     public String detailGoods(@PathVariable Long goodsId, Model model) {
         AdminGoodsDto findGoods = adminService.getId(goodsId);
-        log.info("AdminGoodsDto log={}", findGoods);
+        log.info("AdminGoodsDto = {}", findGoods);
 
         model.addAttribute("form", findGoods);
 

@@ -12,45 +12,42 @@
 <div th:replace="~{/layout/navbar :: navFragment}"></div>
   <div class="container">
     <div class="row mb-4 ms-5">
-      <div>
+      <div class="border-bottom mb-4">
         <h4 class="fw-bold mb-3">국내 도서</h4>
       </div>
-      <div class="mb-4 border-top border-dark-subtle text-end">
-        <select class="mt-2 rounded-pill text-center" style="width: 140px; height: 30px;">
-          <option>8개씩 보기</option>
-          <option>16개씩 보기</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <div class="mb-4">
+      <div class="mt-2">
           <ol class="prod_list">
-            <!-- enhanced-for문 시작 li 5개가 한 줄 -->
-            <li class="me-4 mb-4"><a href="/goods/book/detailBook">
-              <div class="text-center">
-                <img scr="" style="width: 200px; height: 270px;">
-                <span>
-                  <h6 class="mt-3" style="font-size:15px">아주 희미한 빛으로도</h6>
-                  <h6 class="text-secondary" style="font-size:12px">류재향</h6>
-                  <h6 class="text-dark fw-bold" style="font-size:14px">26,000원</h6>
-                </span>
-              </div>
-              </a>
-            </li>
+            <span th:each="book : ${books}">
+              <li class="mb-3 ms-2 me-2">
+                <a th:href="@{/goods/book/{goodsId}/detailBook(goodsId=${book.id})}">
+                  <div class="text-center ms-4 me-3 mb-2">
+                    <img th:src="@{|/admin/${book.fileStore.filename}|}" style="width: 200px; height: 270px;">
+                    <div style="width: 200px; height: 74px;">
+                      <h6 class="mt-3 ms-1 text-dark text-center fw-bold" style="font-size:15px; width: 190px;" th:text="*{book.name}">아주 희미한 빛으로도</h6>
+                      <h6 class="ms-1 text-secondary text-center" style="font-size:14px; width: 190px;" th:text="*{book.author}">류재향</h6>
+                      <h6 class="ms-1 text-dark fw-bold" style="font-size:14px;">
+                        <span class="text-dark fw-bold" style="font-size:16px;" th:text="*{book.price}">26,000</span>원
+                      </h6>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </span>
           </ol>
-        </div>
       </div>
       <div>
         <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-center">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
+            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+              <a class="page-link" th:href="@{/goods/book/domesticBooks(page=${currentPage - 1})}" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
+            <li class="page-item" th:each="page : ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == currentPage} ? 'active'">
+              <a class="page-link" th:text="${page}" th:href="@{/goods/book/domesticBooks(page = ${page})}" >1</a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == endPage} ? 'disabled'">
+              <a class="page-link" th:href="@{/goods/book/domesticBooks(page=${currentPage + 1})}" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
               </a>
             </li>
