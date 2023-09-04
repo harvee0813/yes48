@@ -72,13 +72,11 @@
   </nav>
 </body>
 <script>
-  var searchKeyword = document.getElementById("search").value;    // 검색 키워드 값
-  const searchButton = document.getElementById("search-button");  // 검색 버튼
+  var searchKeyword = document.getElementById("search").value;
+  const searchButton = document.getElementById("search-button");
 
-  // 검색어가 있으면 버튼 타입을 submit으로 변경
   if (searchKeyword != '') {
     searchButton.setAttribute('type', 'submit');
-    searchKeyword.placeholder = '';
   }
 </script>
 </html>
