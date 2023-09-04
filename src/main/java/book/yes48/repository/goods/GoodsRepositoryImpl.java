@@ -29,7 +29,7 @@ public class GoodsRepositoryImpl implements GoodsRepositoryCustom {
     public Page<GoodsDto> findAllBooks(GoodsSearch goodsSearch, Pageable pageable) {
         List<GoodsDto> result = queryFactory
                 .select(Projections.constructor(GoodsDto.class,
-                       goods.id, goods.name, goods.author, goods.price, goods.state, goods.fileStore))
+                       goods.id, goods.name, goods.author, goods.price, goods.fileStore))
                 .from(goods)
                 .where(goods.state.eq("Y"))
                 .where(searchStateAndSort(goodsSearch))
