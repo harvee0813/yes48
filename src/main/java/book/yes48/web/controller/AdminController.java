@@ -28,13 +28,6 @@ import java.io.IOException;
 @RequestMapping("/admin")
 public class AdminController {
 
-//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-//    @ExceptionHandler(IllegalStateException.class)
-//    public String illegalExHandler(IllegalArgumentException ex) {
-//        log.error("[exceptionHandler] ex", ex);
-//        return "error/500";
-//    }
-
     @Autowired private final AdminService adminService;
 
     @ModelAttribute("searchTypes")
