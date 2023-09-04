@@ -34,11 +34,15 @@
           <!-- 검색창 -->
           <form th:object="${searchGoods}" method="get" th:action="@{/searchGoods(search = ${param.search})}">
             <div class="input-group ms-5 mt-1">
-              <input class="form-control border border-end-0 border-primary border border-3" th:name="search" th:if="search" th:value="search" type="text" style="width: 350px; height: 45px;">
-              <button class="bg-primary input-group-text border border-start-0 border-primary border border-3"
-                type="submit" style="width: 60px; height: 45px;">
-                <i style="color: #ffffff" class="ms-2 bg-primary bi bi-search"></i>
-              </button>
+              <input id="search" class="form-control border border-end-0 border-primary border border-3"
+                     placeholder="검색어를 입력해주세요." th:value="${param.search}"
+                     th:name="search" type="text" style="width: 350px; height: 45px;">
+              <span>
+                <button id="search-button" class="bg-primary input-group-text border border-start-0 border-primary border border-3"
+                  type="button" style="width: 60px; height: 45px;">
+                  <i style="color: #ffffff" class="ms-2 bg-primary bi bi-search"></i>
+                </button>
+              </span>
             </div>
           </form>
         </span>
@@ -67,4 +71,14 @@
     </div>
   </nav>
 </body>
+<script>
+  var searchKeyword = document.getElementById("search").value;    // 검색 키워드 값
+  const searchButton = document.getElementById("search-button");  // 검색 버튼
+
+  // 검색어가 있으면 버튼 타입을 submit으로 변경
+  if (searchKeyword != '') {
+    searchButton.setAttribute('type', 'submit');
+    searchKeyword.placeholder = '';
+  }
+</script>
 </html>
