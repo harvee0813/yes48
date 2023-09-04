@@ -1,9 +1,10 @@
-package book.yes48.repository.admin;
+package book.yes48.repository;
 
 import book.yes48.entity.FileStore;
 import book.yes48.entity.goods.Goods;
 import book.yes48.form.admin.AdminGoodsDto;
 import book.yes48.form.admin.search.AdminGoodsSearch;
+import book.yes48.repository.admin.AdminRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,6 +27,12 @@ class AdminRepositoryTest {
     AdminRepository adminRepository;
     @Autowired
     EntityManager em;
+
+    @AfterEach
+    void tearDown() {
+        adminRepository.deleteAll();
+    }
+
 
     @AfterEach
     public void clearTest() {

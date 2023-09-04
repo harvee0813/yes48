@@ -52,7 +52,7 @@ public class HomeRepositoryImpl implements HomeRepositoryCustom{
     }
 
     /**
-     * 최신 음반 3권 id 기준 desc 선별
+     * 최신 음반 3장 id 기준 desc 선별
      */
     @Override
     public List<GoodsDto> selectThreeMusic() {

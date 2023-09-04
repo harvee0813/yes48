@@ -33,7 +33,7 @@ public class HomeController {
         List<GoodsDto> fourNewBooks = homeService.selectFourNewBooks();
         log.info("fourNewBooks = {}", fourNewBooks);
 
-        // 최신 음반 3권
+        // 최신 음반 3장
         List<GoodsDto> threeMusic = homeService.selectThreeMusic();
         log.info("fourMusic = {}", threeMusic);
 

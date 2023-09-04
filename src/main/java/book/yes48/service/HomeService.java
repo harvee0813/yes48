@@ -36,7 +36,7 @@ public class HomeService {
     }
 
     /**
-     * 최신 음반 3권 id desc 기준으로 선별
+     * 최신 음반 3장 id desc 기준으로 선별
      */
     public List<GoodsDto> selectThreeMusic() {
         List<GoodsDto> selectThreeMusic = homeRepository.selectThreeMusic();

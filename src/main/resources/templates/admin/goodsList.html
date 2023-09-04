@@ -78,23 +78,23 @@
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
           <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-            <a class="page-link" th:if="${startPage}" th:href="@{/admin/goodsList(page=${startPage}, searchType=${param.searchType} , searchBy = ${param.searchBy})}">First</a>
+            <a class="page-link" th:if="${startPage}" th:href="@{/admin/goodsList(page=${startPage}, searchType = ${param.searchType} , searchBy = ${param.searchBy})}">First</a>
           </li>
           <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-            <a class="page-link" th:href="@{/admin/goodsList(page=${currentPage - 1}, searchType=${param.searchType} , searchBy = ${param.searchBy})}" aria-label="Previous">
+            <a class="page-link" th:href="@{/admin/goodsList(page = ${currentPage - 1}, searchType = ${param.searchType} , searchBy = ${param.searchBy})}" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
           <li class="page-item" th:each="page : ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == currentPage} ? 'active'">
-            <a class="page-link" th:text="${page}" th:href="@{/admin/goodsList(page = ${page}, searchType=${param.searchType} , searchBy = ${param.searchBy})}" >1</a>
+            <a class="page-link" th:text="${page}" th:href="@{/admin/goodsList(page = ${page}, searchType = ${param.searchType} , searchBy = ${param.searchBy})}" >1</a>
           </li>
           <li class="page-item" th:classappend="${currentPage == endPage} ? 'disabled'">
-            <a class="page-link" th:href="@{/admin/goodsList(page=${currentPage + 1}, searchType=${param.searchType} , searchBy = ${param.searchBy})}" aria-label="Next">
+            <a class="page-link" th:href="@{/admin/goodsList(page= ${currentPage + 1}, searchType= ${param.searchType} , searchBy = ${param.searchBy})}" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>
           <li class="page-item" th:classappend="${currentPage == endPage} ? 'disabled'">
-            <a class="page-link" th:if="${endPage}" th:href="@{/admin/goodsList(page=${endPage}, searchType=${param.searchType} , searchBy = ${param.searchBy})}">End</a>
+            <a class="page-link" th:if="${endPage}" th:href="@{/admin/goodsList(page = ${endPage}, searchType = ${param.searchType} , searchBy = ${param.searchBy})}">End</a>
           </li>
         </ul>
       </nav>

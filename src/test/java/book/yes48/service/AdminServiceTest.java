@@ -2,6 +2,9 @@ package book.yes48.service;
 
 import book.yes48.entity.FileStore;
 import book.yes48.entity.goods.Goods;
+import book.yes48.form.admin.AdminGoodsUpdateForm;
+import book.yes48.repository.admin.AdminRepository;
+import book.yes48.repository.fileStore.FileRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -11,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootTest
@@ -20,11 +25,32 @@ class AdminServiceTest {
     @Autowired
     AdminService adminService;
     @Autowired
+    AdminRepository adminRepository;
+    @Autowired
+    FileRepository fileRepository;
+    @Autowired
     EntityManager em;
+
     @AfterEach
-    public void clearTest() {
-        em.clear();
+    void tearDown() {
+        adminRepository.deleteAll();
+        fileRepository.deleteAll();
     }
+
+//    @Test
+//    @DisplayName("상품 수정에서 파일을 바꾸면 이전에 있던 파일을 삭제하도록 한다.")
+//    public void 상품수정시_기존파일삭제() {
+//        // given
+//        Goods goods = getGoodsOne();
+//        em.persist(goods);
+//
+//        // when
+//        Goods findGoods = adminRepository.findById(goods.getId()).orElseThrow(() -> new NoSuchElementException());
+//        fileRepository.deleteById(findGoods.getFileStore().getId());
+//
+//        // then
+//        org.assertj.core.api.Assertions.assertThat(findGoods.getFileStore().getFilename()).isNull();
+//    }
 
     @Test
     @DisplayName("상품 이름 중복 검증 테스트")
