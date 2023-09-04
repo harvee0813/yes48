@@ -4,6 +4,9 @@ import book.yes48.entity.FileStore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 public class GoodsDto {
@@ -12,7 +15,6 @@ public class GoodsDto {
     private String name;
     private String author;
     private Integer price;
-    private String state;
     private FileStore fileStore;
 
     public GoodsDto(GoodsDto goodsDto) {
@@ -20,7 +22,6 @@ public class GoodsDto {
         this.name = goodsDto.getName();
         this.author = goodsDto.getAuthor();
         this.price = goodsDto.getPrice();
-        this.state = goodsDto.getState();
         this.fileStore = goodsDto.getFileStore();
     }
 }
