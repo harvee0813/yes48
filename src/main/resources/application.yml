@@ -4,6 +4,7 @@ spring:
     url: jdbc:mysql://localhost:3306/yes48?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: yes48
     password: yes48
+
   servlet:
     multipart:
       max-file-size: 10MB
@@ -23,7 +24,6 @@ spring:
         show_sql: true
         format_sql: true
       dialect: org.hibernate.dialect.MySQL8InnoDBDialect
-
 
 logging:
   level:

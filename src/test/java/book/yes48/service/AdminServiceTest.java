@@ -11,8 +11,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -20,6 +24,7 @@ import java.util.UUID;
 
 @SpringBootTest
 @Transactional
+@ActiveProfiles("test")
 class AdminServiceTest {
 
     @Autowired
@@ -36,21 +41,6 @@ class AdminServiceTest {
         adminRepository.deleteAll();
         fileRepository.deleteAll();
     }
-
-//    @Test
-//    @DisplayName("상품 수정에서 파일을 바꾸면 이전에 있던 파일을 삭제하도록 한다.")
-//    public void 상품수정시_기존파일삭제() {
-//        // given
-//        Goods goods = getGoodsOne();
-//        em.persist(goods);
-//
-//        // when
-//        Goods findGoods = adminRepository.findById(goods.getId()).orElseThrow(() -> new NoSuchElementException());
-//        fileRepository.deleteById(findGoods.getFileStore().getId());
-//
-//        // then
-//        org.assertj.core.api.Assertions.assertThat(findGoods.getFileStore().getFilename()).isNull();
-//    }
 
     @Test
     @DisplayName("상품 이름 중복 검증 테스트")
