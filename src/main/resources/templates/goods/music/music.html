@@ -27,7 +27,8 @@
                             <h6 class="mt-3 ms-1 text-dark text-center fw-bold" style="font-size:15px; width: 190px;" th:text="*{music.name}">아주 희미한 빛으로도</h6>
                             <h6 class="ms-1 text-secondary text-center" style="font-size:14px; width: 190px;" th:text="*{music.author}">류재향</h6>
                             <h6 class="ms-1 text-dark fw-bold" style="font-size:14px;">
-                              <span class="text-dark fw-bold" style="font-size:16px;" th:text="*{music.price}">26,000</span>원
+                              <span class="text-dark fw-bold" style="font-size:16px;" th:text="*{music.price}"
+                                    data-th-text="${#numbers.formatInteger(music.price, 3, 'COMMA')}">26,000</span>원
                             </h6>
                           </div>
                         </div>

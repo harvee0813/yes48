@@ -34,8 +34,9 @@ public class GoodsRepositoryTest {
     EntityManager em;
 
     @AfterEach
-    void tearDown() {
+    void clean() {
         goodsRepository.deleteAll();
+        em.clear();
     }
 
     // 테스트용 상품 - 국내도서, 외국도서, 음반 별로 등록되는 sort가 다르다.

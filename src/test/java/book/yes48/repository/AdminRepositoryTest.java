@@ -34,7 +34,7 @@ class AdminRepositoryTest {
     EntityManager em;
 
     @AfterEach
-    public void clearTest() {
+    public void clean() {
         adminRepository.deleteAll();
         em.clear();
     }

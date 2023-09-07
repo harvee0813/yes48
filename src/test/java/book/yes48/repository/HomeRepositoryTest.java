@@ -31,7 +31,7 @@ public class HomeRepositoryTest {
     EntityManager em;
 
     @AfterEach
-    void tearDown() {
+    void clean() {
         homeRepository.deleteAll();
         em.clear();
     }

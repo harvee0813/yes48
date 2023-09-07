@@ -25,7 +25,8 @@
                               <h6 class="mt-3 ms-1 text-dark text-center fw-bold" th:text="*{suggestionBook.name}" style="font-size:15px; width: 190px;">아주 희미한 빛으로도</h6>
                               <h6 class="ms-1 text-secondary text-center" th:text="*{suggestionBook.author}" style="font-size:14px; width: 190px;">류재향</h6>
                               <h6 class="ms-1 text-dark fw-bold" style="font-size:14px;">
-                                <span class="text-dark fw-bold" th:text="*{suggestionBook.price}" style="font-size:16px;">26,000</span>원
+                                <span class="text-dark" th:text="*{suggestionBook.price}" style="font-size:16px;"
+                                      data-th-text="${#numbers.formatInteger(suggestionBook.price, 3, 'COMMA')}">26,000</span>원
                               </h6>
                             </div>
                           </div>
@@ -44,7 +45,8 @@
                               <h6 class="mt-3 ms-1 text-dark text-center fw-bold" th:text="*{newBook.name}" style="font-size:15px; width: 190px;">아주 희미한 빛으로도</h6>
                               <h6 class="ms-1 text-secondary text-center" th:text="*{newBook.author}" style="font-size:14px; width: 190px;">류재향</h6>
                               <h6 class="ms-1 text-dark fw-bold" style="font-size:14px;">
-                                <span class="text-dark fw-bold" th:text="*{newBook.price}" style="font-size:16px;">26,000</span>원
+                                <span class="text-dark" th:text="*{newBook.price}" style="font-size:16px;"
+                                      data-th-text="${#numbers.formatInteger(newBook.price, 3, 'COMMA')}">26,000</span>원
                               </h6>
                             </div>
                           </div>
@@ -81,7 +83,8 @@
                         <img th:src="@{|/admin/${music.fileStore.filename}|}" style="width: 199px; height: 186px; line-height: 0;">
                     </a>
                     <p class="mt-2 fw-bold" th:text="*{music.name}" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">하입 보이</p>
-                    <h6 class="text-secondary mb-1" th:text="*{music.price}" style="font-size:13px; line-height: 2px;">26,000원</h6>
+                    <h6 class="text-secondary mb-1" th:text="*{music.price}" style="font-size:16px; line-height: 2px;"
+                        data-th-text="${#numbers.formatInteger(music.price, 3, 'COMMA') + '원'}">26,000</h6>
                 </span>
             </div>
             </div>

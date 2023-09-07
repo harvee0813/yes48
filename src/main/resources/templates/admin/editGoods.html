@@ -55,7 +55,7 @@
           <td>
             <input class="form-control" id="name" onblur="nameCheck()" th:field="*{name}" th:errorclass="field-error">
             <div class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">상품 이름 오류 메시지</div>
-            <span id="checkName" class="mt-1 ms-1"></span>
+            <span id="check-name" class="mt-1 ms-1"></span>
           </td>
           <th class="text-center" th:for="author"><strong class="ms-2 me-1 text-danger">*</strong>저자</th>
           <td>
@@ -113,11 +113,10 @@
   </div>
 </div>
 <script th:inline="javascript">
-// 상품 이름 중복 알림
+/// 상품 이름 중복 알림
 const nameCheck = () => {
   const name = document.getElementById("name").value;
-  const checkName = document.getElementById("checkName");
-  var saveForm = document.getElementById("saveForm");
+  const checkName = document.getElementById("check-name");
 
   $.ajax ({
     type: "post",
