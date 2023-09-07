@@ -37,9 +37,10 @@ class AdminServiceTest {
     EntityManager em;
 
     @AfterEach
-    void tearDown() {
+    void clean() {
         adminRepository.deleteAll();
         fileRepository.deleteAll();
+        em.clear();
     }
 
     @Test

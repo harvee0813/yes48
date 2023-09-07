@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="headFragment">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <style>
      th { width:225px; height: 60.4px; }
      td { width:475px; height: 60.4px;
@@ -18,24 +19,28 @@
         <p class="fw-bold fs-4" style="vertical-align:middle">회원 가입</p>
       </div>
       <div>
-        <form method="" action="">
-          <input type="hidden" id="client" value="client"> <!-- 고객 -->
+        <form method="post" th:action="@{/join}" th:object="${form}">
           <table class="table align-middle">
-            <tr class="border-top">
+            <tr class="border-top border-bottom border-light-subtle">
               <th class="table-light">
-                <strong class="ms-2 me-1 text-danger">*</strong>아이디</th>
+                <strong class="ms-2 me-1 text-danger">*</strong>아이디
+                <div class="ms-3 field-error" th:errors="*{userId}" style="color: #dc3545; width: 251px; height: 20px;"></div>
+              </th>
               <td class="d-flex justify-content-between mt-2">
-                <input class="ms-2 border border-light-subtle" type="text">
+                <input id="userId" onblur="checkString()" class="ms-2 border border-light-subtle" th:field="*{userId}" type="text">
                 <span>
-                    <button type="button" class="btn btn-secondary btn-sm">중복 확인</button>
+                    <button onclick="idCheck()" type="button" class="btn btn-secondary btn-sm">중복 확인</button>
                 </span>
               </td>
             </tr>
             <tr class="border-bottom">
               <th class="table-light">
-                <strong class="ms-2 me-1 text-danger">*</strong>비밀번호</th>
+                <strong class="ms-2 me-1 text-danger">*</strong>비밀번호
+                <div class="ms-3 field-error" th:errors="*{password}" style="color: #dc3545;"></div>
+              </th>
               <td>
-                <input id="new-password" type="password" class="ms-2 border border-light-subtle">
+                <input id="new-password" th:field="*{password}" type="password" class="ms-2 border border-light-subtle">
+
               </td>
             </tr>
             <tr class="border-bottom">
@@ -47,54 +52,105 @@
             </tr>
             <tr class="border-bottom">
               <th class="table-light">
-                <strong class="ms-2 me-1 text-danger">*</strong>이름</th>
+                <strong class="ms-2 me-1 text-danger">*</strong>이름
+                <div class="ms-3 field-error" th:errors="*{name}" style="color: #dc3545;"></div>
+              </th>
               <td>
-                <input class="ms-2 border border-light-subtle" type="text">
+                <input class="ms-3 border border-light-subtle" th:field="*{name}" type="text" th:errorclass="field-error">
               </td>
             </tr>
             <tr class="border-bottom">
               <th class="table-light">
-                <strong class="ms-2 me-1 text-danger">*</strong>이메일</th>
+                <strong class="ms-2 me-1 text-danger">*</strong>이메일
+                <div class="ms-3 field-error" th:errors="*{email}" style="color: #dc3545;"></div>
+              </th>
               <td>
-                  <input type="text" class="ms-2 border border-light-subtle">
+                  <input type="email" th:field="*{email}" class="ms-2 border border-light-subtle" th:errorclass="field-error">
               </td>
             </tr>
             <tr class="border-bottom">
               <th class="table-light">
-                <strong class="ms-2 me-1 text-danger">*</strong>휴대폰</th>
+                <strong class="ms-2 me-1 text-danger">*</strong>휴대폰
+                <div class="ms-3 field-error" th:errors="*{phone}" style="color: #dc3545;"></div>
+              </th>
               <td>
-                <input class="ms-2 border border-light-subtle" type="text">
+                <input oninput="addHyphen(this)" maxlength="13" class="ms-2 border border-light-subtle" th:field="*{phone}" type="text" th:errorclass="field-error">
               </td>
             </tr>
             <tr class="border-bottom">
               <th class="table-light">
-                <strong class="ms-2 me-1 text-danger">*</strong>배송 주소</th>
+                <strong class="ms-2 me-1 text-danger">*</strong>배송 주소
+                <div class="ms-3 field-error" th:errors="*{postcode}" style="color: #dc3545;"></div>
+              </th>
               <td>
-                <input class="mt-1 ms-2 mb-1 border border-light-subtle" type="text"
-                       name="postcode" readonly="readonly" id="zipCode">
-                <button type="button" class="btn btn-secondary btn-sm"
+                <input id="postcode" class="mt-1 ms-2 mb-1 border border-light-subtle" th:field="*{postcode}" type="text" th:errorclass="field-error"
+                       name="postcode" readonly="readonly" placeholder="우편번호">
+                <button onclick="execDaumPostcode()" type="button" class="btn btn-secondary btn-sm"
                         id="btn-search-postcode">우편번호검색</button>
-                <input type="text" class="ms-2 mb-1 border border-light-subtle" style="width: 460px; height: 36px;"
-                       name="basicAddress" id="basic-address" />
-                <input type="text" class="ms-2 mb-1 border border-light-subtle" style="width: 460px; height: 36px;"
-                       name="detailAddress" id="detail-address"/>
+                <input id="address" type="text" class="ms-2 mb-1 border border-light-subtle" th:field="*{address}" style="width: 460px; height: 36px;" th:errorclass="field-error"
+                       name="basicAddress" placeholder="주소"/>
+                <input id="detailAddress" type="text" class="ms-2 mb-1 border border-light-subtle" th:field="*{detailsAddress}" style="width: 460px; height: 36px;" th:errorclass="field-error"
+                       name="detailAddress" placeholder="상세주소"/>
+                <input id="extraAddress" class="ms-2 mb-1 border border-light-subtle" type="text" th:field="*{extraAddress}" style="width: 460px; height: 36px;" placeholder="참고항목">
               </td>
             </tr>
           </table>
+          <div class="text-center mt-3">
+            <button id="join" onclick="join()" type="button" class="border-0 bg-primary rounded"
+                    style="color: #ffffff; width: 212px; height: 50px;">회원 가입</button>
+          </div>
         </form>
-        <div class="text-center mt-3">
-          <button onclick="join()" class="border-0 bg-primary rounded"
-                  style="color: #ffffff; width: 212px; height: 50px;">회원 가입</button>
-        </div>
       </div>
     </div>
   </div>
 </div>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-  function join() {
+// 회원 가입 버튼
+const joinButton = document.getElementById("join");
+
+// 아이디 중복 여부 확인. 0 이면 unchecked, 1이면 check
+var checkState = 0;
+
+// 아이디 중복 확인 클릭시
+const idCheck = () => {
+
+  const userId = document.getElementById("userId").value;
+
+  $.ajax ({
+    type: "post",
+    url: "/join/userIdCheck",
+    data: {
+      "userId" : userId
+    },
+    success: function(res) {
+      if (res == "ok") {
+          alert("사용할 수 있는 아이디입니다.")
+          joinButton.setAttribute('type', 'submit');
+          checkState = 0;
+      } else {
+           alert("사용할 수 없는 아이디입니다.")
+           joinButton.setAttribute('type', 'button');
+           checkState = 1;
+      }
+    },
+    error: function(err) {
+      console.log("에러발생", err);
+    }
+  });
+}
+
+// 회원 등록 버튼 눌렀을 때
+  joinButton.onclick = function() {
     var newPassword = document.getElementById('new-password').value;
     var passwordConfirm = document.getElementById('new-password-confirm').value;
 
+    // 아이디 중복 여부 확인
+    if (checkState == 1) {
+      alert("아이디 중복을 확인해주세요.");
+    }
+
+    // 비밀번호와 새 비밀번호 일치 여부 확인
     if (newPassword != passwordConfirm) {
       alert("비밀번호가 일치하지 않습니다.");
       return false;
@@ -102,10 +158,82 @@
       return true;
     }
   }
+
+// 아이디에 특수문자나 공백이 들어가 있을 때
+function checkString() {
+
+  const userId = document.getElementById("userId").value;
+  var specialCheck = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+  var nickLength = 0;
+
+  if (specialCheck.test(userId)) {
+       alert("아이디는 특수문자를 포함 할 수 없습니다.");
+       document.getElementById("userId").value = "";
+    }
+  if (userId.search(/\s/) != -1) {
+       alert("아이디는 공백을 포함 할 수 없습니다.");
+       document.getElementById("userId").value = "";
+    }
+}
+
+// 휴대폰 '-' 추가
+const addHyphen = (target) => {
+ target.value = target.value
+   .replace(/[^0-9]/g, '')
+  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+}
+
+// 배송 주소 (kakao api)
+function execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("extraAddress").value = extraAddr;
+
+                } else {
+                    document.getElementById("extraAddress").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('postcode').value = data.zonecode;
+                document.getElementById("address").value = addr;
+
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("detailAddress").focus();
+            }
+        }).open();
+    }
 </script>
 </body>
 <div th:insert="~{/layout/footer :: footerFragment}"></div>
-<script>
- 다음 주소 넣기
-</script>
 </html>

@@ -30,10 +30,10 @@
           <col style="width: 7%;">
           <col style="width: 12%;">
           <col style="width: 8%;">
-          <col style="width: 7%;">
+          <col style="width: 8%;">
           <col style="width: 6%;">
           <col style="width: 5%;">
-          <col style="width: 5%;">
+          <col style="width: 4%;">
           <col style="width: 8%;">
         </colgroup>
         <thead>
@@ -59,7 +59,7 @@
             <td th:text="${goods.author}">고경희</td>
             <td th:text="${goods.publisher}">이지스퍼블리싱</td>
             <td th:text="${goods.publisherDate}">2023.08.17</td>
-            <td th:text="${goods.price}">30,000</td>
+            <td th:text="${goods.price}" data-th-text="${#numbers.formatInteger(goods.price, 3, 'COMMA')}">30,000</td>
             <td th:text="${goods.stockQuantity}">100</td>
             <td th:text="${goods.event}">N</td>
             <td th:text="${goods.state}">Y</td>

@@ -21,20 +21,16 @@ public class AdminGoodsUpdateForm {
 
     private Long id;
 
-    @NotNull
     @NotBlank(message = "상품 이름을 입력해주세요")
     private String name;
     private String sort;
 
-    @NotNull
     @NotBlank(message = "저자를 입력해주세요")
     private String author;
 
-    @NotNull
     @NotBlank(message = "촐판사를 입력해주세요")
     private String publisher;
 
-    @NotNull
     @NotBlank(message = "출판일을 입력해주세요")
     private String publisherDate;
 

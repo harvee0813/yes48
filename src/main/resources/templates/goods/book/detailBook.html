@@ -34,7 +34,8 @@
               <p style="font-size: 15px;">정가</p>
             </div>
             <div class="col-10">
-              <p id="price" class="fw-bold"><strong style="font-size: 23px;" th:field="*{price}" th:text="*{price}" th:value="*{price}">/*[[*{price}]]*/</strong>원</p>
+              <p id="price" class="fw-bold"><strong style="font-size: 23px;" th:field="*{price}" th:text="*{price}" th:value="*{price}"
+                 data-th-text="${#numbers.formatInteger(book.price, 3, 'COMMA')}">/*[[*{price}]]*/</strong>원</p>
             </div>
           </div>
           <!-- 배송 -->
@@ -69,7 +70,8 @@
                   </button>
                   <!-- 구매 수량 별로 총 상품 금액 늘어나게 설정 -->
                   <span class="ms-5">총 상품 금액
-                    <p class="fw-bold text-primary"><strong id="calculatedPrice" th:text="*{price}" class="totalCost" style="font-size: 23px;"></strong>원</p>
+                    <p class="fw-bold text-primary"><strong id="calculatedPrice" th:text="*{price}"
+                       data-th-text="${#numbers.formatInteger(book.price, 3, 'COMMA')}"class="totalCost" style="font-size: 23px;"></strong>원</p>
                   </span>
                 </div>
               </div>
@@ -114,8 +116,8 @@
 
         // 총 가격
         totalPrice = parseInt(price)*count;
-        document.getElementById("calculatedPrice").innerText = totalPrice;
-        document.getElementById("calculatedPrice").innerValue = totalPrice;
+        document.getElementById("calculatedPrice").innerText = totalPrice.toLocaleString();
+        document.getElementById("calculatedPrice").innerValue = totalPrice.toLocaleString();
 
       } else if (count < 1) {
         return false;
@@ -129,8 +131,8 @@
 
       // 총가격
       totalPrice = parseInt(price)*count;
-      document.getElementById("calculatedPrice").innerText = totalPrice;
-      document.getElementById("calculatedPrice").innerValue = totalPrice;
+      document.getElementById("calculatedPrice").innerText = totalPrice.toLocaleString();
+      document.getElementById("calculatedPrice").innerValue = totalPrice.toLocaleString();
     });
 /*]]*/
 </script>

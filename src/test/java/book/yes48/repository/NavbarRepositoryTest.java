@@ -36,8 +36,9 @@ public class NavbarRepositoryTest {
     EntityManager em;
 
     @AfterEach
-    void tearDown() {
+    void clean() {
         navbarRepository.deleteAll();
+        em.clear();
     }
 
     @Test
