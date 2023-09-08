@@ -1,6 +1,7 @@
 package book.yes48.service;
 
 import book.yes48.entity.member.Member;
+import book.yes48.entity.member.Role;
 import book.yes48.form.member.MemberSaveForm;
 import book.yes48.repository.member.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ public class MemberService {
 
         Member member = Member.builder()
                 .userId(form.getUserId())
-                .password(form.getPassword())
+                .password(form.getPassword())   // password 암호화 처리하기
                 .name(form.getName())
                 .email(form.getEmail())
                 .phone(form.getPhone())
@@ -37,7 +38,7 @@ public class MemberService {
                 .detailsAddress(form.getDetailsAddress())
                 .extraAddress(form.getExtraAddress())
                 .state("Y")
-                .authority("client")
+                .role(Role.USER)
                 .build();
 
         Long saveId = memberRepository.save(member).getId();

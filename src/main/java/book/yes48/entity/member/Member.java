@@ -18,6 +18,8 @@ public class Member extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
+
+    @Column(unique = true)
     private String userId;
     private String password;
     private String name;
@@ -28,14 +30,17 @@ public class Member extends BaseTimeEntity {
     private String detailsAddress;
     private String extraAddress;
     private String state;
-    private String authority;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
     @Builder
     public Member(String userId, String password, String name, String email, String phone, String postcode, String address, String state,
-                  String detailsAddress, String extraAddress, String authority) {
+                  String detailsAddress, String extraAddress, Role role) {
         this.userId = userId;
         this.password = password;
         this.name = name;
@@ -46,6 +51,10 @@ public class Member extends BaseTimeEntity {
         this.detailsAddress = detailsAddress;
         this.extraAddress = extraAddress;
         this.state = state;
-        this.authority = authority;
+        this.role = role;
+    }
+
+    public void changePassword(String password) {
+        this.password = password;
     }
 }

@@ -44,6 +44,7 @@ public class HomeRepositoryImpl implements HomeRepositoryCustom{
                         goods.id, goods.name, goods.author, goods.price, goods.fileStore))
                 .from(goods)
                 .join(goods.fileStore)
+                .where(goods.sort.contains("도서"))
                 .limit(4)
                 .orderBy(goods.id.desc())
                 .fetch();

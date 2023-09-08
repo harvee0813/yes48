@@ -36,7 +36,7 @@ public class AdminController {
     }
 
     /**
-     * 상품 목록 폼
+     * 상품 목록 화면
      */
     @GetMapping("/goodsList")
         public String goods(@ModelAttribute("adminGoodsSearch") AdminGoodsSearch adminGoodsSearch,
@@ -58,7 +58,7 @@ public class AdminController {
     }
 
     /**
-     * 상품 등록 폼
+     * 상품 등록 화면
      */
     @GetMapping("/saveGoods")
     public String saveGoods(Model model) {
@@ -92,7 +92,7 @@ public class AdminController {
     }
 
     /**
-     * 상품 상세 정보 폼
+     * 상품 상세 정보 화면
      */
     @GetMapping("/{goodsId}/editGoods")
     public String detailGoods(@PathVariable Long goodsId, Model model) {

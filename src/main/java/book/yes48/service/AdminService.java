@@ -67,7 +67,7 @@ public class AdminService {
     /**
      * 상품 수정
      * @param goodsId 수정할 상품에서 얻은 상품 id
-     * @param form 상품 수정 전용 폼
+     * @param form 상품 수정 전용 화면
      * @param file 변경된 이미지 (Empty 가능)
      */
     @Transactional
@@ -133,7 +133,8 @@ public class AdminService {
 
     // 상품 업데이트 - file이 비어있을 때
     private static void updateGoods(AdminGoodsUpdateForm form, Goods findGoods) {
-        findGoods.updateGoods(form.getId(),
+        findGoods.updateGoods(
+                form.getId(),
                 form.getName(),
                 form.getSort(),
                 form.getAuthor(),
