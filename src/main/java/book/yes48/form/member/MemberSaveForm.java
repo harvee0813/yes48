@@ -1,5 +1,6 @@
 package book.yes48.form.member;
 
+import book.yes48.entity.member.Role;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -37,11 +38,11 @@ public class MemberSaveForm {
 
     private String extraAddress;
     private String state;
-    private String authority;
+    private Role role;
 
     @Builder
     public MemberSaveForm(String userId, String password, String name, String email, String phone, String postcode, String address,
-                          String detailsAddress, String state, String authority, String extraAddress) {
+                          String detailsAddress, String state, Role role, String extraAddress) {
         this.userId = userId;
         this.password = password;
         this.name = name;
@@ -50,8 +51,8 @@ public class MemberSaveForm {
         this.postcode = postcode;
         this.address = address;
         this.state = state;
-        this.authority = authority;
         this.detailsAddress = detailsAddress;
         this.extraAddress = extraAddress;
+        this.role = role;
     }
 }

@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * 상품 조회 전용 폼
+ * 상품 조회 전용 화면
  */
 @RequiredArgsConstructor
 @Getter

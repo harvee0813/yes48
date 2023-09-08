@@ -49,7 +49,7 @@
             </div>
             <div class="col-10">
               <p style="font-size: 15px;">무료</p>
-              <p style="font-size: 15px;">8월 19일 도착예정</p><!-- 자바스크립트 -->
+              <p id="deliveryDate" style="font-size: 15px;">8월 19일 도착예정</p><!-- 자바스크립트 -->
             </div>
           </div>
           <!-- 수량 -->
@@ -134,6 +134,12 @@
       document.getElementById("calculatedPrice").innerValue = totalPrice.toLocaleString();
     });
 /*]]*/
+
+// 배송날짜
+let today = new Date();
+let dataFormat = (today.getMonth() + 1) + '월 ' + (today.getDate() + 1) + '일'
+
+document.getElementById("deliveryDate").innerText = dataFormat + ' 도착 예정';
 </script>
 </body>
 <div th:insert="~{/layout/footer :: footerFragment}"></div>

@@ -1,6 +1,7 @@
 package book.yes48.service;
 
 import book.yes48.entity.member.Member;
+import book.yes48.entity.member.Role;
 import book.yes48.form.member.MemberSaveForm;
 import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
@@ -45,7 +46,7 @@ class MemberServiceTest {
                 .address("서울특별시")
                 .detailsAddress("xxx번지")
                 .extraAddress("xxx로")
-                .authority("client")
+                .role(Role.USER)
                 .state("Y")
                 .build();
 
@@ -64,7 +65,7 @@ class MemberServiceTest {
         assertThat(member.get().getState()).isEqualTo(form.getState());
         assertThat(member.get().getDetailsAddress()).isEqualTo(form.getDetailsAddress());
         assertThat(member.get().getExtraAddress()).isEqualTo(form.getExtraAddress());
-        assertThat(member.get().getAuthority()).isEqualTo(form.getAuthority());
+        assertThat(member.get().getRole()).isEqualTo(form.getRole());
 
     }
 
@@ -122,7 +123,7 @@ class MemberServiceTest {
                 .postcode("서울특별시")
                 .detailsAddress("xxx번지")
                 .extraAddress("xxx로")
-                .authority("client")
+                .role(Role.USER)
                 .state("Y")
                 .build();
 

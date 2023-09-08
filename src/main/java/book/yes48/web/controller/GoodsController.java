@@ -98,7 +98,7 @@ public class GoodsController {
     }
 
     /**
-     * 음반 상세 정보 폼
+     * 음반 상세 정보 화면
      * @return
      */
     @GetMapping("music/{goodsId}/detailMusic")
