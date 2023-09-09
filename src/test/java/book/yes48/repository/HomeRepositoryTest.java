@@ -2,17 +2,14 @@ package book.yes48.repository;
 
 import book.yes48.entity.FileStore;
 import book.yes48.entity.goods.Goods;
-import book.yes48.form.goods.GoodsDto;
+import book.yes48.web.form.goods.GoodsDto;
 import book.yes48.repository.home.HomeRepository;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;

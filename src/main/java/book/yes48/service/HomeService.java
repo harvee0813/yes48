@@ -1,7 +1,8 @@
 package book.yes48.service;
 
-import book.yes48.form.goods.GoodsDto;
+import book.yes48.web.form.goods.GoodsDto;
 import book.yes48.repository.home.HomeRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,11 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class HomeService {
 
     @Autowired
-    HomeRepository homeRepository;
+    private final HomeRepository homeRepository;
 
     /**
      * 편집장의 추천 도서 4권 수정일 기준 desc 선별

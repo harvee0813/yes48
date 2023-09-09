@@ -1,9 +1,10 @@
 package book.yes48.web.controller;
 
-import book.yes48.form.goods.GoodsDetailDto;
-import book.yes48.form.goods.GoodsDto;
-import book.yes48.form.goods.GoodsSearch;
+import book.yes48.web.form.goods.GoodsDetailDto;
+import book.yes48.web.form.goods.GoodsDto;
+import book.yes48.web.form.goods.GoodsSearch;
 import book.yes48.service.GoodsService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,10 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 @Controller
 @RequestMapping("/goods")
+@RequiredArgsConstructor
 public class GoodsController {
 
     @Autowired
-    GoodsService goodsService;
+    private final GoodsService goodsService;
 
     /**
      * 국내 도서 리스트

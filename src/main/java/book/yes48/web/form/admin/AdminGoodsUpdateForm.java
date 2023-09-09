@@ -1,11 +1,11 @@
-package book.yes48.form.admin;
+package book.yes48.web.form.admin;
 
 import book.yes48.entity.FileStore;
-import com.querydsl.core.annotations.QueryProjection;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,10 +14,12 @@ import java.io.IOException;
 import java.util.UUID;
 
 /**
- * 상품 등록 화면
+ * 상품 수정 화면
  */
 @Getter
-public class AdminGoodsSaveForm {
+public class AdminGoodsUpdateForm {
+
+    private Long id;
 
     @NotBlank(message = "상품 이름을 입력해주세요")
     private String name;
@@ -40,13 +42,14 @@ public class AdminGoodsSaveForm {
 
     private String event;
     private String state;
-
     private FileStore fileStore;
+    private String filename;
 
     @Builder
-    @QueryProjection
-    public AdminGoodsSaveForm(String name, String sort, String author, String publisher, String publisherDate,
-                              int price, int stockQuantity, String event, String state, FileStore flieStore) {
+    public AdminGoodsUpdateForm(Long id, String name, String sort, String author, String publisher,
+                                String publisherDate, int price, int stockQuantity, String event, String state,
+                                FileStore fileStore) {
+        this.id = id;
         this.name = name;
         this.sort = sort;
         this.author = author;
@@ -58,7 +61,11 @@ public class AdminGoodsSaveForm {
         this.state = state;
         this.fileStore = fileStore;
     }
-    
+
+    public void setFileStore(FileStore fileStore) {
+        this.fileStore = fileStore;
+    }
+
     // 파일 업로드
     String projectPath = "C:\\upload\\";
 

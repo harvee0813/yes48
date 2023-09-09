@@ -1,7 +1,8 @@
 package book.yes48.web.controller;
 
-import book.yes48.form.member.MemberSaveForm;
+import book.yes48.web.form.member.MemberSaveForm;
 import book.yes48.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,10 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @Controller
 @RequestMapping("/join")
+@RequiredArgsConstructor
 public class MemberController {
 
     @Autowired
-    MemberService memberService;
+    private final MemberService memberService;
 
     @GetMapping
     public String join(Model model) {

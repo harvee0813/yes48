@@ -1,4 +1,4 @@
-package book.yes48.form.admin.search;
+package book.yes48.web.form.admin.search;
 
 import lombok.Getter;
 import lombok.Setter;

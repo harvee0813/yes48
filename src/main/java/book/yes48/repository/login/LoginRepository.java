@@ -19,5 +19,5 @@ public interface LoginRepository extends JpaRepository<Member, Long> {
     Member checkNameAndUserId(@Param("name") String name, @Param("userId") String userId, @Param("state") String state);
 
     @Query("select m from Member m where m.userId = :userId")
-    Member finByMember(@Param("userId") String userId);
+    Member findMemberById(@Param("userId") String userId);
 }

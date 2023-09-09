@@ -1,8 +1,7 @@
-package book.yes48.form.admin;
+package book.yes48.web.form.admin;
 
 import book.yes48.entity.FileStore;
-import book.yes48.entity.goods.Goods;
-import book.yes48.form.admin.search.SearchType;
+import book.yes48.web.form.admin.search.SearchType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

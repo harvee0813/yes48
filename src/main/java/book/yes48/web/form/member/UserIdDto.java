@@ -1,4 +1,4 @@
-package book.yes48.form.member;
+package book.yes48.web.form.member;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

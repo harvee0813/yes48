@@ -1,9 +1,9 @@
 package book.yes48.repository.admin;
 
 import book.yes48.entity.goods.Goods;
-import book.yes48.form.admin.AdminGoodsDto;
-import book.yes48.form.admin.search.AdminGoodsSearch;
-import book.yes48.form.admin.search.SearchType;
+import book.yes48.web.form.admin.AdminGoodsDto;
+import book.yes48.web.form.admin.search.AdminGoodsSearch;
+import book.yes48.web.form.admin.search.SearchType;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;

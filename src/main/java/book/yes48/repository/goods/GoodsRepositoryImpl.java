@@ -1,8 +1,8 @@
 package book.yes48.repository.goods;
 
-import book.yes48.form.goods.GoodsDetailDto;
-import book.yes48.form.goods.GoodsDto;
-import book.yes48.form.goods.GoodsSearch;
+import book.yes48.web.form.goods.GoodsDetailDto;
+import book.yes48.web.form.goods.GoodsDto;
+import book.yes48.web.form.goods.GoodsSearch;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;

@@ -1,4 +1,4 @@
-package book.yes48.form.login;
+package book.yes48.web.form.login;
 
 import lombok.Builder;
 import lombok.Getter;

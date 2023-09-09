@@ -2,9 +2,8 @@ package book.yes48.service;
 
 import book.yes48.entity.member.Member;
 import book.yes48.entity.member.Role;
-import book.yes48.form.member.MemberSaveForm;
+import book.yes48.web.form.member.MemberSaveForm;
 import jakarta.persistence.EntityManager;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,6 @@
-package book.yes48.form;
+package book.yes48.web.form;
 
 import book.yes48.entity.FileStore;
-import book.yes48.form.goods.GoodsDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

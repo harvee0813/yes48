@@ -1,4 +1,4 @@
-package book.yes48.form.goods;
+package book.yes48.web.form.goods;
 
 import lombok.*;
 
