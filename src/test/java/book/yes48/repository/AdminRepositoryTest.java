@@ -3,10 +3,12 @@ package book.yes48.repository;
 import book.yes48.entity.FileStore;
 import book.yes48.entity.goods.Goods;
 import book.yes48.form.admin.AdminGoodsDto;
+import book.yes48.form.admin.AdminGoodsSaveForm;
 import book.yes48.form.admin.search.AdminGoodsSearch;
 import book.yes48.repository.admin.AdminRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +17,12 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import static book.yes48.form.admin.search.SearchType.SORT;
@@ -35,7 +40,6 @@ class AdminRepositoryTest {
 
     @AfterEach
     public void clean() {
-        adminRepository.deleteAll();
         em.clear();
     }
 
@@ -61,7 +65,7 @@ class AdminRepositoryTest {
 
     @Test
     @DisplayName("관리자 상품 등록 테스트")
-    public void 상품등록() {
+    public void save() {
         // given
         Goods goods = getGoodsOne();
 
@@ -84,7 +88,7 @@ class AdminRepositoryTest {
 
     @Test
     @DisplayName("페이징 확인 테스트 - 상품 종류 : '음반'")
-    public void searchWithPage() {
+    public void findAllPageAndSearch() {
         // given
         for (int i = 0; i < 2; i++) {
             FileStore file = getFile();
@@ -118,6 +122,65 @@ class AdminRepositoryTest {
         assertThat(results.getSize()).isEqualTo(2);
         assertThat(results.getContent().get(0).getSort()).isEqualTo("음반");
         assertThat(results.getContent().get(1).getSort()).isEqualTo("음반");
+    }
+
+    @Test
+    @DisplayName("아이디로 조회")
+    public void getId() {
+        // given
+        FileStore file = getFile();
+
+        Goods goods = Goods.builder()
+                .name("스프링 부트")
+                .sort("국내 도서")
+                .author("이동욱")
+                .publisher("프리렉")
+                .publisherDate("20191129")
+                .price(22000)
+                .stockQuantity(20)
+                .fileStore(file)
+                .event("N")
+                .state("Y")
+                .build();
+
+        em.persist(goods);
+
+        // when
+        Goods saveGoods = adminRepository.save(goods);
+        AdminGoodsDto findGoods = adminRepository.getId(saveGoods.getId());
+
+        // then
+        assertThat(findGoods.getName()).isEqualTo(goods.getName());
+
+    }
+
+    @Test
+    @DisplayName("상품 이름 조회")
+    public void findByName() {
+        // given
+        FileStore file = getFile();
+
+        Goods goods = Goods.builder()
+                .name("스프링 부트")
+                .sort("국내 도서")
+                .author("이동욱")
+                .publisher("프리렉")
+                .publisherDate("20191129")
+                .price(22000)
+                .stockQuantity(20)
+                .fileStore(file)
+                .event("N")
+                .state("Y")
+                .build();
+
+        em.persist(goods);
+
+        // when
+        String name = "스프링 부트";
+        List<Goods> byName = adminRepository.findByName(name);
+
+        // then
+        assertThat(byName.get(0).getName()).isEqualTo(name);
     }
 
     // 테스트용 file

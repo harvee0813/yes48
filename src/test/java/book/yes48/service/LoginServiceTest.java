@@ -30,7 +30,7 @@ class LoginServiceTest {
 
     @Test
     @DisplayName("DB에 등록된 이름과 이메일로 아이디 찾기 ")
-    public void 이름과_이메일로_id찾기() {
+    public void searchNameAndEmail() {
         // given
         Member member = testMember();
         em.persist(member);
@@ -45,7 +45,7 @@ class LoginServiceTest {
 
     @Test
     @DisplayName("DB에 등록되지 않은 이름과 이메일로 아이디 찾기 ")
-    public void 이름과_이메일로_id찾기_예외() {
+    public void searchNameAndEmail_null() {
         // given
         Member member = testMember();
         em.persist(member);
@@ -62,7 +62,7 @@ class LoginServiceTest {
 
     @Test
     @DisplayName("DB에 등록된 이름과 핸드폰 번호로 아이디 찾기 ")
-    public void 이름과_핸드폰으로_id찾기() {
+    public void searchNameAndPhone() {
         // given
         Member member = testMember();
         em.persist(member);
@@ -77,7 +77,7 @@ class LoginServiceTest {
 
     @Test
     @DisplayName("DB에 등록되지 않은 이름과 핸드폰 번호로 아이디 찾기 ")
-    public void 이름과_핸드폰으로_id찾기_예외() {
+    public void searchNameAndPhone_null() {
         // given
         Member member = testMember();
         em.persist(member);
@@ -95,7 +95,7 @@ class LoginServiceTest {
     @Test
     @Transactional
     @DisplayName("비밀번호 변경")
-    public void 비밀번호_변경() {
+    public void updateMember() {
         // given
         Member member = testMember();
         em.persist(member);

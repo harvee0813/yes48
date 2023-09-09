@@ -84,7 +84,7 @@ public class GoodsController {
     @GetMapping("/music")
     public String music(GoodsSearch goodsSearch, @PageableDefault(size = 8) Pageable pageable, Model model) {
 
-        Page<GoodsDto> musics = goodsService.musicBooksFindList(goodsSearch, pageable);
+        Page<GoodsDto> musics = goodsService.musicFindList(goodsSearch, pageable);
         log.info("musics = {}", musics.getSize());
 
         int startPage = getStartPage(musics);

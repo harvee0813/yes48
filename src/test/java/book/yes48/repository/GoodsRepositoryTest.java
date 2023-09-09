@@ -2,6 +2,8 @@ package book.yes48.repository;
 
 import book.yes48.entity.FileStore;
 import book.yes48.entity.goods.Goods;
+import book.yes48.form.admin.AdminGoodsDto;
+import book.yes48.form.goods.GoodsDetailDto;
 import book.yes48.form.goods.GoodsDto;
 import book.yes48.form.goods.GoodsSearch;
 import book.yes48.repository.goods.GoodsRepository;
@@ -35,8 +37,109 @@ public class GoodsRepositoryTest {
 
     @AfterEach
     void clean() {
-        goodsRepository.deleteAll();
         em.clear();
+    }
+
+    @Test
+    @DisplayName("국내도서 페이징 확인")
+    public void findAllBooksWithDomesticBook() {
+        // given
+        String sort = "국내 도서";
+        persistGoods(sort);
+
+        GoodsSearch goodsSearch = new GoodsSearch();
+        goodsSearch.setSort("국내 도서");   // sort 조건
+
+        PageRequest pageRequest = PageRequest.of(0, 2);
+
+        // when
+        Page<GoodsDto> results = goodsRepository.findAllBooks(goodsSearch, pageRequest);
+
+        // then
+        assertThat(results.getSize()).isEqualTo(2);
+        assertThat(results.getContent().get(0).getName()).isEqualTo("테스트 책 1");
+        assertThat(results.getContent().get(1).getName()).isEqualTo("테스트 책 0");
+    }
+
+    @Test
+    @DisplayName("외국도서 페이징 확인")
+    public void findAllBooksWithForeignBook() {
+        // given
+        String sort = "외국 도서";
+        persistGoods(sort);
+
+        GoodsSearch goodsSearch = new GoodsSearch();
+        goodsSearch.setSort("외국 도서");   // sort 조건
+
+        PageRequest pageRequest = PageRequest.of(0, 2);
+
+        // when
+        Page<GoodsDto> results = goodsRepository.findAllBooks(goodsSearch, pageRequest);
+
+        // then
+        assertThat(results.getSize()).isEqualTo(2);
+        assertThat(results.getContent().get(0).getName()).isEqualTo("테스트 책 1");
+        assertThat(results.getContent().get(1).getName()).isEqualTo("테스트 책 0");
+    }
+
+    @Test
+    @DisplayName("음반 페이징 확인")
+    public void findAllBooksWithMusic() {
+        // given
+        String sort = "음반";
+        persistGoods(sort);
+
+        GoodsSearch goodsSearch = new GoodsSearch();
+        goodsSearch.setSort("음반");  // sort 조건
+
+        PageRequest pageRequest = PageRequest.of(0, 2);
+
+        // when
+        Page<GoodsDto> results = goodsRepository.findAllBooks(goodsSearch, pageRequest);
+
+        // then
+        assertThat(results.getSize()).isEqualTo(2);
+        assertThat(results.getContent().get(0).getName()).isEqualTo("테스트 책 1");
+        assertThat(results.getContent().get(1).getName()).isEqualTo("테스트 책 0");
+    }
+
+    @Test
+    @DisplayName("아이디로 조회")
+    public void getId() {
+        // given
+        FileStore file = getFile();
+
+        Goods goods = Goods.builder()
+                .name("스프링 부트")
+                .sort("국내 도서")
+                .author("이동욱")
+                .publisher("프리렉")
+                .publisherDate("20191129")
+                .price(22000)
+                .stockQuantity(20)
+                .fileStore(file)
+                .event("N")
+                .state("Y")
+                .build();
+
+        em.persist(goods);
+
+        // when
+        Goods saveGoods = goodsRepository.save(goods);
+        GoodsDetailDto findGoods = goodsRepository.getId(saveGoods.getId());
+
+        // then
+        assertThat(findGoods.getId()).isEqualTo(goods.getId());
+    }
+
+    // 테스트용 file
+    private static FileStore getFile() {
+        FileStore fileStore = FileStore.builder()
+                .filename("스프링부트와 AWS")
+                .filepath("/files/" + UUID.randomUUID())
+                .build();
+
+        return fileStore;
     }
 
     // 테스트용 상품 - 국내도서, 외국도서, 음반 별로 등록되는 sort가 다르다.
@@ -59,78 +162,5 @@ public class GoodsRepositoryTest {
 
             em.persist(goods);
         }
-    }
-
-    @Test
-    @DisplayName("국내도서 페이징 확인")
-    public void 국내도서_페이징() {
-        // given
-        String sort = "국내 도서";
-        persistGoods(sort);
-
-        GoodsSearch goodsSearch = new GoodsSearch();
-        goodsSearch.setSort("국내 도서");   // sort 조건
-
-        PageRequest pageRequest = PageRequest.of(0, 2);
-
-        // when
-        Page<GoodsDto> results = goodsRepository.findAllBooks(goodsSearch, pageRequest);
-
-        // then
-        assertThat(results.getSize()).isEqualTo(2);
-        assertThat(results.getContent().get(0).getName()).isEqualTo("테스트 책 1");
-        assertThat(results.getContent().get(1).getName()).isEqualTo("테스트 책 0");
-    }
-
-    @Test
-    @DisplayName("외국도서 페이징 확인")
-    public void 외국도서_페이징() {
-        // given
-        String sort = "외국 도서";
-        persistGoods(sort);
-
-        GoodsSearch goodsSearch = new GoodsSearch();
-        goodsSearch.setSort("외국 도서");   // sort 조건
-
-        PageRequest pageRequest = PageRequest.of(0, 2);
-
-        // when
-        Page<GoodsDto> results = goodsRepository.findAllBooks(goodsSearch, pageRequest);
-
-        // then
-        assertThat(results.getSize()).isEqualTo(2);
-        assertThat(results.getContent().get(0).getName()).isEqualTo("테스트 책 1");
-        assertThat(results.getContent().get(1).getName()).isEqualTo("테스트 책 0");
-    }
-
-    @Test
-    @DisplayName("음반 페이징 확인")
-    public void 음반_페이징() {
-        // given
-        String sort = "음반";
-        persistGoods(sort);
-
-        GoodsSearch goodsSearch = new GoodsSearch();
-        goodsSearch.setSort("음반");  // sort 조건
-
-        PageRequest pageRequest = PageRequest.of(0, 2);
-
-        // when
-        Page<GoodsDto> results = goodsRepository.findAllBooks(goodsSearch, pageRequest);
-
-        // then
-        assertThat(results.getSize()).isEqualTo(2);
-        assertThat(results.getContent().get(0).getName()).isEqualTo("테스트 책 1");
-        assertThat(results.getContent().get(1).getName()).isEqualTo("테스트 책 0");
-    }
-
-    // 테스트용 file
-    private static FileStore getFile() {
-        FileStore fileStore = FileStore.builder()
-                .filename("스프링부트와 AWS")
-                .filepath("/files/" + UUID.randomUUID())
-                .build();
-
-        return fileStore;
     }
 }

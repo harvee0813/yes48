@@ -2,25 +2,28 @@ package book.yes48.service;
 
 import book.yes48.entity.FileStore;
 import book.yes48.entity.goods.Goods;
+import book.yes48.form.admin.AdminGoodsDto;
+import book.yes48.form.admin.AdminGoodsSaveForm;
 import book.yes48.form.admin.AdminGoodsUpdateForm;
 import book.yes48.repository.admin.AdminRepository;
 import book.yes48.repository.fileStore.FileRepository;
 import jakarta.persistence.EntityManager;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.UUID;
+
+import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.path;
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -30,22 +33,44 @@ class AdminServiceTest {
     @Autowired
     AdminService adminService;
     @Autowired
-    AdminRepository adminRepository;
-    @Autowired
-    FileRepository fileRepository;
-    @Autowired
     EntityManager em;
 
     @AfterEach
     void clean() {
-        adminRepository.deleteAll();
-        fileRepository.deleteAll();
         em.clear();
     }
 
     @Test
-    @DisplayName("상품 이름 중복 검증 테스트")
-    public void 상품이름중복예외() {
+    @DisplayName("상품 등록")
+    public void saveGoods() throws IOException {
+        // given
+        String filename = "filename";
+        String filepath = "filepath";
+        MockMultipartFile file = getMockMultipartFile(filename, filepath);
+
+        AdminGoodsSaveForm form = AdminGoodsSaveForm.builder()
+                .name("책 테스트")
+                .sort("국내 도서")
+                .author("저자")
+                .publisher("출판사")
+                .publisherDate("2023-09-09")
+                .price(10000)
+                .stockQuantity(100)
+                .event("N")
+                .state("Y")
+                .build();
+
+        // when
+        Long goodsId = adminService.saveGoods(form, file);
+        AdminGoodsDto findGoods = adminService.getId(goodsId);
+
+        // then
+        assertThat(form.getName()).isEqualTo(findGoods.getName());
+    }
+
+    @Test
+    @DisplayName("상품 등록시 상품 이름 중복 검증 테스트")
+    public void duplicationCheckGoodsName() {
         // given
         Goods goods1 = getGoodsOne();
         Goods goods2 = getGoodsOne();
@@ -86,5 +111,10 @@ class AdminServiceTest {
                 .build();
 
         return goods;
+    }
+
+    // MultipartFile 테스트 파일
+    private MockMultipartFile getMockMultipartFile(String filename, String filepath) throws IOException {
+        return new MockMultipartFile(filename, filepath.getBytes());
     }
 }

@@ -30,7 +30,7 @@ public class GoodsService {
         return domesticBooks.map(GoodsDto::new);
     }
 
-    public Page<GoodsDto> musicBooksFindList(GoodsSearch goodsSearch, Pageable pageable) {
+    public Page<GoodsDto> musicFindList(GoodsSearch goodsSearch, Pageable pageable) {
         goodsSearch.setSort("음반"); // 페이징 조건
 
         Page<GoodsDto> domesticBooks = goodsRepository.findAllBooks(goodsSearch, pageable);

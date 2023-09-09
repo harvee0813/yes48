@@ -29,7 +29,8 @@ public class AdminService {
 
     @Autowired
     private AdminRepository adminRepository;
-    @Autowired private FileRepository fileRepository;
+    @Autowired
+    private FileRepository fileRepository;
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(IllegalStateException.class)

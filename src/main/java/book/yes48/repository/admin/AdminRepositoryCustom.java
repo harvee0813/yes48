@@ -11,6 +11,5 @@ import java.util.List;
 public interface AdminRepositoryCustom {
     AdminGoodsDto getId(Long id);
     List<Goods> findByName(String name);
-    List<AdminGoodsDto> getAll();
     Page<AdminGoodsDto> findAllPageAndSearch(Pageable pageable, AdminGoodsSearch adminGoodsSearch);
 }

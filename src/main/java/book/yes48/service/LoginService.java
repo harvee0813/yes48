@@ -2,13 +2,11 @@ package book.yes48.service;
 
 import book.yes48.entity.member.Member;
 import book.yes48.form.login.UpdatePasswordForm;
-import book.yes48.repository.LoginRepository;
+import book.yes48.repository.login.LoginRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.NoSuchElementException;
 
 @Slf4j
 @Service
@@ -25,7 +23,7 @@ public class LoginService {
         // 회원 상태
         String state = "Y";
 
-        Member member = loginRepository.findUser(name, email, state);
+        Member member = loginRepository.findMember(name, email, state);
         log.info("member = {}", member);
 
         if (member != null) {
@@ -44,7 +42,7 @@ public class LoginService {
         // 회원 상태
         String state = "Y";
 
-        Member member = loginRepository.findUserByPhone(name, phone, state);
+        Member member = loginRepository.findMemberByPhone(name, phone, state);
         log.info("member = {}", member);
 
         if (member != null) {

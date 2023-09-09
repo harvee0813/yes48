@@ -33,7 +33,7 @@ class MemberServiceTest {
     @Test
     @Transactional
     @DisplayName("회원 등록 확인")
-    public void 회원등록() {
+    public void save() {
 
         // given
         MemberSaveForm form = MemberSaveForm.builder()
@@ -71,7 +71,7 @@ class MemberServiceTest {
 
     @Test
     @DisplayName("회원 등록시 아이디가 중복될 때")
-    public void 아이디_중복될_때() {
+    public void userIdCheck_duplication() {
         // given
         Member member1 = testMember();
         Member member2 = testMember();
@@ -87,7 +87,7 @@ class MemberServiceTest {
 
     @Test
     @DisplayName("회원 등록시 아이디가 중복되지 않을 때")
-    public void 아이디_중복아닐_때() {
+    public void userIdCheck_notDuplication() {
         // given
         Member member = testMember();
 
@@ -100,7 +100,7 @@ class MemberServiceTest {
 
     @Test
     @DisplayName("아이디로 회원 찾기")
-    public void id로_회원_찾기() {
+    public void findById() {
         // given
         Member member = testMember();
         em.persist(member);
