@@ -1,12 +1,10 @@
 package book.yes48.repository.home;
 
-import book.yes48.form.goods.GoodsDto;
+import book.yes48.web.form.goods.GoodsDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static book.yes48.entity.goods.QGoods.goods;

@@ -15,17 +15,23 @@
           </h5>
           <a href="/join" class="mt-4 me-1 text-decoration-none text-secondary" style="font-size: 14px;">회원가입</a>
         </div>
-        <div class="input-group mb-1">
-          <div class="input-group-text bg-white"><i class="bi bi-person-circle"></i></div>
-          <input type="text" class="form-control" name="id" value="" placeholder="아이디">
-        </div>
-        <div class="input-group mb-2">
-          <div class="input-group-text bg-white"><i class="bi bi-lock-fill"></i></div>
-          <input type="password" class="form-control" name="password" value="" placeholder="비밀번호">
-        </div>
-        <div>
-          <button id="login" type="submit" class="form-control btn btn-primary bg-primary">로그인</button>
-        </div>
+        <form method="post" action="/login">
+          <!-- 로그인 에러 발생시 -->
+          <div th:if="${param.error}" class="alert alert-danger" role="alert">
+            <span th:text="${param.exception}"></span>
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-text bg-white"><i class="bi bi-person-circle"></i></div>
+            <input type="text" class="form-control" name="userId" value="" placeholder="아이디">
+          </div>
+          <div class="input-group mb-2">
+            <div class="input-group-text bg-white"><i class="bi bi-lock-fill"></i></div>
+            <input type="password" class="form-control" name="password" value="" placeholder="비밀번호">
+          </div>
+          <div>
+            <button id="login" type="submit" class="form-control btn btn-primary bg-primary">로그인</button>
+          </div>
+        </form>
         <div class="mt-2 text-end">
            <span class="border-secondary">
              <a href="/login/findId" class="me-1 text-decoration-none text-secondary" style="font-size: 14px;">아이디 찾기</a>

@@ -1,8 +1,8 @@
 package book.yes48.web.controller;
 
-import book.yes48.form.NavbarDto;
-import book.yes48.form.admin.AdminGoodsDto;
+import book.yes48.web.form.NavbarDto;
 import book.yes48.service.NavbarService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,15 +11,15 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class NavbarController {
     @Autowired
-    NavbarService navbarService;
+    private final NavbarService navbarService;
 
     @GetMapping("/searchGoods")
     public String searchForm(@RequestParam String search, @PageableDefault(size = 8) Pageable pageable, Model model) {

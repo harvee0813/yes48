@@ -2,8 +2,8 @@ package book.yes48.service;
 
 import book.yes48.entity.FileStore;
 import book.yes48.entity.goods.Goods;
-import book.yes48.form.goods.GoodsDto;
-import book.yes48.form.goods.GoodsSearch;
+import book.yes48.web.form.goods.GoodsDto;
+import book.yes48.web.form.goods.GoodsSearch;
 import book.yes48.repository.goods.GoodsRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.AfterEach;

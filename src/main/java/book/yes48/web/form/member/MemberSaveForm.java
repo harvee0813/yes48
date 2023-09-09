@@ -1,4 +1,4 @@
-package book.yes48.form.member;
+package book.yes48.web.form.member;
 
 import book.yes48.entity.member.Role;
 import jakarta.validation.constraints.NotBlank;

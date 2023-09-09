@@ -1,6 +1,6 @@
 package book.yes48.repository.navbar;
 
-import book.yes48.form.NavbarDto;
+import book.yes48.web.form.NavbarDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

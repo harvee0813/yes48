@@ -1,11 +1,8 @@
-package book.yes48.form.goods;
+package book.yes48.web.form.goods;
 
 import book.yes48.entity.FileStore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @AllArgsConstructor

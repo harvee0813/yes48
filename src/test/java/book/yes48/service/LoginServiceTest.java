@@ -2,9 +2,8 @@ package book.yes48.service;
 
 import book.yes48.entity.member.Member;
 import book.yes48.entity.member.Role;
-import book.yes48.form.login.UpdatePasswordForm;
+import book.yes48.web.form.login.UpdatePasswordForm;
 import jakarta.persistence.EntityManager;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional(readOnly = true)

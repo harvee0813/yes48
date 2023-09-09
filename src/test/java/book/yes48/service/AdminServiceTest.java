@@ -2,11 +2,8 @@ package book.yes48.service;
 
 import book.yes48.entity.FileStore;
 import book.yes48.entity.goods.Goods;
-import book.yes48.form.admin.AdminGoodsDto;
-import book.yes48.form.admin.AdminGoodsSaveForm;
-import book.yes48.form.admin.AdminGoodsUpdateForm;
-import book.yes48.repository.admin.AdminRepository;
-import book.yes48.repository.fileStore.FileRepository;
+import book.yes48.web.form.admin.AdminGoodsDto;
+import book.yes48.web.form.admin.AdminGoodsSaveForm;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.UUID;
 
-import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.path;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest

@@ -2,17 +2,14 @@ package book.yes48.repository;
 
 import book.yes48.entity.FileStore;
 import book.yes48.entity.goods.Goods;
-import book.yes48.form.NavbarDto;
+import book.yes48.web.form.NavbarDto;
 import book.yes48.repository.navbar.NavbarRepository;
 import book.yes48.service.NavbarService;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

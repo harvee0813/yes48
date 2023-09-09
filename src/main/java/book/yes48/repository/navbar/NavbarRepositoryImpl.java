@@ -1,9 +1,7 @@
 package book.yes48.repository.navbar;
 
-import book.yes48.form.NavbarDto;
-import book.yes48.form.goods.GoodsDto;
+import book.yes48.web.form.NavbarDto;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;

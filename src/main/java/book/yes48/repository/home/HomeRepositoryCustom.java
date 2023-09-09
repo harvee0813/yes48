@@ -1,9 +1,7 @@
 package book.yes48.repository.home;
 
-import book.yes48.form.goods.GoodsDto;
-import org.springframework.data.domain.Pageable;
+import book.yes48.web.form.goods.GoodsDto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface HomeRepositoryCustom {

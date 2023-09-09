@@ -2,7 +2,7 @@ package book.yes48.service;
 
 import book.yes48.entity.FileStore;
 import book.yes48.entity.goods.Goods;
-import book.yes48.form.NavbarDto;
+import book.yes48.web.form.NavbarDto;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;

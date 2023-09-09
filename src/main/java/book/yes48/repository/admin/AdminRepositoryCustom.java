@@ -1,8 +1,8 @@
 package book.yes48.repository.admin;
 
 import book.yes48.entity.goods.Goods;
-import book.yes48.form.admin.AdminGoodsDto;
-import book.yes48.form.admin.search.AdminGoodsSearch;
+import book.yes48.web.form.admin.AdminGoodsDto;
+import book.yes48.web.form.admin.search.AdminGoodsSearch;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -1,7 +1,8 @@
 package book.yes48.web.controller;
 
-import book.yes48.form.login.UpdatePasswordForm;
+import book.yes48.web.form.login.UpdatePasswordForm;
 import book.yes48.service.LoginService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,10 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @Controller
 @RequestMapping("/login")
+@RequiredArgsConstructor
 public class LoginController {
 
     @Autowired
-    LoginService loginService;
+    private final LoginService loginService;
 
     /**
      * 로그인 화면

@@ -1,11 +1,10 @@
 package book.yes48.web.controller;
 
-import book.yes48.entity.FileStore;
-import book.yes48.form.admin.AdminGoodsDto;
-import book.yes48.form.admin.AdminGoodsSaveForm;
-import book.yes48.form.admin.AdminGoodsUpdateForm;
-import book.yes48.form.admin.search.AdminGoodsSearch;
-import book.yes48.form.admin.search.SearchType;
+import book.yes48.web.form.admin.AdminGoodsDto;
+import book.yes48.web.form.admin.AdminGoodsSaveForm;
+import book.yes48.web.form.admin.AdminGoodsUpdateForm;
+import book.yes48.web.form.admin.search.AdminGoodsSearch;
+import book.yes48.web.form.admin.search.SearchType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,10 +2,12 @@ package book.yes48.service;
 
 import book.yes48.entity.member.Member;
 import book.yes48.entity.member.Role;
-import book.yes48.form.member.MemberSaveForm;
+import book.yes48.web.form.member.MemberSaveForm;
 import book.yes48.repository.member.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,10 +16,13 @@ import java.util.Optional;
 @Slf4j
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class MemberService {
 
     @Autowired
-    MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 회원 등록
@@ -29,7 +34,7 @@ public class MemberService {
 
         Member member = Member.builder()
                 .userId(form.getUserId())
-                .password(form.getPassword())   // password 암호화 처리하기
+                .password(passwordEncoder.encode(form.getPassword()))
                 .name(form.getName())
                 .email(form.getEmail())
                 .phone(form.getPhone())

@@ -1,12 +1,13 @@
 package book.yes48.service;
 
-import book.yes48.form.admin.AdminGoodsDto;
-import book.yes48.form.admin.AdminGoodsSaveForm;
-import book.yes48.form.admin.AdminGoodsUpdateForm;
-import book.yes48.form.admin.search.AdminGoodsSearch;
+import book.yes48.web.form.admin.AdminGoodsDto;
+import book.yes48.web.form.admin.AdminGoodsSaveForm;
+import book.yes48.web.form.admin.AdminGoodsUpdateForm;
+import book.yes48.web.form.admin.search.AdminGoodsSearch;
 import book.yes48.repository.fileStore.FileRepository;
 import book.yes48.repository.admin.AdminRepository;
 import book.yes48.entity.goods.Goods;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,12 +26,13 @@ import java.util.NoSuchElementException;
 @Slf4j
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class AdminService {
 
     @Autowired
-    private AdminRepository adminRepository;
+    private final AdminRepository adminRepository;
     @Autowired
-    private FileRepository fileRepository;
+    private final FileRepository fileRepository;
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(IllegalStateException.class)

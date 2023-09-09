@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     private String AdminConnectPath = "/admin/**";
-    private String GoodsConnectPath = "/book-list/**";
+    private String GoodsConnectPath = "/goods/**";
     private String resourcePath = "file:///C:/upload/";
 
     @Override

@@ -1,11 +1,10 @@
 package book.yes48.web.controller;
 
-import book.yes48.form.goods.GoodsDto;
+import book.yes48.web.form.goods.GoodsDto;
 import book.yes48.service.HomeService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +13,11 @@ import java.util.*;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
 
     @Autowired
-    HomeService homeService;
+    private final HomeService homeService;
 
     /**
      * 메인 화면

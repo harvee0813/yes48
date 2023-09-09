@@ -101,7 +101,7 @@ public class LoginRepositoryTest {
         String userId = "testId";
 
         // when
-        Member findMember = loginRepository.finByMember(userId);
+        Member findMember = loginRepository.findMemberById(userId);
 
         // then
         Assertions.assertThat(findMember.getUserId()).isEqualTo(userId);
