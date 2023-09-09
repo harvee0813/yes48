@@ -37,13 +37,12 @@ public class NavbarRepositoryTest {
 
     @AfterEach
     void clean() {
-        navbarRepository.deleteAll();
         em.clear();
     }
 
     @Test
     @DisplayName("네비바 검색창 검색 결과와 페이징")
-    public void 네비바_검색() {
+    public void goodsSearchList() {
         // given
         for (int i = 0; i < 2; i++) {
             FileStore file = getFile();

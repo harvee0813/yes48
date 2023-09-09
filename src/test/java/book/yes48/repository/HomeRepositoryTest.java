@@ -32,13 +32,12 @@ public class HomeRepositoryTest {
 
     @AfterEach
     void clean() {
-        homeRepository.deleteAll();
         em.clear();
     }
 
     @Test
     @DisplayName("편집장의 추천 4권 선별")
-    public void 편집장의_추천도서_4권_선별() {
+    public void selectFourSuggestionBooks() {
         // given
         for (int i = 0; i < 5; i++) {
             FileStore file = getFile();
@@ -69,7 +68,7 @@ public class HomeRepositoryTest {
 
     @Test
     @DisplayName("메인페이지에 들어갈 최신 도서 4권 선별")
-    public void 최신도서_4권_선별() {
+    public void selectFourNewBooks() {
         // given
         for (int i = 0; i < 5; i++) {
             FileStore file = getFile();
@@ -100,7 +99,7 @@ public class HomeRepositoryTest {
 
     @Test
     @DisplayName("메인페이지에 들어갈 최신 음반 3개 선별")
-    public void 음반_3권_선별() {
+    public void selectThreeMusic() {
         // given
         for (int i = 0; i < 5; i++) {
             FileStore file = getFile();

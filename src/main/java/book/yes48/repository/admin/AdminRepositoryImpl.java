@@ -57,23 +57,6 @@ public class AdminRepositoryImpl implements AdminRepositoryCustom {
     }
 
     /**
-     * 상품 전체 조회
-     */
-    @Override
-    public List<AdminGoodsDto> getAll() {
-        List<AdminGoodsDto> dtos = queryFactory
-                .select(Projections.constructor(AdminGoodsDto.class, goods.id, goods.name, goods.sort, goods.author,
-                        goods.publisher, goods.publisherDate, goods.price,
-                        goods.stockQuantity, goods.event, goods.state, goods.fileStore)
-                )
-                .from(goods)
-                .orderBy(goods.id.desc())
-                .fetch();
-
-        return dtos;
-    }
-
-    /**
      * 상품 목록 페이지네이션 및 상품 검색
      */
     @Override
