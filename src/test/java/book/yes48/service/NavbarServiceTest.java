@@ -4,6 +4,7 @@ import book.yes48.entity.FileStore;
 import book.yes48.entity.goods.Goods;
 import book.yes48.web.form.NavbarDto;
 import jakarta.persistence.EntityManager;
+import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,20 +12,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 @SpringBootTest
 @Transactional(readOnly = true)
 class NavbarServiceTest {
 
+    @Autowired NavbarService navbarService;
+    @Autowired EntityManager em;
     @Autowired
-    NavbarService navbarService;
-    @Autowired
-    EntityManager em;
+    private WebApplicationContext context;
+    private MockMvc mvc;
+
+    @Before("")
+    public void setup() {
+        mvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
+    }
 
     @AfterEach
     public void clear() {

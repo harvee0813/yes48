@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,9 @@ public class Member extends BaseTimeEntity {
 
     // 비밀번호 변경
     public void changePassword(String password) {
-        this.password = password;
+
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+        this.password = bCryptPasswordEncoder.encode(password);
     }
 }

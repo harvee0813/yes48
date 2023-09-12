@@ -5,11 +5,11 @@ import book.yes48.web.form.login.UpdatePasswordForm;
 import book.yes48.repository.login.LoginRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.WebApplicationContext;
 
 @Slf4j
 @Service
@@ -18,8 +18,6 @@ public class LoginService {
 
     @Autowired
     private final LoginRepository loginRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     /**
      * 이름과 이메일로 아이디 찾기
@@ -86,7 +84,7 @@ public class LoginService {
         // unique한 userId로 조회
         Member findMember = loginRepository.findMemberById(form.getUserId());
 
-        findMember.changePassword(passwordEncoder.encode(form.getPassword()));  // password 암호화 처리하기
+        findMember.changePassword(form.getPassword());  // password 암호화 처리하기
 
         return findMember;
     }

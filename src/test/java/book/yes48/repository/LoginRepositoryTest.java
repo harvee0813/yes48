@@ -4,20 +4,35 @@ import book.yes48.entity.member.Member;
 import book.yes48.entity.member.Role;
 import book.yes48.repository.login.LoginRepository;
 import jakarta.persistence.EntityManager;
+import org.aspectj.lang.annotation.Before;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.WebApplicationContext;
+
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 @SpringBootTest
 @Transactional(readOnly = true)
 public class LoginRepositoryTest {
 
+    @Autowired LoginRepository loginRepository;
+    @Autowired EntityManager em;
     @Autowired
-    LoginRepository loginRepository;
-    @Autowired
-    EntityManager em;
+    private WebApplicationContext context;
+    private MockMvc mvc;
+
+    @Before("")
+    public void setup() {
+        mvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
+    }
 
     @AfterEach
     public void clear() {
@@ -38,6 +53,8 @@ public class LoginRepositoryTest {
                 .extraAddress("xxx로")
                 .role(Role.USER)
                 .state("Y")
+                .providerId("google 아이디")
+                .provider("google")
                 .build();
 
         loginRepository.save(member);
