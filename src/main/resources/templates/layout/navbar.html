@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <header>
   <style>
       a {
@@ -14,13 +14,21 @@
       <div class="col-12 text-end">
         <ul class="navbar-nav">
         <div class="mt-2">
-          <a href="/login" class="me-3 link-secondary" style="font-size:13px">로그인</a>
-          <a href="/logout" class="me-3 link-secondary" style="font-size:13px">로그아웃</a>
-          <a href="/join" class="me-3 link-secondary" style="font-size:13px">회원가입</a>
-          <a href="/order/myCart" class="me-3 link-secondary" style="font-size:13px">장바구니</a>
-          <a href="/order" class="me-3 link-secondary" style="font-size:13px">주문하기</a>
-          <a href="/myPage/orderHistoryList" class="me-3 link-secondary" style="font-size:13px">마이페이지</a>
-          <a th:href="@{/admin/goodsList}" class="me-3 link-secondary" style="font-size:13px">관리자</a>
+          <span th:unless="${#authorization.expr('isAuthenticated()')}">
+            <a href="/login" class="me-3 link-secondary" style="font-size:13px">로그인</a>
+            <a href="/join" class="me-3 link-secondary" style="font-size:13px">회원가입</a>
+          </span>
+          <span sec:authorize="hasRole('ROLE_USER')">
+            <a href="/logout" class="me-3 link-secondary" style="font-size:13px">로그아웃</a>
+          </span>
+          <span>
+            <a href="/myPage/orderHistoryList" class="me-3 link-secondary" style="font-size:13px">마이페이지</a>
+            <a href="/order/myCart" class="me-3 link-secondary" style="font-size:13px">장바구니</a>
+            <a href="/order" class="me-3 link-secondary" style="font-size:13px">주문하기</a>
+          </span>
+          <span sec:authorize="hasRole('ROLE_ADMIN')">
+            <a th:href="@{/admin/goodsList}" class="me-3 link-secondary" style="font-size:13px">관리자</a>
+          </span>
         </div>
         </ul>
       </div>

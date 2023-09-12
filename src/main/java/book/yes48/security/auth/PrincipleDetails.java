@@ -1,34 +1,44 @@
-package book.yes48.security;
+package book.yes48.security.auth;
 
 import book.yes48.entity.member.Member;
-import book.yes48.repository.login.LoginRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
-public class LoginMemberDetails extends Member implements UserDetails {
+@Slf4j
+@Getter
+public class PrincipleDetails extends Member implements UserDetails, OAuth2User {
 
-    @Autowired
-    private final LoginRepository loginRepository;
-    @Autowired
     private Member member;
+    private Map<String, Object> attributes;
 
-    public LoginMemberDetails(LoginRepository loginRepository, Member member) {
-        this.loginRepository = loginRepository;
+    // 일반 로그인
+    public PrincipleDetails(Member member) {
         this.member = member;
+    }
+
+    // OAuth2 로그인
+    public PrincipleDetails(Member member, Map<String, Object> attributes) {
+        this.member= member;
+        this.attributes = attributes;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(member.getRole().toString()));
+
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + member.getRole().toString()));
 
         return authorities;
+
     }
 
     @Override
@@ -41,18 +51,8 @@ public class LoginMemberDetails extends Member implements UserDetails {
         return member.getUserId();
     }
 
-    /**
-     * 계정 만료 여부
-     * 계정 상태가 Y면 true, N이면 false
-     */
     @Override
     public boolean isAccountNonExpired() {
-//        Member findMember = loginRepository.findMemberById(member.getUserId());
-//        if ("Y" == findMember.getState()) {
-//            return true;
-//        } else {
-//            return false;
-//        }
         return true;
     }
 
@@ -69,5 +69,15 @@ public class LoginMemberDetails extends Member implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public <A> A getAttribute(String name) {
+        return OAuth2User.super.getAttribute(name);
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
     }
 }
