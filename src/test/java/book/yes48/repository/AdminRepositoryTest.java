@@ -6,31 +6,44 @@ import book.yes48.web.form.admin.AdminGoodsDto;
 import book.yes48.web.form.admin.search.AdminGoodsSearch;
 import book.yes48.repository.admin.AdminRepository;
 import jakarta.persistence.EntityManager;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 import java.util.UUID;
 
 import static book.yes48.web.form.admin.search.SearchType.SORT;
 import static org.assertj.core.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 @SpringBootTest
 @Transactional
 @ActiveProfiles("test")
 class AdminRepositoryTest {
-
+    
+    @Autowired AdminRepository adminRepository;
+    @Autowired EntityManager em;
     @Autowired
-    AdminRepository adminRepository;
-    @Autowired
-    EntityManager em;
+    private WebApplicationContext context;
+    private MockMvc mvc;
+    
+    @Before("")
+    public void setup() {
+        mvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
+    }
 
     @AfterEach
     public void clean() {
@@ -58,6 +71,7 @@ class AdminRepositoryTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     @DisplayName("관리자 상품 등록 테스트")
     public void save() {
         // given
@@ -81,6 +95,7 @@ class AdminRepositoryTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     @DisplayName("페이징 확인 테스트 - 상품 종류 : '음반'")
     public void findAllPageAndSearch() {
         // given
@@ -119,6 +134,7 @@ class AdminRepositoryTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     @DisplayName("아이디로 조회")
     public void getId() {
         // given
@@ -149,6 +165,7 @@ class AdminRepositoryTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     @DisplayName("상품 이름 조회")
     public void findByName() {
         // given

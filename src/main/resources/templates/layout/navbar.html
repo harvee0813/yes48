@@ -18,7 +18,7 @@
             <a href="/login" class="me-3 link-secondary" style="font-size:13px">로그인</a>
             <a href="/join" class="me-3 link-secondary" style="font-size:13px">회원가입</a>
           </span>
-          <span sec:authorize="hasRole('ROLE_USER')">
+          <span sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
             <a href="/logout" class="me-3 link-secondary" style="font-size:13px">로그아웃</a>
           </span>
           <span>

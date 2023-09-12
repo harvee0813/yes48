@@ -5,27 +5,42 @@ import book.yes48.entity.goods.Goods;
 import book.yes48.web.form.admin.AdminGoodsDto;
 import book.yes48.web.form.admin.AdminGoodsSaveForm;
 import jakarta.persistence.EntityManager;
+import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 @SpringBootTest
 @Transactional
 @ActiveProfiles("test")
 class AdminServiceTest {
 
+    @Autowired AdminService adminService;
+    @Autowired EntityManager em;
     @Autowired
-    AdminService adminService;
-    @Autowired
-    EntityManager em;
+    private WebApplicationContext context;
+    private MockMvc mvc;
+
+    @Before("")
+    public void setup() {
+        mvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
+    }
 
     @AfterEach
     void clean() {
@@ -33,6 +48,7 @@ class AdminServiceTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     @DisplayName("상품 등록")
     public void saveGoods() throws IOException {
         // given

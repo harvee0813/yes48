@@ -26,14 +26,26 @@ public class SecurityConfig {
     private PrincipleDetailsService memberDetailsService;
 
     @Bean
+    public CustomAuthenticationFailHandler failHandler() {
+        return new CustomAuthenticationFailHandler();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CustomLoginSuccessHandler customLoginSuccessHandler() {
+        return new CustomLoginSuccessHandler();
+    }
+
+    @Bean
     protected DefaultSecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
                 .csrf()
                     .disable()
                 .authorizeHttpRequests()
-//                    .requestMatchers("/admin/**").hasAuthority("ADMIN")
-//                    .requestMatchers("/myPage/**").hasAuthority("USER")
-//                    .requestMatchers("/order/**").hasAuthority("USER")
                     .requestMatchers("/admin/**").hasRole("ADMIN")
                     .requestMatchers("/myPage/**").hasRole("USER")
                     .requestMatchers("/order/**").hasRole("USER")
@@ -57,21 +69,5 @@ public class SecurityConfig {
                     .userService(customOauth2UserService);
 
         return http.build();
-    }
-
-
-    @Bean
-    public CustomAuthenticationFailHandler failHandler() {
-        return new CustomAuthenticationFailHandler();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public CustomLoginSuccessHandler customLoginSuccessHandler() {
-        return new CustomLoginSuccessHandler();
     }
 }
