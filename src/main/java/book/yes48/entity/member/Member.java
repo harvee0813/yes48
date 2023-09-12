@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +38,12 @@ public class Member extends BaseTimeEntity {
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
+    private String provider;
+    private String providerId;
+
     @Builder
     public Member(String userId, String password, String name, String email, String phone, String postcode, String address, String state,
-                  String detailsAddress, String extraAddress, Role role) {
+                  String detailsAddress, String extraAddress, Role role, String provider, String providerId) {
         this.userId = userId;
         this.password = password;
         this.name = name;
@@ -53,8 +55,11 @@ public class Member extends BaseTimeEntity {
         this.extraAddress = extraAddress;
         this.state = state;
         this.role = role;
+        this.provider = provider;
+        this.providerId =providerId;
     }
 
+    // 비밀번호 변경
     public void changePassword(String password) {
         this.password = password;
     }
