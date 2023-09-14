@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <style>
+     th { width:225px; height: 60.4px;
+          background-color: #F8F9FA; }
+     td { width:475px; height: 60.4px;
+          }
+     input { width: 251px; height: 36px; }
+  </style>
+    <div th:replace="~{/layout/header :: headFragment}"></div>
+</head>
+<body>
+<div th:replace="~{/layout/navbar :: navFragment}"></div>
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-2" th:insert="~{/layout/leftBar :: leftBarFragment}"></div>
+        <div class="col-10">
+            <div class="mt-3">
+                <p class="fw-bold fs-4" style="vertical-align:middle">내 정보 수정</p>
+            </div>
+            <div>
+                <table>
+                    <tr class="border-top border-bottom">
+                        <th><h6 class="mt-1 ms-2 fw-bold">아이디</h6></th>
+                        <td>
+                            <h6 class="mt-1 ms-2" th:text="${form.userId}">YES48</h6>
+                        </td>
+                    </tr>
+                    <tr class="border-bottom">
+                        <th><h6 class="mt-1 ms-2 fw-bold">이름</h6></th>
+                        <td>
+                            <h6 class="mt-1 ms-2" th:text="${form.name}">YES48</h6>
+                        </td>
+                    </tr>
+                    <tr class="border-bottom">
+                        <th><h6 class="mt-1 ms-2 fw-bold">이메일</h6></th>
+                        <td>
+                            <h6 id="email" class="mt-1 ms-2" th:text="${form.email}">YES48@naver.com</h6>
+                        </td>
+                    </tr>
+                    <form method="post">
+                    <tr class="border-bottom">
+                        <th>
+                            <h6 class="mt-1 ms-2 fw-bold">휴대폰</h6>
+                        </th>
+                        <td>
+                            <h6 id="phone" class="mt-1 ms-2" th:if="${form.phone}" th:text="${form.phone}">010-1234-5678</h6>
+                            <span id="phoneForm" style="display: none;">
+                                <input id="phoneNumber" oninput="addHyphen(this)" maxlength="13" class="ms-2 border border-light-subtle"
+                                       th:field="${phoneUpdateForm.phone}" th:errorclass="field-error" type="text">
+                                <div class="field-error" th:errors="${phoneUpdateForm.phone}">
+                                 상품명 오류
+                                 </div>
+                            </span>
+                        </td>
+                        <td>
+                            <button id="confirmPhone" type="button" class="btn btn-secondary btn-sm">수정</button>
+                            <button id="savePhone" style="display: none;" type="submit" class="btn btn-primary btn-sm">저장</button>
+                        </td>
+                    </tr>
+                    <tr class="border-bottom">
+                        <th><h6 class="mt-1 ms-2 fw-bold">배송 주소</h6></th>
+                        <td>
+                            <h6 id="recentAddress" class="mt-1 ms-2" th:if="${form.address}" th:text="${form.address}">서울시 XX동 XXX길 12-12번지 123동 456호</h6>
+                            <span id="addressForm" style="display: none;">
+                              <input id="postcode" class="mt-1 ms-2 mb-1 border border-light-subtle" th:field="${addressUpdateForm.postcode}" type="text"
+                                     name="postcode" readonly="readonly" placeholder="우편번호">
+                              <button onclick="execDaumPostcode()" type="button" class="btn btn-secondary btn-sm"
+                                    id="btn-search-postcode">우편번호검색</button>
+                              <input id="address" type="text" class="ms-2 mb-1 border border-light-subtle" th:field="${addressUpdateForm.address}" style="width: 460px; height: 36px;"
+                                   name="basicAddress" placeholder="주소"/>
+                              <input id="detailAddress" type="text" class="ms-2 mb-1 border border-light-subtle" th:field="${addressUpdateForm.detailsAddress}" style="width: 460px; height: 36px;"
+                                   name="detailAddress" placeholder="상세주소"/>
+                              <input id="extraAddress" class="ms-2 mb-1 border border-light-subtle" type="text" th:field="${addressUpdateForm.extraAddress}" style="width: 460px; height: 36px;" placeholder="참고항목">
+                            </span>
+                        </td>
+                        <td>
+                            <button id="confirmAddress" type="button" class="mt-1 btn btn-secondary btn-sm">수정</button>
+                            <button id="saveAddress" style="display: none;" type="submit" class="mt-5 btn btn-primary btn-sm">저장</button>
+                        </td>
+                    </tr>
+                    </form>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+// 수정 버튼 클릭시 input 폼 보이기
+const confirmPhoneBtn = document.getElementById("confirmPhone");
+const confirmAddressBtn = document.getElementById("confirmAddress");
+
+// 핸드폰 번호 수정
+confirmPhoneBtn.onclick = function() {
+    const phoneForm = document.getElementById("phoneForm");
+    const savePhoneBtn = document.getElementById("savePhone");
+    const recentPhone = document.getElementById("phone");
+
+    phoneForm.style.display = "block";
+    savePhoneBtn.style.display = "block";
+    recentPhone.style.display = "none";
+    confirmPhoneBtn.style.display = "none";
+}
+
+// 배송 주소 수정
+confirmAddressBtn.onclick = function() {
+    const saveAddressBtn = document.getElementById("saveAddress");
+    const addressForm = document.getElementById("addressForm");
+    const recentAddress = document.getElementById("recentAddress");
+
+    addressForm.style.display = "block";
+    saveAddressBtn.style.display = "block";
+    recentAddress.style.display = "none";
+    confirmAddressBtn.style.display = "none";
+}
+
+<!--// 아이디에 특수문자나 공백이 들어가 있을 때-->
+<!--savePhoneBtn.onclick = function() {-->
+
+<!--  var phoneNumber = document.getElementById("phoneNumber").value;-->
+<!--  const savePhoneBtn = document.getElementById("savePhone");-->
+
+<!--  if (phoneNumber == "") {-->
+<!--       alert("핸드폰 번호는 공백일 수 없습니다.");-->
+<!--       savePhoneBtn.setAttribute('type', 'button');-->
+<!--    }-->
+<!--}-->
+
+// 휴대폰 '-' 추가
+const addHyphen = (target) => {
+ target.value = target.value
+   .replace(/[^0-9]/g, '')
+  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+}
+
+// 배송 주소 (kakao api)
+function execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("extraAddress").value = extraAddr;
+
+                } else {
+                    document.getElementById("extraAddress").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('postcode').value = data.zonecode;
+                document.getElementById("address").value = addr;
+
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("detailAddress").focus();
+            }
+        }).open();
+    }
+</script>
+</body>
+<div th:insert="~{/layout/footer :: footerFragment}"></div>
+</html>

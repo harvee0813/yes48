@@ -2,6 +2,8 @@ package book.yes48.entity.member;
 
 import book.yes48.entity.order.Order;
 import book.yes48.entity.BaseTimeEntity;
+import book.yes48.web.form.myPage.AddressUpdateForm;
+import book.yes48.web.form.myPage.PhoneUpdateForm;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -66,5 +68,32 @@ public class Member extends BaseTimeEntity {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
         this.password = bCryptPasswordEncoder.encode(password);
+    }
+
+    // 배송 주소 엡테이트
+    public void updateAddress(AddressUpdateForm addressUpdateForm) {
+        this.postcode = addressUpdateForm.getPostcode();
+        this.address = addressUpdateForm.getAddress();
+        this.detailsAddress = addressUpdateForm.getDetailsAddress();
+        this.extraAddress = addressUpdateForm.getExtraAddress();
+    }
+
+    // 핸드폰 번호 업데이트
+    public void updatePhone(PhoneUpdateForm phoneUpdateForm) {
+        this.phone = phoneUpdateForm.getPhone();
+    }
+
+    // 배송 주소와 핸드폰 번호 동시 업데이트
+    public void updateAddressAndPhone(AddressUpdateForm addressUpdateForm, PhoneUpdateForm phoneUpdateForm) {
+        this.postcode = addressUpdateForm.getPostcode();
+        this.address = addressUpdateForm.getAddress();
+        this.detailsAddress = addressUpdateForm.getDetailsAddress();
+        this.extraAddress = addressUpdateForm.getExtraAddress();
+        this.phone = phoneUpdateForm.getPhone();
+    }
+
+    // 회원 탈퇴 -> 상태 변경
+    public void withdraw(String state) {
+        this.state = state;
     }
 }

@@ -26,7 +26,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class CustomOauth2UserService extends DefaultOAuth2UserService  { //OAuth2UserService<OAuth2UserRequest, OAuth2User>
+public class CustomOauth2UserService extends DefaultOAuth2UserService  {
     
     @Autowired
     MemberRepository memberRepository;

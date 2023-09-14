@@ -47,18 +47,4 @@ public class HomeController {
 
         return "home";
     }
-
-    @GetMapping("/test")
-    public @ResponseBody String testLogin(@AuthenticationPrincipal PrincipleDetails principleDetails) {
-        System.out.println("principleDetails = " + principleDetails.getMember());
-        System.out.println("principleDetails = " + principleDetails.getMember().getName());
-        System.out.println("principleDetails = " + principleDetails.getMember().getRole());
-        System.out.println("principleDetails = " + principleDetails.getMember().getUserId());
-//        PrincipleDetails memberDetails = (PrincipleDetails) principleDetails.getU();
-//        System.out.println("authentication = " + authentication.getPrincipal());
-//        System.out.println("authentication.memberDetails = " + memberDetails.getRole());
-//        System.out.println("authentication.memberDetails = " + memberDetails.getUsername());
-//        System.out.println("authentication.memberDetails = " + memberDetails.getUserId());
-        return "세션정보 확인";
-    }
 }

@@ -2,6 +2,7 @@ package book.yes48.repository;
 
 import book.yes48.entity.member.Member;
 import book.yes48.entity.member.Role;
+import book.yes48.repository.MyPage.MyPageRepository;
 import book.yes48.repository.member.MemberRepository;
 import jakarta.persistence.EntityManager;
 import org.aspectj.lang.annotation.Before;
@@ -15,20 +16,21 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 @SpringBootTest
 @Transactional(readOnly = true)
-class MemberRepositoryTest {
+class MyPageRepositoryTest {
 
-    @Autowired MemberRepository memberRepository;
+    @Autowired
+    MyPageRepository myPageRepository;
     @Autowired EntityManager em;
     @Autowired
     private WebApplicationContext context;
     private MockMvc mvc;
 
-    @Before("스프링 시큐리티")
+    @Before("")
     public void setup() {
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
@@ -59,12 +61,13 @@ class MemberRepositoryTest {
                 .role(Role.USER)
                 .build();
 
-        memberRepository.save(member);
+        myPageRepository.save(member);
 
         // when
-        Member findUser = memberRepository.findUser("userId");
+        Member findUser = myPageRepository.findUser("userId");
 
         // then
         assertThat(findUser.getUserId()).isEqualTo(member.getUserId());
     }
+
 }
