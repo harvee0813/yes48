@@ -19,12 +19,12 @@
           <div id="message" class="mt-5 mb-5">
             <h5 class="fw-bold">정말 탈퇴하시겠습니까?</h5>
             <div class="mt-4">
-              <span>
-                <button id="yes" type="button" class="btn btn-secondary me-2">예</button>
+              <form method="post" th:action="@{/myPage/withdraw}">
+                <button id="yes" type="submit" class="btn btn-secondary me-2">예</button>
                 <button type="button" class="btn btn-primary">
                   <a href="/" style="color: #ffffff;">아니오</a>
                 </button>
-              </span>
+              </form>
             </div>
           </div>
         </div>

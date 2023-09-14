@@ -33,7 +33,7 @@ public class MemberSaveForm {
     @NotBlank
     private String address;
 
-    @NotBlank
+    @NotBlank(message = "상세주소를 입력해주세요.")
     private String detailsAddress;
 
     private String extraAddress;

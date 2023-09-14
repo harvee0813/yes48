@@ -56,7 +56,7 @@
                 <div class="ms-3 field-error" th:errors="*{name}" style="color: #dc3545;"></div>
               </th>
               <td>
-                <input class="ms-3 border border-light-subtle" th:field="*{name}" type="text" th:errorclass="field-error">
+                <input id="name" class="ms-2 border border-light-subtle" onblur="checkString()" th:field="*{name}" type="text" th:errorclass="field-error">
               </td>
             </tr>
             <tr class="border-bottom">
@@ -81,6 +81,7 @@
               <th class="table-light">
                 <strong class="ms-2 me-1 text-danger">*</strong>배송 주소
                 <div class="ms-3 field-error" th:errors="*{postcode}" style="color: #dc3545;"></div>
+                <div class="ms-3 field-error" th:errors="*{detailsAddress}" style="color: #dc3545;"></div>
               </th>
               <td>
                 <input id="postcode" class="mt-1 ms-2 mb-1 border border-light-subtle" th:field="*{postcode}" type="text" th:errorclass="field-error"
@@ -163,6 +164,7 @@ const idCheck = () => {
 function checkString() {
 
   const userId = document.getElementById("userId").value;
+  const name = document.getElementById("name").value;
   var specialCheck = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
   var nickLength = 0;
 
@@ -173,6 +175,15 @@ function checkString() {
   if (userId.search(/\s/) != -1) {
        alert("아이디는 공백을 포함 할 수 없습니다.");
        document.getElementById("userId").value = "";
+    }
+
+  if (specialCheck.test(name)) {
+       alert("이름은 특수문자를 포함 할 수 없습니다.");
+       document.getElementById("name").value = "";
+    }
+  if (name.search(/\s/) != -1) {
+       alert("이름은 공백을 포함 할 수 없습니다.");
+       document.getElementById("name").value = "";
     }
 }
 

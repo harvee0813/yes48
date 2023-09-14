@@ -32,7 +32,7 @@ class LoginServiceTest {
     private MockMvc mvc;
     @InjectMocks BCryptPasswordEncoder passwordEncoder;
 
-    @Before("")
+    @Before("스프링 시큐리티")
     public void setup() {
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
