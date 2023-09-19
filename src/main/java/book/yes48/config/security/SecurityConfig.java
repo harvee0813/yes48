@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
@@ -26,29 +27,16 @@ public class SecurityConfig {
     private PrincipleDetailsService memberDetailsService;
 
     @Bean
-    public CustomAuthenticationFailHandler failHandler() {
-        return new CustomAuthenticationFailHandler();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public CustomLoginSuccessHandler customLoginSuccessHandler() {
-        return new CustomLoginSuccessHandler();
-    }
-
-    @Bean
     protected DefaultSecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
                 .csrf()
                     .disable()
-                .authorizeHttpRequests()
+                    .httpBasic()
+                .and()
+                    .authorizeHttpRequests()
                     .requestMatchers("/admin/**").hasRole("ADMIN")
-                    .requestMatchers("/myPage/**").hasRole("USER")
-                    .requestMatchers("/order/**").hasRole("USER")
+                    .requestMatchers("/myPage/**").hasAnyRole("USER", "ADMIN")
+                    .requestMatchers("/order/**").hasAnyRole("USER", "ADMIN")
                     .anyRequest().permitAll()
                 .and()
                     .formLogin()
@@ -70,4 +58,20 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+    @Bean
+    public CustomAuthenticationFailHandler failHandler() {
+        return new CustomAuthenticationFailHandler();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CustomLoginSuccessHandler customLoginSuccessHandler() {
+        return new CustomLoginSuccessHandler();
+    }
+
 }

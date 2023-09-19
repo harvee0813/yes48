@@ -20,6 +20,9 @@ public class MemberController {
     @Autowired
     private final MemberService memberService;
 
+    /**
+     * 회원 가입 화면
+     */
     @GetMapping
     public String join(Model model) {
 
@@ -29,6 +32,11 @@ public class MemberController {
         return "member/join";
     }
 
+
+    /**
+     * 회원 가입
+     * @param form 회원 가입에 사용되는 폼
+     */
     @PostMapping
     public String join(@Validated @ModelAttribute("form") MemberSaveForm form,
                         BindingResult bindingResult) {

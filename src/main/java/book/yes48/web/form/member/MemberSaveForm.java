@@ -31,7 +31,7 @@ public class MemberSaveForm {
     private String postcode;
 
     @NotBlank
-    private String address;
+    private String basicAddress;
 
     @NotBlank(message = "상세주소를 입력해주세요.")
     private String detailsAddress;
@@ -41,7 +41,7 @@ public class MemberSaveForm {
     private Role role;
 
     @Builder
-    public MemberSaveForm(String userId, String password, String name, String email, String phone, String postcode, String address,
+    public MemberSaveForm(String userId, String password, String name, String email, String phone, String postcode, String basicAddress,
                           String detailsAddress, String state, Role role, String extraAddress) {
         this.userId = userId;
         this.password = password;
@@ -49,7 +49,7 @@ public class MemberSaveForm {
         this.email = email;
         this.phone = phone;
         this.postcode = postcode;
-        this.address = address;
+        this.basicAddress = basicAddress;
         this.state = state;
         this.detailsAddress = detailsAddress;
         this.extraAddress = extraAddress;

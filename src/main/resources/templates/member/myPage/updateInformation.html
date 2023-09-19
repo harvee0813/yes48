@@ -62,13 +62,13 @@
                     <tr class="border-bottom">
                         <th><h6 class="mt-1 ms-2 fw-bold">배송 주소</h6></th>
                         <td>
-                            <h6 id="recentAddress" class="mt-1 ms-2" th:if="${form.address}" th:text="${form.address}">서울시 XX동 XXX길 12-12번지 123동 456호</h6>
+                            <h6 id="recentAddress" class="mt-1 ms-2" th:if="${form.basicAddress}" th:text="${form.basicAddress}">서울시 XX동 XXX길 12-12번지 123동 456호</h6>
                             <span id="addressForm" style="display: none;">
                               <input id="postcode" class="mt-1 ms-2 mb-1 border border-light-subtle" th:field="${addressUpdateForm.postcode}" type="text"
                                      name="postcode" readonly="readonly" placeholder="우편번호">
                               <button onclick="execDaumPostcode()" type="button" class="btn btn-secondary btn-sm"
                                     id="btn-search-postcode">우편번호검색</button>
-                              <input id="address" type="text" class="ms-2 mb-1 border border-light-subtle" th:field="${addressUpdateForm.address}" style="width: 460px; height: 36px;"
+                              <input id="address" type="text" class="ms-2 mb-1 border border-light-subtle" th:field="${addressUpdateForm.basicAddress}" style="width: 460px; height: 36px;"
                                    name="basicAddress" placeholder="주소"/>
                               <input id="detailAddress" type="text" class="ms-2 mb-1 border border-light-subtle" th:field="${addressUpdateForm.detailsAddress}" style="width: 460px; height: 36px;"
                                    name="detailAddress" placeholder="상세주소"/>

@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class OrderItem extends BaseTimeEntity {
+public class OrderGoods extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id")

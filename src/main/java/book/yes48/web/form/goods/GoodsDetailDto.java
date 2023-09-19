@@ -1,6 +1,7 @@
 package book.yes48.web.form.goods;
 
 import book.yes48.entity.FileStore;
+import book.yes48.entity.goods.Goods;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -17,14 +18,14 @@ public class GoodsDetailDto {
     private String state;
     private FileStore fileStore;
 
-    public GoodsDetailDto(GoodsDetailDto goodsDetailDto) {
-        this.id = goodsDetailDto.getId();
-        this.name = goodsDetailDto.getName();
-        this.author = goodsDetailDto.getAuthor();
-        this.price = goodsDetailDto.getPrice();
-        this.publisher = goodsDetailDto.getPublisher();
-        this.publisherDate = goodsDetailDto.getPublisher();
-        this.state = goodsDetailDto.getState();
-        this.fileStore = goodsDetailDto.getFileStore();
+    public GoodsDetailDto(Goods goods) {
+        this.id = goods.getId();
+        this.name = goods.getName();
+        this.author = goods.getAuthor();
+        this.price = goods.getPrice();
+        this.publisher = goods.getPublisher();
+        this.publisherDate = goods.getPublisher();
+        this.state = goods.getState();
+        this.fileStore = goods.getFileStore();
     }
 }

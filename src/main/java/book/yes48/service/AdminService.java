@@ -150,8 +150,8 @@ public class AdminService {
     }
 
     // 상품 이름 중복 검증 로직
-    public void duplicationCheckGoodsName(String form) {
-        List<Goods> findGoods = adminRepository.findByName(form);
+    public void duplicationCheckGoodsName(String name) {
+        List<Goods> findGoods = adminRepository.findByName(name);
         if (!findGoods.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 상품입니다.");
         }

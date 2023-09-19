@@ -2,7 +2,7 @@ package book.yes48.service;
 
 import book.yes48.entity.member.Member;
 import book.yes48.entity.member.Role;
-import book.yes48.repository.MyPage.MyPageRepository;
+import book.yes48.repository.myPage.MyPageRepository;
 import book.yes48.web.form.myPage.AddressUpdateForm;
 import book.yes48.web.form.myPage.MyPageInformationForm;
 import book.yes48.web.form.myPage.PhoneUpdateForm;
@@ -49,7 +49,7 @@ class MyPageServiceTest {
                 .name("테스트")
                 .email("test@naver.com")
                 .phone("01012345678")
-                .address("서울특별시")
+                .basicAddress("서울특별시")
                 .postcode("12345")
                 .detailsAddress("xxx번지")
                 .extraAddress("xxx로")
@@ -75,7 +75,7 @@ class MyPageServiceTest {
         String userId = "testId";
 
         AddressUpdateForm addressUpdateForm = AddressUpdateForm.builder()
-                .address("서울특별시")
+                .basicAddress("서울특별시")
                 .postcode("12345")
                 .detailsAddress("xxx번지")
                 .extraAddress("xxx로")
@@ -91,7 +91,7 @@ class MyPageServiceTest {
         // then
         Member findMember = myPageRepository.findUser(userId);
 
-        assertThat(findMember.getAddress()).isEqualTo(addressUpdateForm.getAddress());               // address 비교
+        assertThat(findMember.getBasicAddress()).isEqualTo(addressUpdateForm.getBasicAddress());               // address 비교
         assertThat(findMember.getPostcode()).isEqualTo(addressUpdateForm.getPostcode());             // postcode 비교
         assertThat(findMember.getDetailsAddress()).isEqualTo(addressUpdateForm.getDetailsAddress()); // detailsAddress 비교
         assertThat(findMember.getExtraAddress()).isEqualTo(addressUpdateForm.getExtraAddress());     // extraAddress 비교
@@ -107,7 +107,7 @@ class MyPageServiceTest {
         String userId = "testId";
 
         AddressUpdateForm addressUpdateForm = AddressUpdateForm.builder()
-                .address("")
+                .basicAddress("")
                 .postcode("")
                 .detailsAddress("")
                 .extraAddress("")
@@ -125,7 +125,7 @@ class MyPageServiceTest {
 
         assertThat(findMember.getPhone()).isEqualTo(phoneUpdateForm.getPhone());                        // phone 비교
 
-        assertThat(findMember.getAddress()).isNotEqualTo(addressUpdateForm.getAddress());               // address 비교
+        assertThat(findMember.getBasicAddress()).isNotEqualTo(addressUpdateForm.getBasicAddress());               // address 비교
         assertThat(findMember.getPostcode()).isNotEqualTo(addressUpdateForm.getPostcode());             // postcode 비교
         assertThat(findMember.getDetailsAddress()).isNotEqualTo(addressUpdateForm.getDetailsAddress()); // detailsAddress 비교
         assertThat(findMember.getExtraAddress()).isNotEqualTo(addressUpdateForm.getExtraAddress());     // extraAddress 비교
@@ -139,7 +139,7 @@ class MyPageServiceTest {
         String userId = "testId";
 
         AddressUpdateForm addressUpdateForm = AddressUpdateForm.builder()
-                .address("서울특별시")
+                .basicAddress("서울특별시")
                 .postcode("12345")
                 .detailsAddress("xxx번지")
                 .extraAddress("xxx로")
@@ -156,7 +156,7 @@ class MyPageServiceTest {
         Member findMember = myPageRepository.findUser(userId);
 
         assertThat(findMember.getPhone()).isEqualTo(phoneUpdateForm.getPhone());                        // phone 비교
-        assertThat(findMember.getAddress()).isEqualTo(addressUpdateForm.getAddress());               // address 비교
+        assertThat(findMember.getBasicAddress()).isEqualTo(addressUpdateForm.getBasicAddress());               // address 비교
         assertThat(findMember.getPostcode()).isEqualTo(addressUpdateForm.getPostcode());             // postcode 비교
         assertThat(findMember.getDetailsAddress()).isEqualTo(addressUpdateForm.getDetailsAddress()); // detailsAddress 비교
         assertThat(findMember.getExtraAddress()).isEqualTo(addressUpdateForm.getExtraAddress());     // extraAddress 비교
@@ -176,7 +176,7 @@ class MyPageServiceTest {
         assertThat(findMember.getUserId()).isEqualTo("testId");
         assertThat(findMember.getName()).isEqualTo("테스트");
         assertThat(findMember.getEmail()).isEqualTo("test@naver.com");
-        assertThat(findMember.getAddress()).isEqualTo("서울특별시 xxx번지 xxx로");
+        assertThat(findMember.getBasicAddress()).isEqualTo("서울특별시 xxx번지 xxx로");
         assertThat(findMember.getPhone()).isEqualTo("01012345678");
     }
 
@@ -190,7 +190,7 @@ class MyPageServiceTest {
                 .name("테스트")
                 .email("test@naver.com")
                 .phone("01012345678")
-                .address("서울특별시")
+                .basicAddress("서울특별시")
                 .postcode("12345")
                 .detailsAddress("xxx번지")
                 .extraAddress("xxx로")

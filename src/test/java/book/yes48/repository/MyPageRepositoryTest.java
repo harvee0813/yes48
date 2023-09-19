@@ -2,8 +2,7 @@ package book.yes48.repository;
 
 import book.yes48.entity.member.Member;
 import book.yes48.entity.member.Role;
-import book.yes48.repository.MyPage.MyPageRepository;
-import book.yes48.repository.member.MemberRepository;
+import book.yes48.repository.myPage.MyPageRepository;
 import jakarta.persistence.EntityManager;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.AfterEach;
@@ -54,7 +53,7 @@ class MyPageRepositoryTest {
                 .email("test@naver.com")
                 .phone("010-1111-1111")
                 .postcode("12345")
-                .address("서울특별시")
+                .basicAddress("서울특별시")
                 .detailsAddress("xx구")
                 .extraAddress("xx동")
                 .state("Y")

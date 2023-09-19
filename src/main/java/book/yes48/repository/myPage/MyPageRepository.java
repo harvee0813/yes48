@@ -1,4 +1,4 @@
-package book.yes48.repository.MyPage;
+package book.yes48.repository.myPage;
 
 import book.yes48.entity.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

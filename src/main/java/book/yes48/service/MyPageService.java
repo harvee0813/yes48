@@ -1,7 +1,7 @@
 package book.yes48.service;
 
 import book.yes48.entity.member.Member;
-import book.yes48.repository.MyPage.MyPageRepository;
+import book.yes48.repository.myPage.MyPageRepository;
 import book.yes48.web.form.myPage.AddressUpdateForm;
 import book.yes48.web.form.myPage.MyPageInformationForm;
 import book.yes48.web.form.myPage.PhoneUpdateForm;
@@ -31,9 +31,9 @@ public class MyPageService {
 
         if (!phoneUpdateForm.getPhone().isEmpty()) {
             findMember.updatePhone(phoneUpdateForm);
-        } else if (!addressUpdateForm.getAddress().isEmpty()) {
+        } else if (!addressUpdateForm.getBasicAddress().isEmpty()) {
             findMember.updateAddress(addressUpdateForm);
-        } else if (!phoneUpdateForm.getPhone().isEmpty() && !addressUpdateForm.getAddress().isEmpty()) {
+        } else if (!phoneUpdateForm.getPhone().isEmpty() && !addressUpdateForm.getBasicAddress().isEmpty()) {
             findMember.updateAddressAndPhone(addressUpdateForm, phoneUpdateForm);
         } else {
 
@@ -53,7 +53,7 @@ public class MyPageService {
                 .userId(getUserId(findMember))
                 .name(findMember.getName())
                 .email(findMember.getEmail())
-                .address(getAddress(findMember))
+                .basicAddress(getAddress(findMember))
                 .phone(findMember.getPhone())
                 .build();
 
@@ -66,7 +66,7 @@ public class MyPageService {
      * @return 조합된 address
      */
     private static String getAddress(Member findMember) {
-        String address = findMember.getAddress();
+        String address = findMember.getBasicAddress();
         String detailAddress = findMember.getDetailsAddress();
         String extraAddress = findMember.getExtraAddress();
 

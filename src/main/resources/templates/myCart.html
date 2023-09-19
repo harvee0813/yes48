@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:replace="~{/layout/header :: headFragment}"></div>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+          integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div th:replace="~{/layout/navbar :: navFragment}"></div>
+  <div class="container">
+    <div class="mb-3 mt-3">
+      <p class="fw-bold fs-4" style="vertical-align:middle">장바구니</p>
+    </div>
+    <div>
+      <table class="text-center mb-4">
+        <tr class="bg-light border-top" style="height: 40px;">
+          <th style="width: 100px;"></th>
+          <th style="width: 540px;">상품정보</th>
+          <th style="width: 200px;">수량</th>
+          <th style="width: 200px;">상품 금액</th>
+          <th style="width: 200px;">삭제</th>
+        </tr>
+        <tr class="cart_list mt-2 border-top border-bottom" th:each="item : ${allCartItem}">
+          <td>
+            <div class="mt-2 mb-2">
+              <img th:src="@{|/goods/*{item.goods.fileStore.filename}|}" style="width: 80px; height: 107px;">
+            </div>
+          </td>
+          <td class="mt-1">
+            <p th:text="*{item.goods.name}">책 제목 </p>
+          </td>
+          <td>
+            <div class="quantity btn-group border" role="group" aria-label="Basic example">
+              <input th:value="*{item.quantity}" class="border-0 text-center"
+                     style="width: 72.78px; height: 31.78px;" type="number" value="1" min="1">
+            </div>
+            <div class="text-center mt-2">
+              <button th:attr="onclick=|modify('${item.goods.id}')|"
+                      class="change btn btn-sm btn-secondary">변경</button>
+            </div>
+          </td>
+          <td class="unit_price" th:text="*{item.goods.price}"
+              data-th-text="${#numbers.formatInteger((item.goods.price * item.quantity), 3, 'COMMA') + '원'}">가격</td>
+          <td>
+              <button th:attr="onclick=|delBtn('${item.goods.id}')|"
+                      class="cart_item_del btn btn-secondary btn-sm" type="button">삭제</button>
+          </td>
+        </tr>
+      </table>
+      <div class="row ms-1 me-1 border-primary-subtle border" style="background-color: #D4E3F1;">
+        <span class="col-6 mt-4 mb-4 border-primary-subtle border-end text-center">
+           <h6 class="fw-bold" style="font-size: 22px;">최종 결제 금액</h6>
+        </span>
+        <span class="total_price col-6 mt-4 mb-4 text-center" style="height: 26.39px;">
+          <strong class="price text-danger" style="font-size: 22px;">38,700 원</strong>
+        </span>
+      </div>
+      <div class="mt-4">
+        <div class="text-center">
+          <button type="button" class="btn btn-primary me-2">
+            <a href="/order" style="color: #ffffff;">주문하기</a>
+          </button>
+          <button type="button" class="btn btn-secondary">
+            <a href="/" style="color: #ffffff;">쇼핑하기</a>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+<script th:inline="javascript">
+  // 상품 합계와 상품 수량 변경에 함께 사용하는 변수
+  var unitCount = 0;
+
+  // 상품 합계
+  if ($('.cart_list').length) {
+    var cartList = $('.cart_list')
+    var targetTotal = $('.total_price .price');
+    var totalPrice = 0;
+    var itemDelBtn = cartList.find('.cart_item_del');
+
+    // 처음 접속시 합계 계산
+    calcTotal();
+
+    // 수량 바뀌면 합계 다시 계산
+    $('.quantity input').change(calcTotal);
+
+    // 아이템이 삭제되면 다시 합계 계산
+    function delBtn(goodsId) {
+      var userAction = confirm("상품을 삭제하겠습니까?");
+      if (userAction) {
+
+        // 장바구니 물건 삭제하기
+          $.ajax ({
+            type: "delete",
+            url: "/myCart/delete/cartItem",
+            data: {
+              "goodsId" : goodsId,
+            },
+            success: function(res) {
+              if (res == "ok") {
+                 location.href = '/myCart'
+              } else {
+
+              }
+            }
+          });
+            calcTotal();
+          }
+        };
+
+    // 가격 합계
+    function calcTotal() {
+      cartList = $('.cart_list');
+      totalPrice = 0;
+
+      if(cartList.length > 0) {
+         cartList.each(function() {
+          var unitPrice = parseInt($(this).find('.unit_price').text().replace(',', ''));
+          unitCount = $(this).find('input').val();
+          $(this).find('input').innerValue = unitCount;
+
+          totalPrice += unitPrice * unitCount;
+          localeTotalPrice = totalPrice.toLocaleString('ko-KR');
+
+          targetTotal.text(localeTotalPrice + '원');
+        });
+      } else {
+        targetTotal.text('0 원');
+      }
+    }
+  }
+
+  // 수량 변경
+  function modify(goodsId) {
+
+    $.ajax ({
+      type: "post",
+      url: "/myCart/updateQuantity",
+      data: {
+        "goodsId" : goodsId,
+        "quantity" : unitCount
+      },
+      success: function(res) {
+        if (res == "ok") {
+          location.href = '/myCart'
+        }
+      }
+    });
+  }
+
+</script>
+</body>
+<div th:insert="~{/layout/footer :: footerFragment}"></div>
+</html>

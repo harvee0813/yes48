@@ -1,5 +1,6 @@
 package book.yes48.web.controller;
 
+import book.yes48.security.auth.PrincipleDetails;
 import book.yes48.web.form.goods.GoodsDetailDto;
 import book.yes48.web.form.goods.GoodsDto;
 import book.yes48.web.form.goods.GoodsSearch;
@@ -10,11 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
@@ -72,7 +72,6 @@ public class GoodsController {
     @GetMapping("/book/{goodsId}/detailBook")
     public String detailBook(@PathVariable Long goodsId, Model model) {
         GoodsDetailDto findBook = goodsService.getId(goodsId);
-        log.info("findBook = {}", findBook);
 
         model.addAttribute("book", findBook);
 

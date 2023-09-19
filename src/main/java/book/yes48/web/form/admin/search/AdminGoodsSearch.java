@@ -7,6 +7,7 @@ import lombok.Setter;
 public class AdminGoodsSearch {
 
     private String searchBy;
+
     private SearchType searchType;
 
     public boolean isEmpty() {

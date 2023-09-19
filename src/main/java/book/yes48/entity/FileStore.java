@@ -15,9 +15,6 @@ public class FileStore {
     private String filename;
     private String filepath;
 
-    @OneToOne(mappedBy = "fileStore", fetch = FetchType.LAZY)
-    private Goods goods;
-
     @Builder
     public FileStore(String filename, String filepath) {
         this.filename = filename;
