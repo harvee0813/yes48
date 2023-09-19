@@ -40,7 +40,7 @@ public class MemberService {
                 .email(form.getEmail())
                 .phone(form.getPhone())
                 .postcode(form.getPostcode())
-                .address(form.getAddress())
+                .basicAddress(form.getBasicAddress())
                 .detailsAddress(form.getDetailsAddress())
                 .extraAddress(form.getExtraAddress())
                 .state("Y")

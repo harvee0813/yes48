@@ -1,4 +1,4 @@
-package book.yes48.repository.MyPage;
+package book.yes48.repository.myPage;
 
 public interface MyPageRepositoryCustom {
 }

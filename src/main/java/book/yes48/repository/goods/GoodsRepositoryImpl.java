@@ -25,6 +25,11 @@ public class GoodsRepositoryImpl implements GoodsRepositoryCustom {
     @Autowired
     JPAQueryFactory queryFactory;
 
+    /**
+     * 검색어에 따른 책 조회
+     * @param goodsSearch 검색 조건
+     * @return
+     */
     @Override
     public Page<GoodsDto> findAllBooks(GoodsSearch goodsSearch, Pageable pageable) {
         List<GoodsDto> result = queryFactory
@@ -45,6 +50,11 @@ public class GoodsRepositoryImpl implements GoodsRepositoryCustom {
         return PageableExecutionUtils.getPage(result, pageable, count::fetchOne);
     }
 
+    /**
+     * 아이디로 상품 가져오기
+     * @param id 상품 아이디
+     * @return
+     */
     @Override
     public GoodsDetailDto getId(Long id) {
         GoodsDetailDto dto = queryFactory

@@ -1,9 +1,7 @@
 package book.yes48.web.form.admin;
 
 import book.yes48.entity.FileStore;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Range;
@@ -37,7 +35,7 @@ public class AdminGoodsUpdateForm {
     @Range(min = 1000, max = 200000, message = "가격은 1000원이상 200,000원이하로 입력해주세요.")
     private int price;
 
-    @Max(value = 200, message = "수량은 최대 200개로 입력해주세요.")
+    @Range(min = 0, max = 200, message = "수량은 최대 200개로 입력해주세요.")
     private int stockQuantity;
 
     private String event;

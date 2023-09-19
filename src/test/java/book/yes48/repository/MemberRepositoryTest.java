@@ -52,7 +52,7 @@ class MemberRepositoryTest {
                 .email("test@naver.com")
                 .phone("010-1111-1111")
                 .postcode("12345")
-                .address("서울특별시")
+                .basicAddress("서울특별시")
                 .detailsAddress("xx구")
                 .extraAddress("xx동")
                 .state("Y")

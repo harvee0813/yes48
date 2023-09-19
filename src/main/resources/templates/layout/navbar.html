@@ -21,9 +21,9 @@
           <span sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
             <a href="/logout" class="me-3 link-secondary" style="font-size:13px">로그아웃</a>
           </span>
-          <span>
+          <span sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
             <a href="/myPage/orderHistoryList" class="me-3 link-secondary" style="font-size:13px">마이페이지</a>
-            <a href="/order/myCart" class="me-3 link-secondary" style="font-size:13px">장바구니</a>
+            <a href="/myCart" class="me-3 link-secondary" style="font-size:13px">장바구니</a>
             <a href="/order" class="me-3 link-secondary" style="font-size:13px">주문하기</a>
           </span>
           <span sec:authorize="hasRole('ROLE_ADMIN')">

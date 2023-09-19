@@ -23,12 +23,21 @@ public class Order extends BaseTimeEntity {
     private Member member;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> orderItems = new ArrayList<>();
+    private List<OrderGoods> orderGoods = new ArrayList<>();
 
     private int quantity;
     private int totalPrice;
     private LocalDateTime orderDate;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_id")
+    private Delivery delivery;
+
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    public void setMember(Member member) {
+        this.member = member;
+        member.getOrders().add(this);
+    }
 }

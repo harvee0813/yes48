@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <div th:replace="~{/layout/header :: headFragment}"></div>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+          integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
 <div th:replace="~{/layout/navbar :: navFragment}"></div>
@@ -68,7 +70,6 @@
                   <button id="plus" value='+' type="button" class="plus border-0 bg-white" style="height: 31.78px;">
                     <i class="bi bi-chevron-up"></i>
                   </button>
-                  <!-- 구매 수량 별로 총 상품 금액 늘어나게 설정 -->
                   <span class="ms-5">총 상품 금액
                     <p class="fw-bold text-primary"><strong id="calculatedPrice" th:text="*{price}"
                        data-th-text="${#numbers.formatInteger(book.price, 3, 'COMMA')}"class="totalCost" style="font-size: 23px;"></strong>원</p>
@@ -79,16 +80,12 @@
           </div>
           <div class="row">
             <div class="text-center">
-              <a href="/order/myCart" style=" color: #ffffff;">
-                <button type="button" class="mb-1 btn btn-primary form-control" style="background-color: #196AB3;">
-                장바구니 담기
+                <button onclick="setCart()" type="button" class="mb-1 btn btn-primary form-control" style="background-color: #196AB3;">
+                  <a href="/myCart" style="color: #ffffff;">장바구니 담기</a>
                 </button>
-              </a>
-              <a href="/order" style=" color: #ffffff;">
                 <button type="button" class="btn btn-primary form-control" style="background-color: #199DB3;">
-                  바로 구매
+                  <a href="/order" style=" color: #ffffff;">바로 구매</a>
                 </button>
-              </a>
             </div>
           </div>
         </div>
@@ -134,6 +131,35 @@
       document.getElementById("calculatedPrice").innerText = totalPrice.toLocaleString();
       document.getElementById("calculatedPrice").innerValue = totalPrice.toLocaleString();
     });
+
+// 장바구니에 물건 넣기
+var goodsId = '[[${book.id}]]';
+var count = document.getElementById("result").value;
+
+const setCart = () => {
+
+  $.ajax ({
+    type: "post",
+    url: "/myCart/CartItem",
+    data: {
+      "goodsId" : goodsId,
+      "count" : count
+    },
+    success: function(res) {
+      if (res == "ok") {
+          var complete = confirm("장바구니 담기에 성공하였습니다. 장바구니로 이동하시겠습니까?")
+          if (complete) {
+            location.href = '/myCart'
+          }
+      } else {
+           alert("이미 담겨있는 상품입니다.")
+      }
+    },
+    error: function(err) {
+       location.href = '/login'
+    }
+  });
+}
 /*]]*/
 
 // 배송날짜

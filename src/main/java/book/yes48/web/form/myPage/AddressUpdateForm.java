@@ -7,15 +7,15 @@ import lombok.Getter;
 public class AddressUpdateForm {
 
     String postcode;
-    String address;
+    String basicAddress;
     String detailsAddress;
     String extraAddress;
 
 
     @Builder
-    public AddressUpdateForm(String postcode, String address, String detailsAddress, String extraAddress) {
+    public AddressUpdateForm(String postcode, String basicAddress, String detailsAddress, String extraAddress) {
         this.postcode = postcode;
-        this.address = address;
+        this.basicAddress = basicAddress;
         this.detailsAddress = detailsAddress;
         this.extraAddress = extraAddress;
     }

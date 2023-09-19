@@ -47,7 +47,7 @@ public class LoginRepositoryTest {
                 .name("테스트")
                 .email("test@naver.com")
                 .phone("01012345678")
-                .address("12345")
+                .basicAddress("12345")
                 .postcode("서울특별시")
                 .detailsAddress("xxx번지")
                 .extraAddress("xxx로")

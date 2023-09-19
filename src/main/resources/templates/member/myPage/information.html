@@ -52,8 +52,8 @@
                         <tr class="border-bottom">
                             <th><h6 class="mt-1 ms-2 fw-bold">배송 주소</h6></th>
                             <td>
-                                <h6 class="mt-1 ms-2" th:if="${form.address}" th:text="${form.address}">서울시 XX동 XXX길 12-12번지 123동 456호</h6>
-                                <span class="mt-3" th:if="${#strings.isEmpty(form.address)}">
+                                <h6 class="mt-1 ms-2" th:if="${form.basicAddress}" th:text="${form.basicAddress}">서울시 XX동 XXX길 12-12번지 123동 456호</h6>
+                                <span class="mt-3" th:if="${#strings.isEmpty(form.basicAddress)}">
                                     <h6 class="ms-2 fw-bold">내 정보 수정에서 배송 주소를 등록해주세요.</h6>
                                 </span>
                             </td>

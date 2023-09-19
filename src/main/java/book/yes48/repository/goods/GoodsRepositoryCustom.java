@@ -11,4 +11,5 @@ public interface GoodsRepositoryCustom {
     Page<GoodsDto> findAllBooks(GoodsSearch goodsSearch, Pageable pageable);
 
     GoodsDetailDto getId(Long id);
+
 }

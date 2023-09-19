@@ -38,22 +38,22 @@ public class AdminController {
      * 상품 목록 화면
      */
     @GetMapping("/goodsList")
-        public String goods(@ModelAttribute("adminGoodsSearch") AdminGoodsSearch adminGoodsSearch,
-                            Pageable pageable, Model model) {
+    public String goods(@ModelAttribute("adminGoodsSearch") AdminGoodsSearch adminGoodsSearch,
+                        Pageable pageable, Model model) {
 
-        Page<AdminGoodsDto> goodsList = adminService.findList(pageable, adminGoodsSearch);
-        model.addAttribute("goodsList", goodsList.getContent());
+    Page<AdminGoodsDto> goodsList = adminService.findList(pageable, adminGoodsSearch);
+    model.addAttribute("goodsList", goodsList.getContent());
 
-        log.info("adminGoodsSearch.searchBy={}", adminGoodsSearch.getSearchBy());
-        log.info("adminGoodsSearch.searchType={}", adminGoodsSearch.getSearchType());
+    log.info("adminGoodsSearch.searchBy={}", adminGoodsSearch.getSearchBy());
+    log.info("adminGoodsSearch.searchType={}", adminGoodsSearch.getSearchType());
 
-        int startPage = getStartPage(goodsList);
+    int startPage = getStartPage(goodsList);
 
-        model.addAttribute("startPage", getStartPage(goodsList));
-        model.addAttribute("currentPage", goodsList.getNumber() + 1);
-        model.addAttribute("endPage", getEndPage(goodsList, startPage));
+    model.addAttribute("startPage", getStartPage(goodsList));
+    model.addAttribute("currentPage", goodsList.getNumber() + 1);
+    model.addAttribute("endPage", getEndPage(goodsList, startPage));
 
-        return "admin/goodsList";
+    return "admin/goodsList";
     }
 
     /**

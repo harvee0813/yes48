@@ -58,7 +58,7 @@ class MemberServiceTest {
                 .email("test@naver.com")
                 .phone("01012345678")
                 .postcode("12345")
-                .address("서울특별시")
+                .basicAddress("서울특별시")
                 .detailsAddress("xxx번지")
                 .extraAddress("xxx로")
                 .role(Role.USER)
@@ -76,7 +76,7 @@ class MemberServiceTest {
         assertThat(member.get().getEmail()).isEqualTo(form.getEmail());
         assertThat(member.get().getPhone()).isEqualTo(form.getPhone());
         assertThat(member.get().getPostcode()).isEqualTo(form.getPostcode());
-        assertThat(member.get().getAddress()).isEqualTo(form.getAddress());
+        assertThat(member.get().getBasicAddress()).isEqualTo(form.getBasicAddress());
         assertThat(member.get().getState()).isEqualTo(form.getState());
         assertThat(member.get().getDetailsAddress()).isEqualTo(form.getDetailsAddress());
         assertThat(member.get().getExtraAddress()).isEqualTo(form.getExtraAddress());
@@ -134,7 +134,7 @@ class MemberServiceTest {
                 .name("테스트")
                 .email("test@naver.com")
                 .phone("01012345678")
-                .address("12345")
+                .basicAddress("12345")
                 .postcode("서울특별시")
                 .detailsAddress("xxx번지")
                 .extraAddress("xxx로")
