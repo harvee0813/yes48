@@ -20,7 +20,7 @@
           <th style="width: 200px;">상품 금액</th>
           <th style="width: 200px;">삭제</th>
         </tr>
-        <tr class="cart_list mt-2 border-top border-bottom" th:each="item : ${allCartItem}">
+        <tr class="cart_list mt-2 border-top border-bottom" th:each="item, itemStatus : ${allCartItem}">
           <td>
             <div class="mt-2 mb-2">
               <img th:src="@{|/goods/*{item.goods.fileStore.filename}|}" style="width: 80px; height: 107px;">
@@ -31,19 +31,19 @@
           </td>
           <td>
             <div class="quantity btn-group border" role="group" aria-label="Basic example">
-              <input th:value="*{item.quantity}" class="border-0 text-center"
+              <input th:value="*{item.quantity}" th:name="${itemStatus.index}" class="border-0 text-center"
                      style="width: 72.78px; height: 31.78px;" type="number" value="1" min="1">
             </div>
             <div class="text-center mt-2">
-              <button th:attr="onclick=|modify('${item.goods.id}')|"
+              <button th:attr="onclick=|modify(${item.goods.id}, ${itemStatus.index})|"
                       class="change btn btn-sm btn-secondary">변경</button>
             </div>
           </td>
           <td class="unit_price" th:text="*{item.goods.price}"
               data-th-text="${#numbers.formatInteger((item.goods.price * item.quantity), 3, 'COMMA') + '원'}">가격</td>
           <td>
-              <button th:attr="onclick=|delBtn('${item.goods.id}')|"
-                      class="cart_item_del btn btn-secondary btn-sm" type="button">삭제</button>
+            <button th:attr="onclick=|delBtn('${item.goods.id}')|"
+                    class="cart_item_del btn btn-secondary btn-sm" type="button">삭제</button>
           </td>
         </tr>
       </table>
@@ -67,10 +67,7 @@
       </div>
     </div>
   </div>
-<script th:inline="javascript">
-  // 상품 합계와 상품 수량 변경에 함께 사용하는 변수
-  var unitCount = 0;
-
+  <script th:inline="javascript">
   // 상품 합계
   if ($('.cart_list').length) {
     var cartList = $('.cart_list')
@@ -116,7 +113,7 @@
       if(cartList.length > 0) {
          cartList.each(function() {
           var unitPrice = parseInt($(this).find('.unit_price').text().replace(',', ''));
-          unitCount = $(this).find('input').val();
+          var unitCount = $(this).find('input').val();
           $(this).find('input').innerValue = unitCount;
 
           totalPrice += unitPrice * unitCount;
@@ -131,14 +128,16 @@
   }
 
   // 수량 변경
-  function modify(goodsId) {
+  function modify(goodsId, index) {
+
+    var count = $('input[name=' + index + ']').val();
 
     $.ajax ({
       type: "post",
       url: "/myCart/updateQuantity",
       data: {
         "goodsId" : goodsId,
-        "quantity" : unitCount
+        "quantity" : count
       },
       success: function(res) {
         if (res == "ok") {

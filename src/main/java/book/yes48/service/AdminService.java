@@ -34,13 +34,6 @@ public class AdminService {
     @Autowired
     private final FileRepository fileRepository;
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(IllegalStateException.class)
-    public String illegalExHandler(IllegalArgumentException ex) {
-        log.error("[exceptionHandler] ex", ex);
-        return "error/500";
-    }
-
     /**
      * 상품 등록
      */
