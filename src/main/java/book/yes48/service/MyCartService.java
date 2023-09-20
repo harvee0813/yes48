@@ -114,6 +114,12 @@ public class MyCartService {
         return "ok";
     }
 
+    /**
+     * 상품 삭제
+     * @param goodsId 삭제할 상품 아이디
+     * @param userId 유저 아이디
+     * @return
+     */
     @Transactional
     public String deleteCartItem(String goodsId, String userId) {
         if (goodsId == null || userId == null) {
@@ -132,6 +138,13 @@ public class MyCartService {
         return "ok";
     }
 
+    /**
+     * 상품 별 수량 변경
+     * @param goodsId 수량 변경할 상품 아이디
+     * @param quantity 변경할 수량
+     * @param userId 유저 아이디
+     * @return
+     */
     @Transactional
     public String updateQuantity(String goodsId, String quantity, String userId) {
         if (goodsId == null || userId == null) {
