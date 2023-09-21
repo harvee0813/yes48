@@ -24,10 +24,12 @@ public class MyCartController {
 
     @GetMapping
     public String myCart(@AuthenticationPrincipal PrincipleDetails principleDetails,
-                         Model model) {
+                         Model model) throws Exception {
 
         String userId = principleDetails.getMember().getUserId();
+
         List<CartItemDto> allCartItem = myCartService.findAllCartItem(userId);
+        log.info("allCartItem = {}", allCartItem);
 
         model.addAttribute("allCartItem", allCartItem);
 

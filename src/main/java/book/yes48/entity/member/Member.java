@@ -45,10 +45,6 @@ public class Member extends BaseTimeEntity {
     private String provider;
     private String providerId;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "my_cart_id")
-//    private MyCart myCart;
-
     @Builder
     public Member(String userId, String password, String name, String email, String phone, Role role,
                   String provider, String postcode, String basicAddress, String detailsAddress, String extraAddress, String state, String providerId) {

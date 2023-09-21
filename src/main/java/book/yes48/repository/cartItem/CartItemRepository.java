@@ -14,9 +14,6 @@ import java.util.List;
 @Repository
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
-    @Query(value = "select ci from CartItem ci where ci.goods.id = :goodsId and ci.myCart.id = :cartId")
-    CartItem checkDuplicationGoods(@Param("goodsId") String goodsId, @Param("cartId") String cartId);
-
     @Query(value = "select ci from CartItem ci where ci.myCart.id = :cartId")
     List<CartItemDto> findCartById(@Param("cartId") Long id);
 

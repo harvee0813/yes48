@@ -3,18 +3,35 @@ server:
     encoding:
       force-response: true
 spring:
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+#  jpa:
+#    generate-ddl: true
+#    hibernate:
+#      hbm2ddl:
+#        auto: update
+#  datasource:
+##    url: jdbc:h2:mem:yes48Test;MODE=MySQL;
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:tcp://localhost/~/yes48Test;MODE=MySQL;
+#    username: sa
+#    password:
+#  h2:
+#    console:
+#      enabled: true
+
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost/~/yes48Test;MODE=MySQL;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:tcp://localhost/~/yes48Test;MODE=MySQL;
     username: sa
     password:
-  h2:
-    console:
-      enabled: true
+  jpa:
+    generate-ddl: true
+    hibernate:
+      hbm2ddl:
+        auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+      format_sql: true
 
   security:
     oauth2:

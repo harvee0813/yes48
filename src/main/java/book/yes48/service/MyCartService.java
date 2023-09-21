@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Transactional(readOnly = true)
@@ -33,13 +34,13 @@ public class MyCartService {
      * @param userId 유저 아이디
      * @return
      */
-    public List<CartItemDto> findAllCartItem(String userId) {
+    @Transactional
+    public List<CartItemDto> findAllCartItem(String userId) throws Exception {
 
         MyCart findMyCart = myCartRepository.findMyCartById(userId);
-        List<CartItemDto> findCartItem = cartItemRepository.findCartById(findMyCart.getId()); // 여기 querydsl로 바꿔보기
+        List<CartItemDto> findCartItem = cartItemRepository.findCartById(findMyCart.getId());
 
         return findCartItem;
-
     }
 
     /**
@@ -59,57 +60,26 @@ public class MyCartService {
 
         int quantity = Integer.parseInt(count);
 
-        Goods goodsById = goodsRepository.findGoodsById(goodsId);
+        Goods findgoods = goodsRepository.findGoodsById(goodsId);
         Member findMember = memberRepository.findUser(userId);
         MyCart myCart = myCartRepository.findMyCart(findMember);
 
-        // 생성된 cart가 없으면
-        if (myCart == null) {
-            MyCart createCart = MyCart.builder()
-                    .member(findMember)
-                    .build();
-            myCartRepository.save(createCart);
+        CartItem cartItem = CartItem.builder()
+                .goods(findgoods)
+                .myCart(myCart)
+                .quantity(quantity)
+                .build();
 
-            CartItem cartItem = CartItem.builder()
-                    .goods(goodsById)
-                    .myCart(createCart)
-                    .quantity(quantity)
-                    .build();
+        String checkGoodsId = String.valueOf(findgoods.getId());
+        String cartId = String.valueOf(myCart.getId());
+        CartItem result = cartItemRepository.findCartItem(checkGoodsId, cartId);
+        log.info("result = {}", result);
 
-            String checkGoodsId = String.valueOf(goodsById.getId());
-            String cartId = String.valueOf(myCart.getId());
-            log.info("cartId = {}", cartId);
-
-            CartItem result = cartItemRepository.checkDuplicationGoods(checkGoodsId, cartId);
-            log.info("result = {}", result);
-
-            if (result != null) {
-                return null;
-            }
-
-            cartItemRepository.save(cartItem);
+        if (result != null) {
+            return null;
         }
 
-        // 미리 생성된 cart가 있으면
-        if (myCart != null) {
-
-            CartItem cartItem = CartItem.builder()
-                    .goods(goodsById)
-                    .myCart(myCart)
-                    .quantity(quantity)
-                    .build();
-
-            String checkGoodsId = String.valueOf(goodsById.getId());
-            String cartId = String.valueOf(myCart.getId());
-            CartItem result = cartItemRepository.checkDuplicationGoods(checkGoodsId, cartId);
-            log.info("result = {}", result);
-
-            if (result != null) {
-                return null;
-            }
-
-            cartItemRepository.save(cartItem);
-        }
+        cartItemRepository.save(cartItem);
 
         return "ok";
     }
@@ -130,8 +100,6 @@ public class MyCartService {
         MyCart findCart = myCartRepository.findMyCart(findMember);
 
         String findCartId = String.valueOf(findCart.getId());
-
-        log.info("service memberId", findCart.getId());
 
         cartItemRepository.deleteById(goodsId, findCartId);
 
