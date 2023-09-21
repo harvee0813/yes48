@@ -1,8 +1,10 @@
 package book.yes48.security.oauth;
 
+import book.yes48.entity.cart.MyCart;
 import book.yes48.entity.member.Member;
 import book.yes48.entity.member.Role;
 import book.yes48.repository.member.MemberRepository;
+import book.yes48.repository.myCart.MyCartRepository;
 import book.yes48.security.auth.PrincipleDetails;
 import book.yes48.security.oauth.provider.GoogleUserInfo;
 import book.yes48.security.oauth.provider.NaverUserInfo;
@@ -30,6 +32,8 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService  {
     
     @Autowired
     MemberRepository memberRepository;
+    @Autowired
+    MyCartRepository myCartRepository;
     
     // 구글로 부터 받은 userRequest 데이터에 대한 후처리
     @Override
@@ -71,8 +75,18 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService  {
                     .providerId(providerId)
                     .state("Y")
                     .build();
-            
-            memberRepository.save(memberEntity);
+
+            Member save = memberRepository.save(memberEntity);
+        }
+
+        // 장바구니 생성
+        MyCart findMyCart = myCartRepository.findMyCart(memberEntity);
+        if (findMyCart == null) {
+            MyCart myCart = MyCart.builder()
+                    .member(memberEntity)
+                    .build();
+
+            myCartRepository.save(myCart);
         }
         
         return new PrincipleDetails(memberEntity, oAuth2User.getAttributes());
