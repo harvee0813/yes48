@@ -2,26 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <div th:replace="~{/layout/header :: headFragment}"></div>
-  <!--  -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-        crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <title>yes48</title>
-  <style>
-      a {
-          text-decoration: none;
-      }
-      ol{
-         list-style:none;
-       }
-   .container {
-      width: 1200px;
-      max-width: none !important;
-    }
-    </style>
-  <!--  -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+          integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
 <div th:replace="~{/layout/navbar :: navFragment}"></div>
@@ -30,151 +12,100 @@
       <p class="fw-bold fs-4" style="vertical-align:middle">주문 배송</p>
     </div>
     <div>
-      <div>
-        <h6 class="mt-4 mb-2"><i class="me-1 bi bi-caret-right-fill"></i>전체 주문 내역</h6>
-      </div>
-      <div>
-        <table class="text-center mb-4">
-          <tr class="bg-light border-top" style="height: 40px;">
-            <th style="width: 100px;"></th>
-            <th style="width: 540px;">상품정보</th>
-            <th style="width: 200px;">수량</th>
-            <th style="width: 200px;">상품 금액</th>
-            <th style="width: 200px;">비고</th>
-          </tr>
-          <!-- for문 -->
-          <tr class=" mt-2 border-top border-bottom">
-            <td>
-              <div class="mt-2 mb-2">
-                <img scr="" style="width: 80px; height: 107px;">
-              </div>
-            </td>
-            <td>
-              <p>자바 ORM 표준 JPA 프로그래밍 : 스프링 데이터 예제 프로젝트로 배우는 전자정부 표준 데이터베이스 프레임워크 </p>
-            </td>
-            <td>1</td>
-            <td>26,000</td>
-            <td>비고</td>
-          </tr>
-        </table>
-      </div>
-      <div>
-        <table class="ms-1 me-1 text-center" style="background-color: #D4E3F1; height: 80px;">
-          <tr class="border-primary-subtle border-top">
-            <th class="border-primary-subtle border-start border-end" style="width: 400px; font-size: 14px;">총 상품금액</th>
-            <th class="border-primary-subtle border-end" style="width: 400px; font-size: 14px;">총 할인 금액</th>
-            <th class="border-primary-subtle border-end" style="width: 400px; font-size: 14px;">최종 결제 금액</th>
-          </tr>
-          <tr class="border-primary-subtle border-bottom">
-            <td class="border-primary-subtle border-start border-end">
-              <strong style="font-size: 22px;">38,700 원</strong>
-            </td>
-            <td class="border-primary-subtle border-end">
-              <strong style="font-size: 22px; color: #3A85C8;">0 원</strong>
-            </td>
-            <td class="border-primary-subtle border-end">
-              <strong class="text-danger" style="font-size: 22px;">38,700 원</strong>
-            </td>
-          </tr>
-        </table>
-        <div>
-          <div>
-            <h6 class="mt-4 mb-2"><i class="me-1 bi bi-caret-right-fill"></i>배송 주소</h6>
-          </div>
-          <div class="border-top">
-            <table>
-              <tr class="border-bottom">
-                <th class="bg-light border-end" style="width: 200px;">
-                  <p class="ms-3 me-3 mt-3">주문자</p>
-                </th>
-                <td>
-                  <p id="order" class="mt-3 ms-3" style="width: 1000px;">홍길동</p>
-                  <input id="hidden-order" class="ms-2 border border-light-subtle" type="text" style="height: 36px; display: none;">
-                </td>
-              </tr>
-              <tr class="border-bottom">
-                <th class="bg-light border-end" style="width: 200px;">
-                  <p class="ms-3 me-3 mt-3">받으시는 분</p>
-                </th>
-                <td>
-                  <p id="recipient" class="mt-3 ms-3">고길동</p>
-                  <input id="hidden-recipient" class="ms-2 border border-light-subtle" type="text" style="height: 36px; display: none;">
-                </td>
-              </tr>
-              <tr class="border-bottom">
-                <th class="bg-light border-end" style="width: 200px;">
-                  <p class="ms-3 me-3 mt-3">주소</p>
-                </th>
-                <td>
-                  <p id="address" class="mt-3 ms-3">12345 서울특별시 xx동 12-34번지 123동 456호</p>
-                  <span id="hidden-address" style="display: none;">
-                    <input class="mt-1 ms-2 mb-2 border border-light-subtle" type="text" style="height: 36px;"
-                           name="postcode" readonly="readonly" id="zipCode">
-                    <button type="button" class="btn btn-secondary btn-sm"
-                            id="btn-search-postcode">우편번호검색</button>
-                    <input type="text" class="ms-2 mb-1 border border-light-subtle" style="width: 800px; height: 36px;"
-                           name="basicAddress" id="basic-address" />
-                    <input type="text" class="ms-2 mb-1 border border-light-subtle" style="width: 800px; height: 36px;"
-                           name="detailAddress" id="detail-address"/>
-                  </span>
-                </td>
-              </tr>
-              <tr class="border-bottom">
-                <th class="bg-light border-end" style="width: 200px;">
-                  <p class="ms-3 me-3 mt-3">휴대전화번호</p>
-                </th>
-                <td>
-                  <p id="phone" class="mt-3 ms-3" >010-1234-5678</p>
-                  <input id="hidden-phone" class="ms-2 border border-light-subtle" type="text" style="height: 36px; display: none;">
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div class="text-end mt-2 me-2">
-            <button type="button" class="btn btn-secondary btn-sm">
-              <label id="new-address">새 주소로 변경</label>
-              <label id="confirm" style="display:none;">확인</label>
-            </button>
-          </div>
-        </div>
-        <div class="text-center">
-          <!-- 결제 api뜨게 구현 -->
-          <button type="button" class="btn btn-primary btn-lg">결제하기</button>
-        </div>
-      </div>
+      <h6 class="mt-4 mb-2"><i class="me-1 bi bi-caret-right-fill"></i>전체 주문 내역</h6>
+    </div>
+    <div>
+      <table class="text-center mb-4">
+        <tr class="bg-light border-top" style="height: 40px;">
+          <th style="width: 100px;"></th>
+          <th style="width: 540px;">상품정보</th>
+          <th style="width: 300px;">수량</th>
+          <th style="width: 300px;">상품 금액</th>
+        </tr>
+        <tr class="cart_list mt-2 border-top border-bottom" th:each="order : ${findOrderList}">
+          <td>
+            <div class="mt-2 mb-2">
+              <img th:src="@{|/goods/*{order.goods.fileStore.filename}|}" style="width: 80px; height: 107px;">
+            </div>
+          </td>
+          <td class="mt-1">
+            <p th:text="*{order.goods.name}">책 제목 </p>
+          </td>
+          <td class="quantity" th:value="*{order.quantity}" th:text="${order.quantity}">수량</td>
+          <td class="unit_price" th:text="*{order.goods.price}"
+              data-th-text="${#numbers.formatInteger((order.goods.price * order.quantity), 3, 'COMMA') + '원'}">가격</td>
+          <td>
+        </tr>
+      </table>
+    </div>
+    <div class="row ms-1 me-1 border-primary-subtle border" style="background-color: #D4E3F1;">
+          <span class="col-6 mt-4 mb-4 border-primary-subtle border-end text-center">
+             <h6 class="fw-bold" style="font-size: 22px;">최종 결제 금액</h6>
+          </span>
+      <span class="total_price col-6 mt-4 mb-4 text-center" style="height: 26.39px;">
+            <strong class="price text-danger" style="font-size: 22px;">0 원</strong>
+          </span>
+    </div>
+    <div>
+      <h6 class="mt-4 mb-2"><i class="me-1 bi bi-caret-right-fill"></i>배송 정보</h6>
+    </div>
+    <div class="border-top">
+      <table>
+        <tr class="border-bottom">
+          <th class="bg-light border-end" style="width: 200px;">
+            <p class="ms-3 me-3 mt-3">주문자</p>
+          </th>
+          <td>
+            <p id="order" th:text="${findMember.name}" class="mt-3 ms-3" style="width: 1000px;">홍길동</p>
+          </td>
+        </tr>
+        <tr class="border-bottom">
+          <th class="bg-light border-end" style="width: 200px;">
+            <p class="ms-3 me-3 mt-3">주소</p>
+          </th>
+          <td>
+            <p id="address" th:if="${findMember.basicAddress}" th:text="${findMember.basicAddress}" class="mt-3 ms-3">12345 서울특별시 xx동 12-34번지 123동 456호</p>
+            <span class="mt-3" th:if="${#strings.isEmpty(findMember.basicAddress)}">
+                <h6 class="ms-2 fw-bold">내 정보 수정에서 배송 주소를 등록해주세요.</h6>
+            </span>
+          </td>
+        </tr>
+        <tr class="border-bottom">
+          <th class="bg-light border-end" style="width: 200px;">
+            <p class="ms-3 me-3 mt-3">휴대전화번호</p>
+          </th>
+          <td>
+            <p id="phone" class="mt-3 ms-3" th:if="${findMember.phone}" th:text="${findMember.phone}">010-1234-5678</p>
+            <span class="mt-3" th:if="${#strings.isEmpty(findMember.phone)}">
+                <h6 class="ms-2 fw-bold">내 정보 수정에서 휴대폰 번호를 등록해주세요.</h6>
+            </span>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="mt-2 text-center">
+      <button type="button" class="btn btn-primary btn-lg">결제하기</button>
     </div>
   </div>
 <script>
-  <!-- 기본 배송지 -->
-  var order = document.querySelector('#order');
-  var recipient = document.querySelector('#recipient');
-  var address = document.querySelector('#address');
-  var phone = document.querySelector('#phone');
+// 합계 계산
+if ($('.cart_list').length) {
+    var cartList = $('.cart_list')
+    var targetTotal = $('.total_price .price');
+    var totalPrice = 0;
 
-  <!-- 새 배송지 -->
-  var hiddenOrder = document.querySelector('#hidden-order');
-  var hiddenRecipient = document.querySelector('#hidden-recipient');
-  var hiddenAddress = document.querySelector('#hidden-address');
-  var hiddenPhone = document.querySelector('#hidden-phone');
+    // 상품 가격 * 상품 수량 합계
+    for(let i = 0; i < cartList.length; i++) {
+      var unitPrice = parseInt(document.getElementsByClassName('unit_price')[i].textContent.replace(',', ''));
+      var unitCount = parseInt(document.getElementsByClassName('quantity')[i].textContent);
 
-  <!-- 버튼 -->
-  var newAddress = document.querySelector('#new-address');
-  var confirm = document.querySelector('#confirm');
+      totalPrice += unitPrice * unitCount;
+    }
 
-  newAddress.onclick = function() {
-    order.style.display = "none";
-    recipient.style.display = "none";
-    address.style.display = "none";
-    phone.style.display = "none";
+    localeTotalPrice = totalPrice.toLocaleString('ko-KR');
+    targetTotal.text(localeTotalPrice + '원');
 
-    hiddenOrder.style.display = "block";
-    hiddenRecipient.style.display = "block";
-    hiddenAddress.style.display = "block";
-    hiddenPhone.style.display = "block";
-
-    newAddress.style.display = "none";
-    confirm.style.display = "block";
-  }
+}
 </script>
 </body>
 <div th:insert="~{/layout/footer :: footerFragment}"></div>

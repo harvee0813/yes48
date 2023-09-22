@@ -59,7 +59,7 @@ public class MemberController {
     public String nameCheck(@RequestParam("userId") String userId) {
         log.info("userId = {}", userId);
 
-        String checkResult = memberService.userIdCheck(userId);
+        String checkResult = memberService.findUser(userId);
 
         return checkResult;
     }

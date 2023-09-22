@@ -94,7 +94,7 @@ class MemberServiceTest {
         em.persist(member1);
 
         // when
-        String result = memberService.userIdCheck(member2.getUserId());
+        String result = memberService.findUser(member2.getUserId());
 
         // then
         assertThat(result).isEqualTo(null);
@@ -107,7 +107,7 @@ class MemberServiceTest {
         Member member = testMember();
 
         // when
-        String result = memberService.userIdCheck(member.getUserId());
+        String result = memberService.findUser(member.getUserId());
 
         // then
         assertThat(result).isEqualTo("ok");
@@ -117,8 +117,7 @@ class MemberServiceTest {
     @DisplayName("아이디로 회원 찾기")
     public void findById() {
         // given
-        Member member = testMember();
-        em.persist(member);
+        Member member = em.find(Member.class, 117);
 
         // when
         Optional<Member> findMember = memberService.findById(member.getId());

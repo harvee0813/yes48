@@ -4,10 +4,12 @@ import book.yes48.entity.cart.CartItem;
 import book.yes48.entity.cart.MyCart;
 import book.yes48.entity.goods.Goods;
 import book.yes48.entity.member.Member;
+import book.yes48.entity.order.OrderGoods;
 import book.yes48.repository.cartItem.CartItemRepository;
 import book.yes48.repository.goods.GoodsRepository;
 import book.yes48.repository.member.MemberRepository;
 import book.yes48.repository.myCart.MyCartRepository;
+import book.yes48.repository.order.OrderGoodsRepository;
 import book.yes48.web.form.cartItemDto.CartItemDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +30,7 @@ public class MyCartService {
     @Autowired private final MemberRepository memberRepository;
     @Autowired private final MyCartRepository myCartRepository;
     @Autowired private final CartItemRepository cartItemRepository;
+    @Autowired private final OrderGoodsRepository orderGoodsRepository;
 
     /**
      * 장바구니에 담긴 상품 전체 가져오기
@@ -81,6 +84,9 @@ public class MyCartService {
 
         cartItemRepository.save(cartItem);
 
+        // 주문 대기 상품 삭제
+        orderGoodsRepository.deleteByMemberId(String.valueOf(findMember.getId()));
+
         return "ok";
     }
 
@@ -99,9 +105,9 @@ public class MyCartService {
         Member findMember = memberRepository.findUser(userId);
         MyCart findCart = myCartRepository.findMyCart(findMember);
 
-        String findCartId = String.valueOf(findCart.getId());
+        String cartId = String.valueOf(findCart.getId());
 
-        cartItemRepository.deleteById(goodsId, findCartId);
+        cartItemRepository.deleteById(goodsId, cartId);
 
         return "ok";
     }
@@ -122,8 +128,8 @@ public class MyCartService {
         Member findMember = memberRepository.findUser(userId);
         MyCart findCart = myCartRepository.findMyCart(findMember);
 
-        String findCartId = String.valueOf(findCart.getId());
-        CartItem findCartItem = cartItemRepository.findCartItem(goodsId, findCartId);
+        String cartId = String.valueOf(findCart.getId());
+        CartItem findCartItem = cartItemRepository.findCartItem(goodsId, cartId);
 
         findCartItem.setQuantity(Integer.parseInt(quantity));
 

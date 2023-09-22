@@ -22,6 +22,11 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Transactional
-    @Query(value = "delete from CartItem where goods.id = :goodsId and myCart.id = :findCartId")
-    void deleteById(@Param("goodsId") String goodsId, @Param("findCartId") String findCartId);
+    @Query(value = "delete from CartItem where goods.id = :goodsId and myCart.id = :cartId")
+    void deleteById(@Param("goodsId") String goodsId, @Param("cartId") String cartId);
+
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Transactional
+    @Query(value = "delete from CartItem where myCart.id = :cartId")
+    void deleteCartItem(@Param("cartId") String cartId);
 }

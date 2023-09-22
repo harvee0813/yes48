@@ -46,7 +46,7 @@ class MemberRepositoryTest {
     public void findUser() {
         // given
         Member member = Member.builder()
-                .userId("userId")
+                .userId("testId")
                 .phone("test")
                 .name("테스트")
                 .email("test@naver.com")
