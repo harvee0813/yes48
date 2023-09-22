@@ -56,19 +56,15 @@ public class CartItemRepositoryTest {
     @DisplayName("장바구니에 중복 상품 등록 방지 - 중복 상품이 없을 때")
     public void checkDuplicationGoods_yesNull() {
         // given
-        Member member = getMember(); // 회원 저장 - myCart와 연관관계
-        em.persist(member);
+        MyCart myCart = em.find(MyCart.class, 63);
 
         FileStore fileStore = getFile();
-        Goods goods = getGoods(fileStore);  // 상품 저장 - cartItem와 연관관계
+        Goods goods = getGoods(fileStore);  // 상품 저장
         em.persist(goods);
-
-        MyCart createCart = getMyCart(member);  // myCart 생성
-        em.persist(createCart);
 
         // when
         String goodsId = String.valueOf(goods.getId());
-        String cartId = String.valueOf(createCart.getId());
+        String cartId = String.valueOf(myCart.getId());
         CartItem findCartItem = cartItemRepository.findCartItem(goodsId, cartId);
 
         // then
@@ -79,23 +75,9 @@ public class CartItemRepositoryTest {
     @DisplayName("장바구니에 중복 상품 등록 방지 - 중복 상품이 있을 때")
     public void checkDuplicationGoods_NotNull() {
         // given
-        Member member = getMember(); // 회원 저장 - myCart와 연관관계
-        em.persist(member);
-
-        FileStore fileStore = getFile();
-        Goods goods = getGoods(fileStore);  // 상품 저장 - cartItem와 연관관계
-        em.persist(goods);
-
-        MyCart createCart = getMyCart(member);  // myCart 생성
-        em.persist(createCart);
+        CartItem cartItem = em.find(CartItem.class, 45);
 
         // when
-        CartItem cartItem = CartItem.builder()   // 새로운 cartItem 추가
-                .myCart(createCart)
-                .goods(goods)
-                .build();
-        em.persist(cartItem);
-
         String newGoodsId = String.valueOf(cartItem.getGoods().getId());
         String cartId = String.valueOf(cartItem.getMyCart().getId());
         CartItem findCartItem = cartItemRepository.findCartItem(newGoodsId, cartId);
@@ -108,21 +90,7 @@ public class CartItemRepositoryTest {
     @DisplayName("상품 아이디와 카트 아이디를 비교해서 장바구니 내부 아이템 삭제하기")
     @Transactional
     public void deleteById() {
-        Member member = getMember(); // 회원 저장 - myCart와 연관관계
-        em.persist(member);
-
-        FileStore fileStore = getFile();
-        Goods goods = getGoods(fileStore);  // 상품 저장 - cartItem와 연관관계
-        em.persist(goods);
-
-        MyCart createCart = getMyCart(member);  // myCart 생성
-        em.persist(createCart);
-
-        CartItem cartItem = CartItem.builder()   // cartItem 추가
-                .myCart(createCart)
-                .goods(goods)
-                .build();
-        em.persist(cartItem);
+        CartItem cartItem = em.find(CartItem.class, 45);
 
         // when
         String goodsId = String.valueOf(cartItem.getGoods().getId());
@@ -133,30 +101,6 @@ public class CartItemRepositoryTest {
 
         // then
         Assertions.assertThat(all).isNotNull();
-    }
-
-    // 테스트 MyCart
-    private MyCart getMyCart(Member member) {
-        return MyCart.builder()
-                .member(member)
-                .build();
-    }
-
-    // 테스트 회원
-    private static Member getMember() {
-        return Member.builder()
-                .userId("userId")
-                .phone("test")
-                .name("테스트")
-                .email("test@naver.com")
-                .phone("010-1111-1111")
-                .postcode("12345")
-                .basicAddress("서울특별시")
-                .detailsAddress("xx구")
-                .extraAddress("xx동")
-                .state("Y")
-                .role(Role.USER)
-                .build();
     }
 
     // 테스트 상품

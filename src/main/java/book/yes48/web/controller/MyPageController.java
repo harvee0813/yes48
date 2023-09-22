@@ -25,7 +25,7 @@ public class MyPageController {
     @Autowired MyPageService myPageService;
 
     /**
-     * 주문 목록 - 추후 설명 업데이트
+     * 주문 목록
      * @return
      */
     @GetMapping("/orderHistoryList")

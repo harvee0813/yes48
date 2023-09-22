@@ -57,7 +57,7 @@ public class MemberService {
      * @param userId 중복 체크할 아이디
      * @return 중복 여부
      */
-    public String userIdCheck(String userId) {
+    public String findUser(String userId) {
         Member member = memberRepository.findUser(userId);
         if (member != null) {
             return null;

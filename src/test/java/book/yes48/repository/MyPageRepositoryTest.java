@@ -29,7 +29,7 @@ class MyPageRepositoryTest {
     private WebApplicationContext context;
     private MockMvc mvc;
 
-    @Before("")
+    @Before("스프링 시큐리티")
     public void setup() {
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
@@ -47,7 +47,7 @@ class MyPageRepositoryTest {
     public void findUser() {
         // given
         Member member = Member.builder()
-                .userId("userId")
+                .userId("testId")
                 .phone("test")
                 .name("테스트")
                 .email("test@naver.com")
@@ -63,7 +63,8 @@ class MyPageRepositoryTest {
         myPageRepository.save(member);
 
         // when
-        Member findUser = myPageRepository.findUser("userId");
+        String userId = member.getUserId();
+        Member findUser = myPageRepository.findUser(userId);
 
         // then
         assertThat(findUser.getUserId()).isEqualTo(member.getUserId());

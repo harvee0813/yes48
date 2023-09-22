@@ -1,4 +1,4 @@
-package book.yes48.repository;
+package book.yes48.service;
 
 import book.yes48.entity.FileStore;
 import book.yes48.entity.cart.CartItem;
@@ -6,40 +6,35 @@ import book.yes48.entity.cart.MyCart;
 import book.yes48.entity.goods.Goods;
 import book.yes48.entity.member.Member;
 import book.yes48.entity.member.Role;
-import book.yes48.repository.myCart.MyCartRepository;
-import book.yes48.security.auth.PrincipleDetails;
+import book.yes48.entity.order.OrderGoods;
 import jakarta.persistence.EntityManager;
 import org.aspectj.lang.annotation.Before;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest
 @Transactional(readOnly = true)
-public class MyCartRepositoryTest {
+public class OrderServiceTest {
 
     @Autowired
-    MyCartRepository myCartRepository;
+    OrderService orderService;
     @Autowired
     EntityManager em;
+    @Autowired
     private WebApplicationContext context;
     private MockMvc mvc;
 
@@ -57,30 +52,37 @@ public class MyCartRepositoryTest {
     }
 
     @Test
-    @DisplayName("장바구니 담기 클릭시, 장바구니 첫 생성을 위한 회원 개인 장바구니 찾기")
-    public void findMyCart() {
+    @DisplayName("주문 대기 상품 등록")
+    public void getGoods() {
         // given
         Member member = em.find(Member.class, 117);
+        String userId = member.getUserId();
 
         // when
-        MyCart myCart = myCartRepository.findMyCart(member);
+        List<OrderGoods> findOrderGoods = orderService.getGoods(userId);
 
         // then
-        assertThat(member.getId()).isEqualTo(myCart.getMember().getId());
+        assertThat(findOrderGoods).isNotEmpty();
+        assertThat(findOrderGoods.get(0).getMember().getId()).isEqualTo(member.getId());
     }
 
     @Test
-    @DisplayName("장바구니에 상품을 담기 위해 회원 아이디로 장바구니 찾기")
-    public void findMyCartById() {
+    @DisplayName("바로 구매 클릭시 주문 대기 상품 등록")
+    public void GoodsBuyNow() {
         // given
+        Goods goods = em.find(Goods.class, 113);
         Member member = em.find(Member.class, 117);
-        MyCart myCart = em.find(MyCart.class, 63);
+
+        String goodsId = String.valueOf(goods.getId());
+        String userId = member.getUserId();
+        String count = "1";
+        String memberPkId = String.valueOf(member.getId());
 
         // when
-        String userId = String.valueOf(member.getUserId());
-        MyCart myCartById = myCartRepository.findMyCartById(userId);
+        String result = orderService.GoodsBuyNow(count, goodsId, userId, memberPkId);
 
         // then
-        assertThat(myCartById.getMember().getId()).isEqualTo(myCart.getMember().getId());
+        assertThat(result).isEqualTo("ok");
+
     }
 }

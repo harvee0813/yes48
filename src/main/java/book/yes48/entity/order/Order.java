@@ -36,8 +36,6 @@ public class Order extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    public void setMember(Member member) {
-        this.member = member;
-        member.getOrders().add(this);
-    }
+
+
 }

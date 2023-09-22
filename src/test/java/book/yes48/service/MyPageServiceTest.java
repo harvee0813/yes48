@@ -91,7 +91,7 @@ class MyPageServiceTest {
         // then
         Member findMember = myPageRepository.findUser(userId);
 
-        assertThat(findMember.getBasicAddress()).isEqualTo(addressUpdateForm.getBasicAddress());               // address 비교
+        assertThat(findMember.getBasicAddress()).isEqualTo(addressUpdateForm.getBasicAddress());     // address 비교
         assertThat(findMember.getPostcode()).isEqualTo(addressUpdateForm.getPostcode());             // postcode 비교
         assertThat(findMember.getDetailsAddress()).isEqualTo(addressUpdateForm.getDetailsAddress()); // detailsAddress 비교
         assertThat(findMember.getExtraAddress()).isEqualTo(addressUpdateForm.getExtraAddress());     // extraAddress 비교

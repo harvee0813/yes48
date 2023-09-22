@@ -66,7 +66,7 @@
                     <i class="bi bi-chevron-down"></i>
                   </button>
                   <input id="result" class="border-0 text-center"
-                         style="width: 72.78px; height: 31.78px;" value="1"> <!-- 수량  -->
+                         style="width: 72.78px; height: 31.78px;" value="1">
                   <button id="plus" value='+' type="button" class="plus border-0 bg-white" style="height: 31.78px;">
                     <i class="bi bi-chevron-up"></i>
                   </button>
@@ -83,8 +83,8 @@
                 <button onclick="setCart()" type="button" class="mb-1 btn btn-primary form-control" style="background-color: #196AB3;">
                   <a href="/myCart" style="color: #ffffff;">장바구니 담기</a>
                 </button>
-                <button type="button" class="btn btn-primary form-control" style="background-color: #199DB3;">
-                  <a href="/order" style=" color: #ffffff;">바로 구매</a>
+                <button onclick="setOrderGoods()" type="button" class="btn btn-primary form-control" style="background-color: #199DB3;">
+                  <a href="/order/now" style=" color: #ffffff;">바로 구매</a>
                 </button>
             </div>
           </div>
@@ -132,10 +132,11 @@
       document.getElementById("calculatedPrice").innerValue = totalPrice.toLocaleString();
     });
 
-// 장바구니에 물건 넣기
+// 장바구니와 바로 구매에 사용하는 변수
 var goodsId = '[[${book.id}]]';
 var count = document.getElementById("result").value;
 
+// 장바구니에 물건 넣기
 const setCart = () => {
 
   $.ajax ({
@@ -161,6 +162,29 @@ const setCart = () => {
   });
 }
 /*]]*/
+
+// 바로 구매
+const setOrderGoods = () => {
+
+  $.ajax ({
+    type: "post",
+    url: "/order/OrderItem",
+    data: {
+      "goodsId" : goodsId,
+      "count" : count
+    },
+    success: function(res) {
+      if (res == "ok") {
+          location.href = '/order';
+      } else {
+           alert("이미 담겨있는 상품입니다.")
+      }
+    },
+    error: function(err) {
+       location.href = '/login'
+    }
+  });
+}
 
 // 배송날짜
 let today = new Date();

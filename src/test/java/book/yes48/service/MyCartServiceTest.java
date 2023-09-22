@@ -18,6 +18,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,21 +60,8 @@ class MyCartServiceTest {
     @DisplayName("장바구니에 상품 등록 - 이미 등록된 상품을 등록할 경우")
     public void setCartItem_yesItem() {
         // given
-        FileStore fileStore = getFile();
-        Goods goods = getGoods(fileStore);  // 상품 저장 - cartItem와 연관관계
-        em.persist(goods);
-
-        Member member = getMember(); // 회원 생성 - myCart와 연관관계
-        em.persist(member);
-
-        MyCart createCart = getMyCart(member);  // myCart 생성
-        em.persist(createCart);
-
-        CartItem cartItem = CartItem.builder()   // 동일한 cartItem 미리 등록
-                .myCart(createCart)
-                .goods(goods)
-                .build();
-        em.persist(cartItem);
+        Goods goods = em.find(Goods.class, 113);
+        Member member = em.find(Member.class, 117);
 
         // when
         String goodsId = String.valueOf(goods.getId());
@@ -90,15 +78,11 @@ class MyCartServiceTest {
     @DisplayName("장바구니에 상품 등록 - 등록되지 않은 상품을 등록할 경우")
     public void setCartItem_noItem() {
         // given
-        FileStore fileStore = getFile();
-        Goods goods = getGoods(fileStore);  // 상품 저장 - cartItem와 연관관계
+        Member member = em.find(Member.class, 117);
+
+        FileStore fileStore = getFile(); // 새 상품
+        Goods goods = getGoods(fileStore);
         em.persist(goods);
-
-        Member member = getMember(); // 회원 생성 - myCart와 연관관계
-        em.persist(member);
-
-        MyCart createCart = getMyCart(member);  // myCart 생성
-        em.persist(createCart);
 
         // when
         String goodsId = String.valueOf(goods.getId());
@@ -115,18 +99,8 @@ class MyCartServiceTest {
     @DisplayName("장바구니 상품 삭제")
     public void deleteCartItem() {
         // given
-        FileStore fileStore = getFile();
-        Goods goods = getGoods(fileStore);  // 상품 저장 - cartItem와 연관관계
-        em.persist(goods);
-
-        Member member = getMember(); // 회원 생성 - myCart와 연관관계
-        em.persist(member);
-
-        MyCart createCart = getMyCart(member);  // myCart 생성
-        em.persist(createCart);
-
-        CartItem cartItem = getCartItem(goods, createCart); // 장바구니 상품 등록
-        em.persist(cartItem);
+        Goods goods = em.find(Goods.class, 113);
+        Member member = em.find(Member.class, 117);
 
         // when
         String goodsId = String.valueOf(goods.getId());
@@ -142,22 +116,8 @@ class MyCartServiceTest {
     @DisplayName("장바구니 상품 수량 변경")
     public void updateQuantity() {
         // given
-        FileStore fileStore = getFile();
-        Goods goods = getGoods(fileStore);  // 상품 저장 - cartItem와 연관관계
-        em.persist(goods);
-
-        Member member = getMember(); // 회원 생성 - myCart와 연관관계
-        em.persist(member);
-
-        MyCart createCart = getMyCart(member);  // myCart 생성
-        em.persist(createCart);
-
-        CartItem cartItem = CartItem.builder()   // 동일한 cartItem 미리 등록
-                .myCart(createCart)
-                .goods(goods)
-                .quantity(1)
-                .build();
-        em.persist(cartItem);
+        Goods goods = em.find(Goods.class, 113);
+        Member member = em.find(Member.class, 117);
 
         // when
         String quantity = "3";
@@ -170,34 +130,10 @@ class MyCartServiceTest {
         assertThat(result).isEqualTo("ok");
     }
 
-    // 테스트 MyCart
-    private MyCart getMyCart(Member member) {
-        return MyCart.builder()
-                .member(member)
-                .build();
-    }
-
-    // 테스트 회원
-    private static Member getMember() {
-        return Member.builder()
-                .userId("userId")
-                .phone("test")
-                .name("테스트")
-                .email("test@naver.com")
-                .phone("010-1111-1111")
-                .postcode("12345")
-                .basicAddress("서울특별시")
-                .detailsAddress("xx구")
-                .extraAddress("xx동")
-                .state("Y")
-                .role(Role.USER)
-                .build();
-    }
-
     // 테스트 상품
     private static Goods getGoods(FileStore file) {
         return Goods.builder()
-                .name("스프링 부트")
+                .name("스프링 부트 aws")
                 .sort("국내 도서")
                 .author("이동욱")
                 .publisher("프리렉")
@@ -218,14 +154,5 @@ class MyCartServiceTest {
                 .build();
 
         return fileStore;
-    }
-
-    // 테스트 cartItem
-    private static CartItem getCartItem(Goods goods, MyCart createCart) {
-        return CartItem.builder()
-                .myCart(createCart)
-                .goods(goods)
-                .quantity(2)
-                .build();
     }
 }
