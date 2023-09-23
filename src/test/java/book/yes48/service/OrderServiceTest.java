@@ -6,7 +6,10 @@ import book.yes48.entity.cart.MyCart;
 import book.yes48.entity.goods.Goods;
 import book.yes48.entity.member.Member;
 import book.yes48.entity.member.Role;
+import book.yes48.entity.order.Order;
 import book.yes48.entity.order.OrderGoods;
+import book.yes48.repository.order.OrderRepository;
+import book.yes48.web.form.myPage.MyPageInformationForm;
 import jakarta.persistence.EntityManager;
 import org.aspectj.lang.annotation.Before;
 import org.assertj.core.api.Assertions;
@@ -32,6 +35,8 @@ public class OrderServiceTest {
 
     @Autowired
     OrderService orderService;
+    @Autowired
+    OrderRepository orderRepository;
     @Autowired
     EntityManager em;
     @Autowired
@@ -83,6 +88,29 @@ public class OrderServiceTest {
 
         // then
         assertThat(result).isEqualTo("ok");
+    }
 
+    @Test
+    @DisplayName("주문 등록")
+    public void createOrder() {
+        // given
+        String orderPrice = "20000";
+        String address = "경기도 xx시 xx동 xx로 xx동 xx호";
+
+        Member member = em.find(Member.class, 117);
+        String userId = member.getUserId();
+
+        // when
+        String result = orderService.createOrder(orderPrice, address, userId);
+
+        // then
+        assertThat(result).isEqualTo("ok");
+    }
+
+    // 샘플 주소
+    private static MyPageInformationForm getAddress() {
+        return MyPageInformationForm.builder()
+                .basicAddress("경기도 xx시 xx동 xx로 xx동 xx호")
+                .build();
     }
 }

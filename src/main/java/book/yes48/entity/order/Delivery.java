@@ -1,7 +1,7 @@
 package book.yes48.entity.order;
 
-import book.yes48.entity.address.Address;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 
 @Entity
@@ -16,6 +16,11 @@ public class Delivery {
     @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
     private Order order;
 
-    @Embedded
-    private Address address;
+    private String address;
+
+    @Builder
+    public Delivery(Order order, String address) {
+        this.order = order;
+        this.address = address;
+    }
 }

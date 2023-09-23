@@ -88,4 +88,8 @@ public class Goods extends BaseTimeEntity {
         this.event = event;
         this.state = state;
     }
+
+    public void updateQuantity(int quantity) {
+        this.stockQuantity = quantity;
+    }
 }

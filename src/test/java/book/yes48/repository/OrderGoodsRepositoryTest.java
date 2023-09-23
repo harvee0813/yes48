@@ -8,13 +8,11 @@ import book.yes48.entity.order.OrderGoods;
 import book.yes48.repository.order.OrderGoodsRepository;
 import jakarta.persistence.EntityManager;
 import org.aspectj.lang.annotation.Before;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.repository.query.Param;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,7 +69,7 @@ public class OrderGoodsRepositoryTest {
 
         // when
         String userId = member.getUserId();
-        List<OrderGoods> findOrderGoodsList = orderGoodsRepository.findOrderGoodsByUserId(userId);
+        List<OrderGoods> findOrderGoodsList = orderGoodsRepository.findOrderGoodsByUserId(userId, "WAIT");
 
         // then
         assertThat(orderGoods.getId()).isEqualTo(findOrderGoodsList.get(0).getId());
@@ -97,7 +95,7 @@ public class OrderGoodsRepositoryTest {
 
         // when
         String memberId = String.valueOf(member.getId());
-        List<OrderGoods> findOrderGoodsList = orderGoodsRepository.findAllByMemberId(memberId);
+        List<OrderGoods> findOrderGoodsList = orderGoodsRepository.findAllByMemberId(memberId, "WAIT");
 
         // then
         assertThat(orderGoods.getId()).isEqualTo(findOrderGoodsList.get(0).getId());
@@ -124,9 +122,9 @@ public class OrderGoodsRepositoryTest {
 
         // when
         String memberId = String.valueOf(member.getId());
-        orderGoodsRepository.deleteByMemberId(memberId);
+        orderGoodsRepository.deleteByMemberId(memberId, "WAIT");
 
-        List<OrderGoods> allByMemberId = orderGoodsRepository.findAllByMemberId(memberId);
+        List<OrderGoods> allByMemberId = orderGoodsRepository.findAllByMemberId(memberId, "WAIT");
 
         // then
         assertThat(allByMemberId.size()).isEqualTo(0);
