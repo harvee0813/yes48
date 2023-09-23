@@ -1,16 +1,12 @@
 package book.yes48.entity.order;
 
 import book.yes48.entity.BaseTimeEntity;
-import book.yes48.entity.cart.CartItem;
 import book.yes48.entity.goods.Goods;
 import book.yes48.entity.member.Member;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -25,16 +21,17 @@ public class OrderGoods extends BaseTimeEntity {
     @JoinColumn(name = "goods_id")
     private Goods goods;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
-    private Order order;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private Order order; //주문
+
     private int price;
     private int quantity;
+    private String state;
 
     @Builder
     public OrderGoods(Goods goods, Member member, int price, int quantity) {
@@ -42,5 +39,14 @@ public class OrderGoods extends BaseTimeEntity {
         this.member = member;
         this.price = price;
         this.quantity = quantity;
+        this.state = "WAIT";
+    }
+
+    public void updateState(String state) {
+        this.state = state;
+    }
+
+    public void updateOrder(Order order) {
+        this.order = order;
     }
 }

@@ -4,7 +4,6 @@ import book.yes48.entity.cart.CartItem;
 import book.yes48.entity.cart.MyCart;
 import book.yes48.entity.goods.Goods;
 import book.yes48.entity.member.Member;
-import book.yes48.entity.order.OrderGoods;
 import book.yes48.repository.cartItem.CartItemRepository;
 import book.yes48.repository.goods.GoodsRepository;
 import book.yes48.repository.member.MemberRepository;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Transactional(readOnly = true)
@@ -85,7 +83,8 @@ public class MyCartService {
         cartItemRepository.save(cartItem);
 
         // 주문 대기 상품 삭제
-        orderGoodsRepository.deleteByMemberId(String.valueOf(findMember.getId()));
+        orderGoodsRepository.deleteByMemberId(String.valueOf(findMember.getId()), "WAIT");
+
 
         return "ok";
     }

@@ -46,46 +46,50 @@
             <strong class="price text-danger" style="font-size: 22px;">0 원</strong>
           </span>
     </div>
-    <div>
-      <h6 class="mt-4 mb-2"><i class="me-1 bi bi-caret-right-fill"></i>배송 정보</h6>
-    </div>
-    <div class="border-top">
-      <table>
-        <tr class="border-bottom">
-          <th class="bg-light border-end" style="width: 200px;">
-            <p class="ms-3 me-3 mt-3">주문자</p>
-          </th>
-          <td>
-            <p id="order" th:text="${findMember.name}" class="mt-3 ms-3" style="width: 1000px;">홍길동</p>
-          </td>
-        </tr>
-        <tr class="border-bottom">
-          <th class="bg-light border-end" style="width: 200px;">
-            <p class="ms-3 me-3 mt-3">주소</p>
-          </th>
-          <td>
-            <p id="address" th:if="${findMember.basicAddress}" th:text="${findMember.basicAddress}" class="mt-3 ms-3">12345 서울특별시 xx동 12-34번지 123동 456호</p>
-            <span class="mt-3" th:if="${#strings.isEmpty(findMember.basicAddress)}">
-                <h6 class="ms-2 fw-bold">내 정보 수정에서 배송 주소를 등록해주세요.</h6>
-            </span>
-          </td>
-        </tr>
-        <tr class="border-bottom">
-          <th class="bg-light border-end" style="width: 200px;">
-            <p class="ms-3 me-3 mt-3">휴대전화번호</p>
-          </th>
-          <td>
-            <p id="phone" class="mt-3 ms-3" th:if="${findMember.phone}" th:text="${findMember.phone}">010-1234-5678</p>
-            <span class="mt-3" th:if="${#strings.isEmpty(findMember.phone)}">
-                <h6 class="ms-2 fw-bold">내 정보 수정에서 휴대폰 번호를 등록해주세요.</h6>
-            </span>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div class="mt-2 text-center">
-      <button type="button" class="btn btn-primary btn-lg">결제하기</button>
-    </div>
+<!--    <form method="post">-->
+      <input type="hidden" th:name="orderPrice">
+      <input type="hidden" th:name="orderQuantity">
+      <div>
+        <h6 class="mt-4 mb-2"><i class="me-1 bi bi-caret-right-fill"></i>배송 정보</h6>
+      </div>
+      <div class="border-top">
+        <table>
+          <tr class="border-bottom">
+            <th class="bg-light border-end" style="width: 200px;">
+              <p class="ms-3 me-3 mt-3">주문자</p>
+            </th>
+            <td>
+              <p id="order" th:field="${findMember.name}" class="mt-3 ms-3" style="width: 1000px;">홍길동</p>
+            </td>
+          </tr>
+          <tr class="border-bottom">
+            <th class="bg-light border-end" style="width: 200px;">
+              <p class="ms-3 me-3 mt-3">주소</p>
+            </th>
+            <td>
+              <p id="address" th:if="${findMember.basicAddress}" th:field="${findMember.basicAddress}" class="mt-3 ms-3">12345 서울특별시 xx동 12-34번지 123동 456호</p>
+              <span class="mt-3" th:if="${#strings.isEmpty(findMember.basicAddress)}">
+                  <h6 class="ms-2 fw-bold">내 정보 수정에서 배송 주소를 등록해주세요.</h6>
+              </span>
+            </td>
+          </tr>
+          <tr class="border-bottom">
+            <th class="bg-light border-end" style="width: 200px;">
+              <p class="ms-3 me-3 mt-3">휴대전화번호</p>
+            </th>
+            <td>
+              <p id="phone" class="mt-3 ms-3" th:if="${findMember.phone}" th:field="${findMember.phone}">010-1234-5678</p>
+              <span class="mt-3" th:if="${#strings.isEmpty(findMember.phone)}">
+                  <h6 class="ms-2 fw-bold">내 정보 수정에서 휴대폰 번호를 등록해주세요.</h6>
+              </span>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="mt-2 text-center">
+        <button th:attr="onclick=|createOrder('${findMember.basicAddress}')|" type="button" class="btn btn-primary btn-lg">결제하기</button> <!--   -->
+      </div>
+<!--    </form>-->
   </div>
 <script>
 // 합계 계산
@@ -93,6 +97,7 @@ if ($('.cart_list').length) {
     var cartList = $('.cart_list')
     var targetTotal = $('.total_price .price');
     var totalPrice = 0;
+    var orderQuantity = 0;
 
     // 상품 가격 * 상품 수량 합계
     for(let i = 0; i < cartList.length; i++) {
@@ -100,12 +105,36 @@ if ($('.cart_list').length) {
       var unitCount = parseInt(document.getElementsByClassName('quantity')[i].textContent);
 
       totalPrice += unitPrice * unitCount;
+      orderQuantity += unitCount;
+
+      // 전체 주문 가격 & 상품 개수
+      document.getElementsByName('orderPrice').value = totalPrice;
+      document.getElementsByName('orderQuantity').value = orderQuantity;
     }
 
     localeTotalPrice = totalPrice.toLocaleString('ko-KR');
     targetTotal.text(localeTotalPrice + '원');
-
 }
+
+function createOrder(address) {
+  var orderPrice = document.getElementsByName('orderPrice').value = totalPrice;
+
+$.ajax ({
+      type: "post",
+      url: "/order/createOrder",
+      cache: false,
+      data: {
+        "address" : "address",
+        "orderPrice" : orderPrice
+      },
+      success: function(res) {
+        if (res == "ok") {
+          alert("주문이 완료되었습니다.")
+          location.href = '/myPage/orderHistoryList'
+        }
+      }
+    });
+  }
 </script>
 </body>
 <div th:insert="~{/layout/footer :: footerFragment}"></div>

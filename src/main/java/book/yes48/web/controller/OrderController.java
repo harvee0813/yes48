@@ -44,6 +44,22 @@ public class OrderController {
         return "order/order";
     }
 
+    @PostMapping("/createOrder")
+    @ResponseBody
+    public String order(@RequestParam("address") String address,
+                        @RequestParam("orderPrice") String orderPrice,
+                        @AuthenticationPrincipal PrincipleDetails principleDetails) {
+
+        log.info("findMember.getAddress = {}", address);
+        log.info("totalPrice = {}", orderPrice);
+
+        String userId = String.valueOf(principleDetails.getMember().getUserId());
+        String result = orderService.createOrder(orderPrice, address, userId);
+
+        return result;
+
+    }
+
     @PostMapping("/OrderItem")
     @ResponseBody
     public String setOrderGoods(@RequestParam("count") String count,
@@ -56,5 +72,15 @@ public class OrderController {
         String result = orderService.GoodsBuyNow(count, goodsId, userId, memberPkId);
 
         return result;
+    }
+
+    /**
+     * 결제 완료 화면
+     * @return
+     */
+    @GetMapping("/completeOrder")
+    public String completeOrder() {
+
+        return "/completeOrder";
     }
 }

@@ -142,7 +142,12 @@
       success: function(res) {
         if (res == "ok") {
           location.href = '/myCart'
+        } else {
+          alert("재고 부족으로 주문할 수 없습니다.")
         }
+      },
+      error: function(err) {
+        console.log("에러발생", err);
       }
     });
   }

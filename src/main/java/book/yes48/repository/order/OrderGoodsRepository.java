@@ -13,14 +13,17 @@ import java.util.List;
 @Repository
 public interface OrderGoodsRepository extends JpaRepository<OrderGoods, Long> {
 
-    @Query("select og from OrderGoods og where og.member.userId = :userId")
-    List<OrderGoods> findOrderGoodsByUserId(@Param("userId") String userId);
+    @Query("select og from OrderGoods og where og.member.userId = :userId and og.state = :state")
+    List<OrderGoods> findOrderGoodsByUserId(@Param("userId") String userId, @Param("state") String state);
 
-    @Query("select og from OrderGoods og where og.member.id = :memberId")
-    List<OrderGoods> findAllByMemberId(@Param("memberId") String memberId);
+    @Query("select og from OrderGoods og where og.member.id = :memberId and og.state = :state")
+    List<OrderGoods> findAllByMemberId(@Param("memberId") String memberId, @Param("state") String state);
 
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Transactional
-    @Query(value = "delete from OrderGoods where member.id = :memberPkId")
-    void deleteByMemberId(@Param("memberPkId") String memberPkId);
+    @Query(value = "delete from OrderGoods og where og.member.id = :memberPkId and og.state = :state")
+    void deleteByMemberId(@Param("memberPkId") String memberPkId, @Param("state") String state);
+
+    @Query("select og from OrderGoods og where og.goods.id = :goodsId")
+    OrderGoods findByGoodsId(@Param("goodsId") String goodsId);
 }
