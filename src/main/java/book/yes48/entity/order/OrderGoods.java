@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
@@ -40,6 +41,16 @@ public class OrderGoods extends BaseTimeEntity {
         this.price = price;
         this.quantity = quantity;
         this.state = "WAIT";
+    }
+
+    public OrderGoods(Long id, Goods goods, Member member, Order order, int price, int quantity, String state) {
+        this.id = id;
+        this.goods = goods;
+        this.member = member;
+        this.order = order;
+        this.price = price;
+        this.quantity = quantity;
+        this.state = state;
     }
 
     public void updateState(String state) {

@@ -44,9 +44,6 @@ public class AdminController {
     Page<AdminGoodsDto> goodsList = adminService.findList(pageable, adminGoodsSearch);
     model.addAttribute("goodsList", goodsList.getContent());
 
-    log.info("adminGoodsSearch.searchBy={}", adminGoodsSearch.getSearchBy());
-    log.info("adminGoodsSearch.searchType={}", adminGoodsSearch.getSearchType());
-
     int startPage = getStartPage(goodsList);
 
     model.addAttribute("startPage", getStartPage(goodsList));

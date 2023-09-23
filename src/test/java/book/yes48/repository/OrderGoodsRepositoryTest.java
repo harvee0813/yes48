@@ -5,7 +5,7 @@ import book.yes48.entity.goods.Goods;
 import book.yes48.entity.member.Member;
 import book.yes48.entity.member.Role;
 import book.yes48.entity.order.OrderGoods;
-import book.yes48.repository.order.OrderGoodsRepository;
+import book.yes48.repository.order.orderGoods.OrderGoodsRepository;
 import jakarta.persistence.EntityManager;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.AfterEach;
