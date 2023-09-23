@@ -11,11 +11,15 @@ import book.yes48.repository.cartItem.CartItemRepository;
 import book.yes48.repository.goods.GoodsRepository;
 import book.yes48.repository.member.MemberRepository;
 import book.yes48.repository.myCart.MyCartRepository;
-import book.yes48.repository.order.OrderGoodsRepository;
+import book.yes48.repository.order.orderGoods.OrderGoodsRepository;
 import book.yes48.repository.order.OrderRepository;
+import book.yes48.web.form.OrderHistoryDto;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +44,9 @@ public class OrderService {
     private final GoodsRepository goodsRepository;
     @Autowired
     private final OrderRepository orderRepository;
+
+//    @Autowired
+//    private final EntityManager entityManager;
     
     /**
      * 장바구니에 담긴 상품 orderGoods(주문 대기 상품)로 이전
@@ -84,7 +91,7 @@ public class OrderService {
     }
 
     /**
-     * detailBook.html과 detailMusic.html에서 바로 구매 클릭시 상품 등록
+     * 상품 상세에서 바로 구매 클릭시 상품 등록
      * @param count 상품 수량
      * @param goodsId 상품 아이디
      * @param memberPkId 유저의 고유 아이디 (pk)
@@ -150,7 +157,9 @@ public class OrderService {
             // 주문 상품 수량 변경
             String goodsId = String.valueOf(findOrderGoods.get(i).getGoods().getId());
 
-            OrderGoods orderGoods = orderGoodsRepository.findByGoodsId(goodsId);
+            OrderGoods orderGoods = orderGoodsRepository.findByGoodsId(goodsId, "WAIT");
+            log.info("orderGoods.getId() = {}", orderGoods.getId());
+
             Optional<Goods> goods = goodsRepository.findById(Long.valueOf(goodsId));
 
             // 수량 계산
@@ -162,12 +171,28 @@ public class OrderService {
             } else {
                 return null;
             }
-
-            // orderGoods 주문 대기 상품 상태 'WAIT' 변경 & order로 update
-            List<OrderGoods> orderGoodsByUserId = orderGoodsRepository.findOrderGoodsByUserId(userId, "WAIT");
-            orderGoodsByUserId.get(i).updateOrder(order);
-            orderGoodsByUserId.get(i).updateState("ORDER");
         }
+
+        // orderGoods 주문 대기 상품 상태 'WAIT' 변경 & order로 update
+        for (int i = 0; i < findOrderGoods.size(); i++) {
+            findOrderGoods.get(i).updateOrder(order);
+            findOrderGoods.get(i).updateState("ORDER");
+        }
+
+//        entityManager.clear();
+
         return "ok";
+    }
+
+    /**
+     * 마이페이지 - 주문 목록
+     * @param pageable 페이징
+     * @return
+     */
+    public Page<OrderHistoryDto> getOrderList(Pageable pageable, Long memberPkId) {
+
+        Page<OrderHistoryDto> orderList = orderGoodsRepository.findOrderList(pageable, memberPkId);
+
+        return orderList;
     }
 }

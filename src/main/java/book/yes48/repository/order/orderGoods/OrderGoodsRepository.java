@@ -1,4 +1,4 @@
-package book.yes48.repository.order;
+package book.yes48.repository.order.orderGoods;
 
 import book.yes48.entity.order.OrderGoods;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public interface OrderGoodsRepository extends JpaRepository<OrderGoods, Long> {
+public interface OrderGoodsRepository extends JpaRepository<OrderGoods, Long>, OrderGoodsRepositoryCustom {
 
     @Query("select og from OrderGoods og where og.member.userId = :userId and og.state = :state")
     List<OrderGoods> findOrderGoodsByUserId(@Param("userId") String userId, @Param("state") String state);
@@ -24,6 +24,6 @@ public interface OrderGoodsRepository extends JpaRepository<OrderGoods, Long> {
     @Query(value = "delete from OrderGoods og where og.member.id = :memberPkId and og.state = :state")
     void deleteByMemberId(@Param("memberPkId") String memberPkId, @Param("state") String state);
 
-    @Query("select og from OrderGoods og where og.goods.id = :goodsId")
-    OrderGoods findByGoodsId(@Param("goodsId") String goodsId);
+    @Query("select og from OrderGoods og where og.goods.id = :goodsId and og.state = :state")
+    OrderGoods findByGoodsId(@Param("goodsId") String goodsId, @Param("state") String state);
 }

@@ -8,7 +8,7 @@ import book.yes48.repository.cartItem.CartItemRepository;
 import book.yes48.repository.goods.GoodsRepository;
 import book.yes48.repository.member.MemberRepository;
 import book.yes48.repository.myCart.MyCartRepository;
-import book.yes48.repository.order.OrderGoodsRepository;
+import book.yes48.repository.order.orderGoods.OrderGoodsRepository;
 import book.yes48.web.form.cartItemDto.CartItemDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

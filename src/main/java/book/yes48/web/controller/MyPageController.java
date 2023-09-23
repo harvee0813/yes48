@@ -1,35 +1,56 @@
 package book.yes48.web.controller;
 
-import book.yes48.repository.member.MemberRepository;
+import book.yes48.entity.order.OrderGoods;
 import book.yes48.security.auth.PrincipleDetails;
 import book.yes48.service.MyPageService;
+import book.yes48.service.OrderService;
+import book.yes48.web.form.OrderHistoryDto;
 import book.yes48.web.form.myPage.AddressUpdateForm;
 import book.yes48.web.form.myPage.MyPageInformationForm;
 import book.yes48.web.form.myPage.PhoneUpdateForm;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/myPage")
 public class MyPageController {
 
-    @Autowired MyPageService myPageService;
+    @Autowired
+    private final MyPageService myPageService;
+    @Autowired
+    private final OrderService orderService;
 
     /**
      * 주문 목록
      * @return
      */
     @GetMapping("/orderHistoryList")
-    public String orderHistoryList() {
+    public String orderHistoryList(@PageableDefault(size = 5) Pageable pageable,
+                                   @AuthenticationPrincipal PrincipleDetails principleDetails,
+                                   Model model) {
+
+        // 주문 목록 조회
+        Long memberPkId = principleDetails.getMember().getId();
+        Page<OrderHistoryDto> orderList = orderService.getOrderList(pageable, memberPkId);
+        model.addAttribute("orderList", orderList);
+
+        // 페이징
+        int startPage = getStartPage(orderList);
+
+        model.addAttribute("startPage", getStartPage(orderList));
+        model.addAttribute("currentPage", orderList.getNumber() + 1);
+        model.addAttribute("endPage", getEndPage(orderList, startPage));
+
         return "/member/myPage/orderHistoryList";
     }
 
@@ -102,5 +123,16 @@ public class MyPageController {
         myPageService.updateState(userId);
 
         return "redirect:/";
+    }
+
+    // 페이지네이션 - 첫 페이지 구하기
+    private static int getStartPage(Page<OrderHistoryDto> goodsList) {
+        return ((goodsList.getNumber() / 5) * 5) + 1;
+    }
+
+    // 페이지네이션 - 마지막 페이지 구하기
+    private static int getEndPage(Page<OrderHistoryDto> goodList, int startPage) {
+        if (goodList.getTotalPages() == 0) return 1;
+        return Math.min(goodList.getTotalPages(), startPage + 4);
     }
 }
