@@ -13,6 +13,7 @@ import java.util.List;
 
 import static book.yes48.entity.goods.QGoods.*;
 import static book.yes48.entity.member.QMember.*;
+import static book.yes48.entity.order.QDelivery.*;
 import static book.yes48.entity.order.QOrder.*;
 import static book.yes48.entity.order.QOrderGoods.*;
 
@@ -31,11 +32,13 @@ public class OrderGoodsRepositoryImpl implements OrderGoodsRepositoryCustom {
     public Page<OrderHistoryDto> findOrderList(Pageable pageable,  Long memberPkId) {
         List<OrderHistoryDto> result = queryFactory
                 .select(Projections.constructor(OrderHistoryDto.class,
-                        order.orderDate, order.id, orderGoods.member.name, orderGoods.goods.name, orderGoods.quantity))
+                        order.orderDate, order.id, orderGoods.member.name, orderGoods.goods.name,
+                        orderGoods.quantity, delivery.address))
                 .from(orderGoods)
                 .join(orderGoods.order, order)
                 .join(orderGoods.goods, goods)
                 .join(orderGoods.member, member)
+                .join(order.delivery, delivery) //
                 .where(orderGoods.state.eq("ORDER").and(orderGoods.member.id.eq(memberPkId)))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())

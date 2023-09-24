@@ -20,11 +20,12 @@
         <div class="ms-2 mt-2 me-2 mb-2">
           <table class="ms-2 mt-2 mb-2 me-2 bg-white table-bordered border-secondary-subtle">
             <tr class="text-center bg-dark-subtle">
-              <th style="width: 200px; height: 32px;">주문일</th>
-              <th style="width: 200px; height: 32px;">주문번호</th>
-              <th style="width: 150px; height: 32px;">수령인</th>
+              <th style="width: 150px; height: 32px;">주문일</th>
+              <th style="width: 100px; height: 32px;">주문번호</th>
+              <th style="width: 100px; height: 32px;">수령인</th>
               <th style="width: 450px; height: 32px;">주문상품</th>
-              <th style="width: 200px; height: 32px;">수량</th>
+              <th style="width: 50px; height: 32px;">수량</th>
+              <th style="width: 350px; height: 32px;">배송 주소</th>
             </tr>
             <tr class="text-center" th:each="order : ${orderList}">
               <td th:text="${#strings.substring(order.orderDate, 0, 9)}">2023.08.12</td>
@@ -32,6 +33,7 @@
               <td th:text="*{order.name}">YES48</td>
               <td th:text="*{order.goodsName}">책 제목</td>
               <td th:text="*{order.quantity}">상품 개수</td>
+              <td th:text="*{order.address}">주소</td>
             </tr>
           </table>
         </div>
