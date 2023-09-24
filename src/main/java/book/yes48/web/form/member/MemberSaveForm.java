@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 회원 가입에 사용
+ */
 @Getter
 public class MemberSaveForm {
 

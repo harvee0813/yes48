@@ -147,10 +147,11 @@ public class OrderGoodsRepositoryTest {
         em.persist(orderGoods);
 
         // when
-        String goodsId = String.valueOf(goods.getId());
+        Long goodsId = goods.getId();
+        Long memberId = member.getId();
         String state = "WAIT";
 
-        OrderGoods findOrderGoods = orderGoodsRepository.findByGoodsId(goodsId, state);
+        OrderGoods findOrderGoods = orderGoodsRepository.findByGoodsId(goodsId, state, memberId);
 
         // then
         assertThat(orderGoods.getId()).isEqualTo(findOrderGoods.getId());

@@ -2,7 +2,7 @@ package book.yes48.service;
 
 import book.yes48.entity.member.Member;
 import book.yes48.entity.member.Role;
-import book.yes48.repository.myPage.MyPageRepository;
+import book.yes48.repository.member.MemberRepository;
 import book.yes48.web.form.myPage.AddressUpdateForm;
 import book.yes48.web.form.myPage.MyPageInformationForm;
 import book.yes48.web.form.myPage.PhoneUpdateForm;
@@ -24,7 +24,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 class MyPageServiceTest {
 
     @Autowired
-    MyPageRepository myPageRepository;
+    MemberRepository memberRepository;
     @Autowired
     MyPageService myPageService;
     @Autowired
@@ -59,7 +59,7 @@ class MyPageServiceTest {
                 .provider("google")
                 .build();
 
-        myPageRepository.save(member);
+        memberRepository.save(member);
     }
 
     @AfterEach
@@ -89,7 +89,7 @@ class MyPageServiceTest {
         myPageService.updateAddressAndPhone(userId, phoneUpdateForm, addressUpdateForm);
 
         // then
-        Member findMember = myPageRepository.findUser(userId);
+        Member findMember = memberRepository.findUser(userId);
 
         assertThat(findMember.getBasicAddress()).isEqualTo(addressUpdateForm.getBasicAddress());     // address 비교
         assertThat(findMember.getPostcode()).isEqualTo(addressUpdateForm.getPostcode());             // postcode 비교
@@ -121,7 +121,7 @@ class MyPageServiceTest {
         myPageService.updateAddressAndPhone(userId, phoneUpdateForm, addressUpdateForm);
 
         // then
-        Member findMember = myPageRepository.findUser(userId);
+        Member findMember = memberRepository.findUser(userId);
 
         assertThat(findMember.getPhone()).isEqualTo(phoneUpdateForm.getPhone());                        // phone 비교
 
@@ -153,7 +153,7 @@ class MyPageServiceTest {
         myPageService.updateAddressAndPhone(userId, phoneUpdateForm, addressUpdateForm);
 
         // then
-        Member findMember = myPageRepository.findUser(userId);
+        Member findMember = memberRepository.findUser(userId);
 
         assertThat(findMember.getPhone()).isEqualTo(phoneUpdateForm.getPhone());                        // phone 비교
         assertThat(findMember.getBasicAddress()).isEqualTo(addressUpdateForm.getBasicAddress());               // address 비교

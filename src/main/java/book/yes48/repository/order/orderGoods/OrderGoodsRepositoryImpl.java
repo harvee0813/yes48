@@ -1,12 +1,6 @@
 package book.yes48.repository.order.orderGoods;
 
-import book.yes48.entity.goods.QGoods;
-import book.yes48.entity.member.QMember;
-import book.yes48.entity.order.OrderGoods;
-import book.yes48.entity.order.QDelivery;
-import book.yes48.entity.order.QOrder;
-import book.yes48.entity.order.QOrderGoods;
-import book.yes48.web.form.OrderHistoryDto;
+import book.yes48.web.form.myPage.OrderHistoryDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -19,7 +13,6 @@ import java.util.List;
 
 import static book.yes48.entity.goods.QGoods.*;
 import static book.yes48.entity.member.QMember.*;
-import static book.yes48.entity.order.QDelivery.*;
 import static book.yes48.entity.order.QOrder.*;
 import static book.yes48.entity.order.QOrderGoods.*;
 
@@ -28,6 +21,12 @@ public class OrderGoodsRepositoryImpl implements OrderGoodsRepositoryCustom {
     @Autowired
     JPAQueryFactory queryFactory;
 
+    /**
+     * 주문 완료된 상품 조회
+     * @param pageable 페이징
+     * @param memberPkId 멤버의 고유 아이디
+     * @return 페이징 처리된 주문 완료 상품 리스트
+     */
     @Override
     public Page<OrderHistoryDto> findOrderList(Pageable pageable,  Long memberPkId) {
         List<OrderHistoryDto> result = queryFactory

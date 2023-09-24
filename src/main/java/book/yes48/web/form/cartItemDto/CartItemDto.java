@@ -12,6 +12,9 @@ import lombok.Getter;
 
 import java.util.List;
 
+/**
+ * 조회된 cartItem을 담는 폼
+ */
 @Getter
 public class CartItemDto {
 

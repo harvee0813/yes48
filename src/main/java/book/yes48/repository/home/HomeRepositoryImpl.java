@@ -15,7 +15,7 @@ public class HomeRepositoryImpl implements HomeRepositoryCustom{
     JPAQueryFactory queryFactory;
 
     /**
-     * 편집장의 추천 도서 4권 수정일 기준 desc 선별
+     * 편집장의 추천 도서 4권 조회 (수정일 기준, desc 선별)
      */
     @Override
     public List<GoodsDto> selectFourSuggestionBooks() {
@@ -33,7 +33,7 @@ public class HomeRepositoryImpl implements HomeRepositoryCustom{
     }
 
     /**
-     * 최신 도서 4권 id 기준 desc 선별
+     * 최신 도서 4권 조회 (id 기준, desc 선별)
      */
     @Override
     public List<GoodsDto> selectFourNewBooks() {
@@ -51,7 +51,7 @@ public class HomeRepositoryImpl implements HomeRepositoryCustom{
     }
 
     /**
-     * 최신 음반 3장 id 기준 desc 선별
+     * 최신 음반 3장 조회 (id 기준, desc 선별)
      */
     @Override
     public List<GoodsDto> selectThreeMusic() {

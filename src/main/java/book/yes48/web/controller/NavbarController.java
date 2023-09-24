@@ -21,6 +21,11 @@ public class NavbarController {
     @Autowired
     private final NavbarService navbarService;
 
+    /**
+     * 네비바 검색 창
+     * @param search 검색어
+     * @param pageable 페이징
+     */
     @GetMapping("/searchGoods")
     public String searchForm(@RequestParam String search, @PageableDefault(size = 8) Pageable pageable, Model model) {
 

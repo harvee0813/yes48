@@ -18,7 +18,7 @@ spring:
     generate-ddl: true
     hibernate:
       hbm2ddl:
-        auto: update
+        auto: none
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect

@@ -3,6 +3,9 @@ package book.yes48.web.form.myPage;
 import lombok.Builder;
 import lombok.Getter;
 
+/**
+ * 마이페이지 상세 정보를 담는 폼
+ */
 @Getter
 public class MyPageInformationForm {
 

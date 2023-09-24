@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 /**
- * 상품 수정 화면
+ * 상품 수정 폼
  */
 @Getter
 public class AdminGoodsUpdateForm {

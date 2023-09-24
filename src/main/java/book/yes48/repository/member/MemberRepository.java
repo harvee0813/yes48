@@ -11,6 +11,11 @@ import java.util.Optional;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
+    /**
+     * userId로 회원 조회
+     * @param userId 유저 아이디
+     * @return
+     */
     @Query("select m from Member m where m.userId = :userId")
     Member findUser(@Param("userId") String userId);
 

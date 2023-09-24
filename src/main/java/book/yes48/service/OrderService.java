@@ -13,8 +13,7 @@ import book.yes48.repository.member.MemberRepository;
 import book.yes48.repository.myCart.MyCartRepository;
 import book.yes48.repository.order.orderGoods.OrderGoodsRepository;
 import book.yes48.repository.order.OrderRepository;
-import book.yes48.web.form.OrderHistoryDto;
-import jakarta.persistence.EntityManager;
+import book.yes48.web.form.myPage.OrderHistoryDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,10 +97,21 @@ public class OrderService {
     @Transactional
     public String GoodsBuyNow(String count, String goodsId, String userId, String memberPkId) {
 
-        // orderGoods가 이미 들어있다면 관련된 goods를 지운다.
+        // orderGoods가 이미 들어있다면 관련된 goods 삭제
         List<OrderGoods> findOrderGoods = orderGoodsRepository.findOrderGoodsByUserId(userId, "WAIT");
+
         if (!findOrderGoods.isEmpty()) {
             orderGoodsRepository.deleteByMemberId(memberPkId, String.valueOf("WAIT"));
+        }
+
+        // 장바구니에 상품 들어있으면 장바구니 상품 삭제
+        Optional<Member> fondMember = memberRepository.findById(Long.valueOf(memberPkId));
+        Member member = fondMember.get();
+
+        MyCart findCart = myCartRepository.findMyCart(member);
+        
+        if (findCart != null) {
+            cartItemRepository.deleteCartItem(String.valueOf(findCart.getId()));
         }
 
         // orderGoods에 상품 등록
@@ -152,9 +162,10 @@ public class OrderService {
         for (int i = 0; i < findOrderGoods.size(); i++) {
 
             // 주문 상품 수량 변경
-            String goodsId = String.valueOf(findOrderGoods.get(i).getGoods().getId());
+            Long goodsId = findOrderGoods.get(i).getGoods().getId();
+            Long memberId = findMember.getId();
 
-            OrderGoods orderGoods = orderGoodsRepository.findByGoodsId(goodsId, "WAIT");
+            OrderGoods orderGoods = orderGoodsRepository.findByGoodsId(goodsId, "WAIT", memberId);
             log.info("orderGoods.getId() = {}", orderGoods.getId());
 
             Optional<Goods> goods = goodsRepository.findById(Long.valueOf(goodsId));

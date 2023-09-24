@@ -1,7 +1,7 @@
 package book.yes48.service;
 
 import book.yes48.entity.member.Member;
-import book.yes48.repository.myPage.MyPageRepository;
+import book.yes48.repository.member.MemberRepository;
 import book.yes48.web.form.myPage.AddressUpdateForm;
 import book.yes48.web.form.myPage.MyPageInformationForm;
 import book.yes48.web.form.myPage.PhoneUpdateForm;
@@ -16,7 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class MyPageService {
 
-    @Autowired MyPageRepository myPageRepository;
+    @Autowired
+    MemberRepository memberRepository;
 
     /**
      * 핸드폰 번호와 배송 주소 등록 or 수정
@@ -27,7 +28,7 @@ public class MyPageService {
     @Transactional
     public void updateAddressAndPhone(String userId, PhoneUpdateForm phoneUpdateForm, AddressUpdateForm addressUpdateForm) {
 
-        Member findMember = myPageRepository.findUser(userId);
+        Member findMember = memberRepository.findUser(userId);
 
         if (!phoneUpdateForm.getPhone().isEmpty()) {
             findMember.updatePhone(phoneUpdateForm);
@@ -47,7 +48,7 @@ public class MyPageService {
      * @return 찾은 멤버
      */
     public MyPageInformationForm findMemberById(String userId) {
-        Member findMember = myPageRepository.findUser(userId);
+        Member findMember = memberRepository.findUser(userId);
 
         MyPageInformationForm form = MyPageInformationForm.builder()
                 .userId(getUserId(findMember))
@@ -106,7 +107,7 @@ public class MyPageService {
 
     @Transactional
     public void updateState(String userId) {
-        Member member = myPageRepository.findUser(userId);
+        Member member = memberRepository.findUser(userId);
 
         member.withdraw("N");
     }

@@ -1,9 +1,12 @@
-package book.yes48.web.form;
+package book.yes48.web.form.myPage;
 
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+/**
+ * 마이페이지 주문 조회에 사용
+ */
 @Getter
 public class OrderHistoryDto {
 
