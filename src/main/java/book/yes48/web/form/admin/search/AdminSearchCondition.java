@@ -4,6 +4,9 @@ import book.yes48.entity.FileStore;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 검색 조건과 타입으로 조회된 상품 리스트를 담는 폼
+ */
 @Getter @Setter
 public class AdminSearchCondition {
 

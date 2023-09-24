@@ -29,6 +29,10 @@ public class OrderController {
     @Autowired
     private final MyPageService myPageService;
 
+    /**
+     * order 화면 폼
+     * @return
+     */
     @GetMapping
     public String order(@AuthenticationPrincipal PrincipleDetails principleDetails,
                         Model model) {
@@ -44,6 +48,11 @@ public class OrderController {
         return "order/order";
     }
 
+    /**
+     * 주문 생성
+     * @param address 배송 주소
+     * @param orderPrice 주문 가격
+     */
     @PostMapping("/createOrder")
     @ResponseBody
     public String order(@RequestParam("address") String address,
@@ -54,12 +63,17 @@ public class OrderController {
         log.info("totalPrice = {}", orderPrice);
 
         String userId = String.valueOf(principleDetails.getMember().getUserId());
-        String result = orderService.createOrder(orderPrice, address, userId);
+        String result = orderService.createOrder(orderPrice, address, userId); // 여기랑
 
         return result;
 
     }
 
+    /**
+     * 바로 구매 버튼 클릭시 주문 생성
+     * @param count 갯수
+     * @param goodsId 상품 아이디
+     */
     @PostMapping("/OrderItem")
     @ResponseBody
     public String setOrderGoods(@RequestParam("count") String count,

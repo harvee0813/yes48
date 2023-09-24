@@ -45,7 +45,7 @@ public class MyCartService {
     }
 
     /**
-     * 장바구니 담기
+     * 상품 장바구니 담기
      * @param goodsId 상품 아이디
      * @param count 수량
      * @param userId 유저 아이디

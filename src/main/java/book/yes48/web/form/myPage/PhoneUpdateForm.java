@@ -4,6 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 
+/**
+ * 핸드폰 번호 업데이트에 사용
+ */
 @Getter
 public class PhoneUpdateForm {
 

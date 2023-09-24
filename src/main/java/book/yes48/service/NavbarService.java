@@ -17,6 +17,11 @@ public class NavbarService {
     @Autowired
     private final NavbarRepository navbarRepository;
 
+    /**
+     * navbar 검색
+     * @param pageable 페이징
+     * @param search 검색어
+     */
     public Page<NavbarDto> goodsSearchList(Pageable pageable, String search) {
         Page<NavbarDto> find = navbarRepository.goodsSearchList(pageable, search);
 

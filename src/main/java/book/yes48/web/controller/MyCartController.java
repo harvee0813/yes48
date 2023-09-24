@@ -22,6 +22,9 @@ public class MyCartController {
     @Autowired
     private final MyCartService myCartService;
 
+    /**
+     * 장바구니 메인 폼
+     */
     @GetMapping
     public String myCart(@AuthenticationPrincipal PrincipleDetails principleDetails,
                          Model model) throws Exception {
@@ -36,6 +39,12 @@ public class MyCartController {
         return "myCart";
     }
 
+    /**
+     * 장바구니 삭제
+     * @param goodsId 상품 아이디
+     * @param principleDetails 삭제 요청 멤버
+     * @return
+     */
     @DeleteMapping("/delete/cartItem")
     @ResponseBody
     public String deleteItem(@RequestParam("goodsId") String goodsId,
@@ -47,6 +56,13 @@ public class MyCartController {
         return result;
     }
 
+    /**
+     * 수량 변경
+     * @param goodsId 상품 아이디
+     * @param quantity 변경할 수량
+     * @param principleDetails 삭제 요청 멤버
+     * @return
+     */
     @PostMapping("/updateQuantity")
     @ResponseBody
     public String updateQuantity(@RequestParam("goodsId") String goodsId,

@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * navbar 검색에 사용
+ */
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

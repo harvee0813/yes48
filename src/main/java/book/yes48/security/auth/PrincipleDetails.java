@@ -19,12 +19,16 @@ public class PrincipleDetails extends Member implements UserDetails, OAuth2User 
     private Member member;
     private Map<String, Object> attributes;
 
-    // 일반 로그인
+    /**
+     * 일반 로그인
+     */
     public PrincipleDetails(Member member) {
         this.member = member;
     }
 
-    // OAuth2 로그인
+    /**
+     * OAuth 로그인
+     */
     public PrincipleDetails(Member member, Map<String, Object> attributes) {
         this.member= member;
         this.attributes = attributes;

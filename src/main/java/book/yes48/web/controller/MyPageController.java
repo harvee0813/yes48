@@ -1,10 +1,9 @@
 package book.yes48.web.controller;
 
-import book.yes48.entity.order.OrderGoods;
 import book.yes48.security.auth.PrincipleDetails;
 import book.yes48.service.MyPageService;
 import book.yes48.service.OrderService;
-import book.yes48.web.form.OrderHistoryDto;
+import book.yes48.web.form.myPage.OrderHistoryDto;
 import book.yes48.web.form.myPage.AddressUpdateForm;
 import book.yes48.web.form.myPage.MyPageInformationForm;
 import book.yes48.web.form.myPage.PhoneUpdateForm;
@@ -32,7 +31,6 @@ public class MyPageController {
 
     /**
      * 주문 목록
-     * @return
      */
     @GetMapping("/orderHistoryList")
     public String orderHistoryList(@PageableDefault(size = 5) Pageable pageable,
@@ -72,7 +70,6 @@ public class MyPageController {
     /**
      * 내정보 수정 화면
      * @param principleDetails 로그인한 사용자의 정보
-     * @return
      */
     @GetMapping("/updateInformation")
     public String updateInformation(@AuthenticationPrincipal PrincipleDetails principleDetails, Model model) {
@@ -94,7 +91,6 @@ public class MyPageController {
      * @param principleDetails 로그인한 사용자의 정보
      * @param phoneUpdateForm 핸드폰 번호 수정 폼
      * @param addressUpdateForm 배송 주소 번호 수정 폼
-     * @return
      */
     @PostMapping("/updateInformation")
     public String updateInformation(@AuthenticationPrincipal PrincipleDetails principleDetails,
@@ -108,7 +104,6 @@ public class MyPageController {
 
     /**
      * 회원 탈퇴 화면
-     * @return
      */
     @GetMapping("/withdraw")
     public String withdraw() {
@@ -116,6 +111,9 @@ public class MyPageController {
         return "/member/myPage/withdraw";
     }
 
+    /**
+     * 회원 탈퇴
+     */
     @PostMapping("/withdraw")
     public String withdraw(@AuthenticationPrincipal PrincipleDetails principleDetails) {
         String userId = principleDetails.getMember().getUserId();

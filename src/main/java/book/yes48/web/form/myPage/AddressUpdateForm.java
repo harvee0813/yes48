@@ -3,6 +3,9 @@ package book.yes48.web.form.myPage;
 import lombok.Builder;
 import lombok.Getter;
 
+/**
+ * 주소 업데이트 폼
+ */
 @Getter
 public class AddressUpdateForm {
 

@@ -5,6 +5,9 @@ import book.yes48.entity.goods.Goods;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * goods 상세 보기 폼
+ */
 @Getter
 @AllArgsConstructor
 public class GoodsDetailDto {

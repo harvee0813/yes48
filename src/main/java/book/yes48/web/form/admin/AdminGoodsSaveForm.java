@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 /**
- * 상품 등록 화면
+ * 상품 등록 폼
  */
 @Getter
 public class AdminGoodsSaveForm {

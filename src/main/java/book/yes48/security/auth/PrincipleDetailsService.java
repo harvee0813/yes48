@@ -23,22 +23,19 @@ public class PrincipleDetailsService implements org.springframework.security.cor
     private final LoginRepository loginRepository;
     @Autowired
     private final MyCartRepository myCartRepository;
-    @Autowired
-    private final MemberRepository memberRepository;
 
     @Override
     public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("username = {}", username);
 
+        // 계정 확인
         Member findMember = loginRepository.findMemberById(username);
-        log.info("findMember.getUserId = {}", findMember.getUserId());
-        log.info("findMember = {}", findMember);
 
         if (findMember == null) {
             throw new UsernameNotFoundException("계정이 존재하지 않습니다.");
         } else if (findMember.getState().equals("N")) {
             throw new UsernameNotFoundException("탈퇴된 계정입니다.");
         } else {
+
             // 장바구니 생성
             MyCart findMyCart = myCartRepository.findMyCart(findMember);
             if (findMyCart == null) {

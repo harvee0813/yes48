@@ -68,6 +68,7 @@ public class GoodsRepositoryImpl implements GoodsRepositoryCustom {
         return dto;
     }
 
+    // 검색 종류
     private BooleanExpression searchStateAndSort(GoodsSearch goodsSearch) {
         if (goodsSearch.isEmpty()) return null;
 

@@ -34,15 +34,13 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService  {
     MemberRepository memberRepository;
     @Autowired
     MyCartRepository myCartRepository;
-    
-    // 구글로 부터 받은 userRequest 데이터에 대한 후처리
+
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         System.out.println("getClientRegistration" + userRequest.getClientRegistration());
         System.out.println("getAccessToken" + userRequest.getAccessToken().getTokenValue());
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
-
         System.out.println("getAttributes" + oAuth2User.getAuthorities());
 
         OAuth2UserInfo oAuth2UserInfo = null;
@@ -56,6 +54,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService  {
 
         }
 
+        // 회원 생성
         String provider = oAuth2UserInfo.getProvider();
         String providerId = oAuth2UserInfo.getProviderId();
         String userId = provider + "_" + providerId;
@@ -76,7 +75,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService  {
                     .state("Y")
                     .build();
 
-            Member save = memberRepository.save(memberEntity);
+           memberRepository.save(memberEntity);
         }
 
         // 장바구니 생성

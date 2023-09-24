@@ -2,7 +2,7 @@ package book.yes48.repository;
 
 import book.yes48.entity.member.Member;
 import book.yes48.entity.member.Role;
-import book.yes48.repository.myPage.MyPageRepository;
+import book.yes48.repository.member.MemberRepository;
 import jakarta.persistence.EntityManager;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.AfterEach;
@@ -23,7 +23,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 class MyPageRepositoryTest {
 
     @Autowired
-    MyPageRepository myPageRepository;
+    MemberRepository memberRepository;
     @Autowired EntityManager em;
     @Autowired
     private WebApplicationContext context;
@@ -60,11 +60,11 @@ class MyPageRepositoryTest {
                 .role(Role.USER)
                 .build();
 
-        myPageRepository.save(member);
+        memberRepository.save(member);
 
         // when
         String userId = member.getUserId();
-        Member findUser = myPageRepository.findUser(userId);
+        Member findUser = memberRepository.findUser(userId);
 
         // then
         assertThat(findUser.getUserId()).isEqualTo(member.getUserId());

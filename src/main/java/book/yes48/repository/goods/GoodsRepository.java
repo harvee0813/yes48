@@ -12,9 +12,11 @@ import java.util.List;
 @Repository
 public interface GoodsRepository extends JpaRepository<Goods, Long>, GoodsRepositoryCustom {
 
+    /**
+     * 상품 아이디로 상품 찾기
+     * @param goodsId 상품 아이디
+     * @return 찾은 상품
+     */
     @Query("select g from Goods g where g.id = :id")
     Goods findGoodsById(@Param("id") String goodsId);
-
-    @Query("select g from Goods g where g.id = :id")
-    List<Goods> findGoodsListById(@Param("id") String goodsId);
 }
