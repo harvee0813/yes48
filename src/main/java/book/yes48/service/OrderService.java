@@ -139,6 +139,7 @@ public class OrderService {
      */
     @Transactional
     public String createOrder(String orderPrice, String address, String userId) {
+        log.info("address = {}", address);
 
         // 주문 생성에 필요한 정보
         Member findMember = memberRepository.findUser(userId);
