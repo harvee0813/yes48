@@ -130,6 +130,34 @@ public class OrderGoodsRepositoryTest {
         assertThat(allByMemberId.size()).isEqualTo(0);
     }
 
+    @Test
+    @DisplayName("상품 아이디와 주문 상태로 상품 찾기")
+    public void findByGoodsId() {
+        // given
+        Member member = em.find(Member.class, 117);
+
+        Goods goods = em.find(Goods.class, 113);
+
+        OrderGoods orderGoods = OrderGoods.builder()
+                .member(member)
+                .goods(goods)
+                .price(goods.getPrice())
+                .quantity(1)
+                .build();
+        em.persist(orderGoods);
+
+        // when
+        String goodsId = String.valueOf(goods.getId());
+        String state = "WAIT";
+
+        OrderGoods findOrderGoods = orderGoodsRepository.findByGoodsId(goodsId, state);
+
+        // then
+        assertThat(orderGoods.getId()).isEqualTo(findOrderGoods.getId());
+        assertThat(orderGoods.getState()).isEqualTo(findOrderGoods.getState());
+
+    }
+
     // 테스트 회원
     private static Member getMember() {
         return Member.builder()

@@ -44,9 +44,6 @@ public class OrderService {
     private final GoodsRepository goodsRepository;
     @Autowired
     private final OrderRepository orderRepository;
-
-//    @Autowired
-//    private final EntityManager entityManager;
     
     /**
      * 장바구니에 담긴 상품 orderGoods(주문 대기 상품)로 이전
@@ -178,8 +175,6 @@ public class OrderService {
             findOrderGoods.get(i).updateOrder(order);
             findOrderGoods.get(i).updateState("ORDER");
         }
-
-//        entityManager.clear();
 
         return "ok";
     }
