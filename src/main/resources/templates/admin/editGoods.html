@@ -29,7 +29,7 @@
     <input type="hidden" th:field="*{id}">
   <div class="row">
     <div class="col-2">
-      <img th:if="*{fileStore}" th:src="@{|/admin/${form.fileStore.filename}|}" id="imgPreview" style="width: 200px; height: 220px; filter: drop-shadow(10px 6px 6px #c3c3c3);">
+      <img th:if="*{fileStore}" th:src="@{|${form.fileStore.filepath}|}" id="imgPreview" style="width: 200px; height: 220px; filter: drop-shadow(10px 6px 6px #c3c3c3);">
     </div>
     <div class="col-10">
       <table class="table table-sm table-borderless">

@@ -2,15 +2,10 @@ package book.yes48.entity.goods;
 
 import book.yes48.entity.BaseTimeEntity;
 import book.yes48.entity.FileStore;
-import book.yes48.entity.cart.CartItem;
-import book.yes48.entity.cart.MyCart;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -75,7 +70,7 @@ public class Goods extends BaseTimeEntity {
      * 상품 수정시 file을 수정할 때 - file 있을 때
      */
     public void updateGoodsAndFile(Long id, String name, String sort, String author, String publisher, String publisherDate,
-                 int price, int stockQuantity, String event, String state, FileStore fileStore) {
+                                   int price, int stockQuantity, String event, String state, FileStore fileStore) {
         this.id = id;
         this.name = name;
         this.sort = sort;
@@ -84,12 +79,16 @@ public class Goods extends BaseTimeEntity {
         this.publisherDate = publisherDate;
         this.price = price;
         this.stockQuantity = stockQuantity;
-        this.fileStore = fileStore;
         this.event = event;
         this.state = state;
+        this.fileStore = fileStore;
     }
 
     public void updateQuantity(int quantity) {
         this.stockQuantity = quantity;
+    }
+
+    public void setFileStore(FileStore fileStore) {
+        this.fileStore = fileStore;
     }
 }

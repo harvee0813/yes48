@@ -1,14 +1,8 @@
 package book.yes48.web.form.admin;
 
-import book.yes48.entity.FileStore;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
 
 /**
  * 상품 등록 폼
@@ -50,38 +44,5 @@ public class AdminGoodsSaveForm {
         this.stockQuantity = stockQuantity;
         this.event = event;
         this.state = state;
-    }
-    
-    // 파일 업로드
-    String projectPath = "C:\\upload\\";
-
-    public String getFullPath(String filename) {
-        return projectPath + filename;
-    }
-
-    public FileStore file(MultipartFile multipartFile) throws IOException
-    {
-        if (multipartFile.isEmpty()) {
-            return null;
-        }
-        String originalFilename = multipartFile.getOriginalFilename();
-        String fileName = createStoreFileName(originalFilename);
-        multipartFile.transferTo(new File(getFullPath(fileName)));
-
-        FileStore saveFileStore = FileStore.builder()
-                .filename(fileName)
-                .filepath("C:/upload/" + fileName)
-                .build();
-
-        return saveFileStore;
-    }
-    private String createStoreFileName(String originalFilename) {
-        String ext = extractExt(originalFilename);
-        String uuid = UUID.randomUUID().toString();
-        return uuid + "." + ext;
-    }
-    private String extractExt(String originalFilename) {
-        int pos = originalFilename.lastIndexOf(".");
-        return originalFilename.substring(pos + 1);
     }
 }

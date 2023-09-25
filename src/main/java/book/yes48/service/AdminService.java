@@ -1,5 +1,7 @@
 package book.yes48.service;
 
+import book.yes48.entity.FileStore;
+import book.yes48.service.fileUpload.FileUpload;
 import book.yes48.web.form.admin.AdminGoodsDto;
 import book.yes48.web.form.admin.AdminGoodsSaveForm;
 import book.yes48.web.form.admin.AdminGoodsUpdateForm;
@@ -7,21 +9,25 @@ import book.yes48.web.form.admin.search.AdminGoodsSearch;
 import book.yes48.repository.fileStore.FileRepository;
 import book.yes48.repository.admin.AdminRepository;
 import book.yes48.entity.goods.Goods;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -33,6 +39,8 @@ public class AdminService {
     private final AdminRepository adminRepository;
     @Autowired
     private final FileRepository fileRepository;
+    @Autowired
+    private final FileUpload fileUpload;
 
     /**
      * 상품 등록
@@ -42,6 +50,16 @@ public class AdminService {
 
         duplicationCheckGoodsName(form.getName());
 
+        String originalFileName = file.getOriginalFilename();
+        String filePath = fileUpload.uploadFileToS3(file);
+
+        // 상품 파일 생성
+        FileStore fileStore = FileStore.builder()
+                .filename(originalFileName)
+                .filepath(filePath)
+                .build();
+
+        // 상품 생성
         Goods save = Goods.builder()
                 .name(form.getName())
                 .sort(form.getSort())
@@ -52,7 +70,7 @@ public class AdminService {
                 .stockQuantity(form.getStockQuantity())
                 .event(form.getEvent())
                 .state(form.getState())
-                .fileStore(form.file(file))
+                .fileStore(fileStore)
                 .build();
 
         adminRepository.save(save);
@@ -75,7 +93,17 @@ public class AdminService {
             updateGoods(form, findGoods);
         } else if (!file.isEmpty()) {
             fileRepository.deleteById(findGoods.getFileStore().getId()); // 기존 파일 삭제
-            UpdateGoodsAndFile(form, file, findGoods);
+
+            String originalFileName = file.getOriginalFilename();
+            String filePath = fileUpload.uploadFileToS3(file);
+
+            FileStore fileStore = FileStore.builder()
+                    .filename(originalFileName)
+                    .filepath(filePath)
+                    .build();
+
+            UpdateGoodsAndFile(form, findGoods, fileStore);
+
         }
     }
 
@@ -112,7 +140,7 @@ public class AdminService {
     }
 
     // 상품 업데이트 - file이 있을 때
-    private static void UpdateGoodsAndFile(AdminGoodsUpdateForm form, MultipartFile file, Goods findGoods) throws IOException {
+    private static void UpdateGoodsAndFile(AdminGoodsUpdateForm form, Goods findGoods, FileStore fileStore) throws IOException {
         findGoods.updateGoodsAndFile(
                 form.getId(),
                 form.getName(),
@@ -124,7 +152,7 @@ public class AdminService {
                 form.getStockQuantity(),
                 form.getEvent(),
                 form.getState(),
-                form.file(file));
+                fileStore);
     }
 
     // 상품 업데이트 - file이 비어있을 때
@@ -149,4 +177,6 @@ public class AdminService {
             throw new IllegalStateException("이미 존재하는 상품입니다.");
         }
     }
+
+
 }

@@ -1,6 +1,7 @@
 HELP.md
 .gradle
 application-oauth.yml
+application-cloud.yml
 build/
 /src/main/generated/
 !gradle/wrapper/gradle-wrapper.jar
