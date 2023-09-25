@@ -21,4 +21,7 @@ public class FileStore {
         this.filepath = filepath;
     }
 
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 }

@@ -110,9 +110,9 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
 
-            // form에 fileStore를 넣어주기 위한 코드 -> editGoods에서 이미지가 보여진다.
-            AdminGoodsDto getFilenameByGoodsId = adminService.getId(form.getId());
-            form.setFileStore(getFilenameByGoodsId.getFileStore());
+//            // form에 fileStore를 넣어주기 위한 코드 -> editGoods에서 이미지가 보여진다.
+//            AdminGoodsDto getFilenameByGoodsId = adminService.getId(form.getId());
+////            form.setFileStore(getFilenameByGoodsId.getFileStore());
             return "admin/editGoods";
         }
 

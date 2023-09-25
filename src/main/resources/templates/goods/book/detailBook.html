@@ -12,7 +12,7 @@
     <!-- 책 이미지 -->
     <div class="row" th:object="${book}">
       <div class="col-5 mt-5">
-        <img th:src="@{|/goods/${book.fileStore.filename}|}" style="width: 450px; height: 475px; filter: drop-shadow(10px 6px 6px #c3c3c3);" >
+        <img th:src="@{|${book.fileStore.filepath}|}" style="width: 450px; height: 475px; filter: drop-shadow(10px 6px 6px #c3c3c3);" >
       </div>
       <!-- 책 세부사항 -->
       <div class="col-7">

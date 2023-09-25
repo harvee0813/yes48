@@ -23,7 +23,7 @@
         <tr class="cart_list mt-2 border-top border-bottom" th:each="item, itemStatus : ${allCartItem}">
           <td>
             <div class="mt-2 mb-2">
-              <img th:src="@{|/goods/*{item.goods.fileStore.filename}|}" style="width: 80px; height: 107px;">
+              <img th:src="@{|*{item.goods.fileStore.filepath}|}" style="width: 80px; height: 107px;">
             </div>
           </td>
           <td class="mt-1">

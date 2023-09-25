@@ -56,6 +56,8 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	// hibernate 버전
 	implementation 'org.hibernate:hibernate-entitymanager:6.1.7.Final'
+	// aws
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }
 
 tasks.named('test') {
