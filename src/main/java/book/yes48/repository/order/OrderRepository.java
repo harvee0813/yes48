@@ -1,7 +1,6 @@
 package book.yes48.repository.order;
 
 import book.yes48.entity.order.Order;
-import book.yes48.repository.order.orderGoods.OrderGoodsRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

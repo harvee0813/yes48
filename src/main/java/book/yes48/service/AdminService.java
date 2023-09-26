@@ -9,15 +9,9 @@ import book.yes48.web.form.admin.search.AdminGoodsSearch;
 import book.yes48.repository.fileStore.FileRepository;
 import book.yes48.repository.admin.AdminRepository;
 import book.yes48.entity.goods.Goods;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.UUID;
 
 @Slf4j
 @Service

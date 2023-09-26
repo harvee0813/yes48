@@ -1,10 +1,7 @@
 package book.yes48.web.controller;
 
-import book.yes48.entity.member.Member;
 import book.yes48.entity.order.OrderGoods;
-import book.yes48.repository.member.MemberRepository;
 import book.yes48.security.auth.PrincipleDetails;
-import book.yes48.service.MemberService;
 import book.yes48.service.MyPageService;
 import book.yes48.service.OrderService;
 import book.yes48.web.form.myPage.MyPageInformationForm;

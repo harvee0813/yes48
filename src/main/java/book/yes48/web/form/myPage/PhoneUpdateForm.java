@@ -1,6 +1,5 @@
 package book.yes48.web.form.myPage;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 

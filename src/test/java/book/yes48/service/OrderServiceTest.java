@@ -1,18 +1,12 @@
 package book.yes48.service;
 
-import book.yes48.entity.FileStore;
-import book.yes48.entity.cart.CartItem;
-import book.yes48.entity.cart.MyCart;
 import book.yes48.entity.goods.Goods;
 import book.yes48.entity.member.Member;
-import book.yes48.entity.member.Role;
-import book.yes48.entity.order.Order;
 import book.yes48.entity.order.OrderGoods;
 import book.yes48.repository.order.OrderRepository;
 import book.yes48.web.form.myPage.MyPageInformationForm;
 import jakarta.persistence.EntityManager;
 import org.aspectj.lang.annotation.Before;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
