@@ -18,7 +18,7 @@
     <div class="mt-2">
       <ol class="prod_list">
         <span th:each="search : ${searchGoods}">
-          <li class="mb-3 ms-2 me-2">
+          <li class="mb-3 ms-5 me-5">
             <a th:href="@{/goods/book/{goodsId}/detailBook(goodsId=${search.id})}">
               <div class="text-center ms-4 me-3 mb-2">
                 <img th:src="@{|${search.fileStore.filepath}|}" style="width: 200px; height: 270px;">
