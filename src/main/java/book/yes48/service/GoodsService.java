@@ -1,12 +1,5 @@
 package book.yes48.service;
 
-import book.yes48.entity.cart.CartItem;
-import book.yes48.entity.cart.MyCart;
-import book.yes48.entity.goods.Goods;
-import book.yes48.entity.member.Member;
-import book.yes48.repository.cartItem.CartItemRepository;
-import book.yes48.repository.member.MemberRepository;
-import book.yes48.repository.myCart.MyCartRepository;
 import book.yes48.web.form.goods.GoodsDetailDto;
 import book.yes48.web.form.goods.GoodsDto;
 import book.yes48.web.form.goods.GoodsSearch;

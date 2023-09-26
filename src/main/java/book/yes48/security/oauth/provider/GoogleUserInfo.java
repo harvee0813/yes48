@@ -1,7 +1,5 @@
 package book.yes48.security.oauth.provider;
 
-import lombok.NoArgsConstructor;
-
 import java.util.Map;
 
 public class GoogleUserInfo  implements OAuth2UserInfo{
