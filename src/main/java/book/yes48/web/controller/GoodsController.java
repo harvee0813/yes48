@@ -30,7 +30,7 @@ public class GoodsController {
      * @return
      */
     @GetMapping("/book/domesticBooks")
-    public String domesticBooks(GoodsSearch goodsSearch, @PageableDefault(size = 8) Pageable pageable, Model model) {
+    public String domesticBooks(GoodsSearch goodsSearch, @PageableDefault(size = 6) Pageable pageable, Model model) {
 
         Page<GoodsDto> domesticBooks = goodsService.domesticBooksFindList(goodsSearch, pageable);
         log.info("domesticBooks = {}", domesticBooks.getSize());
@@ -50,7 +50,7 @@ public class GoodsController {
      * @return
      */
     @GetMapping("/book/foreignBooks")
-    public String foreignBooks(GoodsSearch goodsSearch, @PageableDefault(size = 8) Pageable pageable, Model model) {
+    public String foreignBooks(GoodsSearch goodsSearch, @PageableDefault(size = 6) Pageable pageable, Model model) {
 
         Page<GoodsDto> foreignBooks = goodsService.foreignBooksFindList(goodsSearch, pageable);
         log.info("foreignBooks = {}", foreignBooks.getSize());
@@ -83,7 +83,7 @@ public class GoodsController {
      * @return
      */
     @GetMapping("/music")
-    public String music(GoodsSearch goodsSearch, @PageableDefault(size = 8) Pageable pageable, Model model) {
+    public String music(GoodsSearch goodsSearch, @PageableDefault(size = 6) Pageable pageable, Model model) {
 
         Page<GoodsDto> musics = goodsService.musicFindList(goodsSearch, pageable);
         log.info("musics = {}", musics.getSize());

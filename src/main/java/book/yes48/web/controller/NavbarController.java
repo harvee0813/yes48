@@ -27,7 +27,7 @@ public class NavbarController {
      * @param pageable 페이징
      */
     @GetMapping("/searchGoods")
-    public String searchForm(@RequestParam String search, @PageableDefault(size = 8) Pageable pageable, Model model) {
+    public String searchForm(@RequestParam String search, @PageableDefault(size = 6) Pageable pageable, Model model) {
 
         if (search == null) {
             return "/";
