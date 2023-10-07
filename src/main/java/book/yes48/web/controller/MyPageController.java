@@ -49,7 +49,7 @@ public class MyPageController {
         model.addAttribute("currentPage", orderList.getNumber() + 1);
         model.addAttribute("endPage", getEndPage(orderList, startPage));
 
-        return "/member/myPage/orderHistoryList";
+        return "member/myPage/orderHistoryList";
     }
 
     /**
@@ -64,7 +64,7 @@ public class MyPageController {
 
         model.addAttribute("form", form);
 
-        return "/member/myPage/information";
+        return "member/myPage/information";
     }
 
     /**
@@ -83,7 +83,7 @@ public class MyPageController {
         model.addAttribute("phoneUpdateForm", phoneUpdateForm);
         model.addAttribute("addressUpdateForm", addressUpdateForm);
 
-        return "/member/myPage/updateInformation";
+        return "member/myPage/updateInformation";
     }
 
     /**
@@ -108,7 +108,7 @@ public class MyPageController {
     @GetMapping("/withdraw")
     public String withdraw() {
 
-        return "/member/myPage/withdraw";
+        return "member/myPage/withdraw";
     }
 
     /**

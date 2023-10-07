@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <div th:replace="~{/layout/header :: headFragment}"></div>
+    <div th:replace="~{layout/header :: headFragment}"></div>
 </head>
 <body>
-    <div th:replace="~{/layout/navbar :: navFragment}"></div>
+    <div th:replace="~{layout/navbar :: navFragment}"></div>
     <div class="container">
         <div class="col-6 offset-3 mt-3">
             <div>
@@ -45,7 +45,7 @@
         </div>
     </div>
 </body>
-<div th:insert="~{/layout/footer :: footerFragment}"></div>
+<div th:insert="~{layout/footer :: footerFragment}"></div>
 <script>
 var findEmail = document.querySelector('#findEmail');           // 이메일 찾기 div 시작
 var findEmailForm = document.querySelector('#findEmailForm');   // 이메일 찾기에 필요한 input 태그들

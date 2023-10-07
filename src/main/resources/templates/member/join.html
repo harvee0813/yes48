@@ -9,10 +9,10 @@
           }
      input { width: 251px; height: 36px; }
   </style>
-  <div th:replace="~{/layout/header :: headFragment}"></div>
+  <div th:replace="~{layout/header :: headFragment}"></div>
 </head>
 <body>
-<div th:replace="~{/layout/navbar :: navFragment}"></div>
+<div th:replace="~{layout/navbar :: navFragment}"></div>
 <div class="container">
   <div class="row mt-3">
     <div class="col-8 offset-2">
@@ -247,5 +247,5 @@ function execDaumPostcode() {
     }
 </script>
 </body>
-<div th:insert="~{/layout/footer :: footerFragment}"></div>
+<div th:insert="~{layout/footer :: footerFragment}"></div>
 </html>

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <div th:replace="~{/layout/header :: headFragment}"></div>
+  <div th:replace="~{layout/header :: headFragment}"></div>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"
           integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
-<div th:replace="~{/layout/navbar :: navFragment}"></div>
+<div th:replace="~{layout/navbar :: navFragment}"></div>
 <div class="container">
   <div class="row ms-5 mt-3">
     <!-- 책 이미지 -->
@@ -193,5 +193,5 @@ let dataFormat = (today.getMonth() + 1) + '월 ' + (today.getDate() + 1) + '일'
 document.getElementById("deliveryDate").innerText = dataFormat + ' 도착 예정';
 </script>
 </body>
-<div th:insert="~{/layout/footer :: footerFragment}"></div>
+<div th:insert="~{layout/footer :: footerFragment}"></div>
 </html>
