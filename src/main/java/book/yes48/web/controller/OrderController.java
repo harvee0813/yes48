@@ -39,6 +39,8 @@ public class OrderController {
         List<OrderGoods> findOrderList = orderService.getGoods(userId);
         MyPageInformationForm findMember = myPageService.findMemberById(userId);
 
+        log.info("findMember.getBasicAddress() = {}", findMember.getBasicAddress());
+
         model.addAttribute("findOrderList", findOrderList);
         model.addAttribute("findMember", findMember);
 
@@ -60,7 +62,7 @@ public class OrderController {
         log.info("totalPrice = {}", orderPrice);
 
         String userId = String.valueOf(principleDetails.getMember().getUserId());
-        String result = orderService.createOrder(orderPrice, address, userId); // 여기랑
+        String result = orderService.createOrder(orderPrice, address, userId);
 
         return result;
 
@@ -92,6 +94,6 @@ public class OrderController {
     @GetMapping("/completeOrder")
     public String completeOrder() {
 
-        return "/completeOrder";
+        return "completeOrder";
     }
 }

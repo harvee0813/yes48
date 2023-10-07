@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <div th:replace="~{/layout/header :: headFragment}"></div>
+  <div th:replace="~{layout/header :: headFragment}"></div>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"
           integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
-  <div th:replace="~{/layout/navbar :: navFragment}"></div>
+  <div th:replace="~{layout/navbar :: navFragment}"></div>
   <div class="container">
     <div class="mb-3 mt-3">
       <p class="fw-bold fs-4" style="vertical-align:middle">장바구니</p>
@@ -83,6 +83,7 @@
 
     // 아이템이 삭제되면 다시 합계 계산
     function delBtn(goodsId) {
+
       var userAction = confirm("상품을 삭제하겠습니까?");
       if (userAction) {
 
@@ -154,5 +155,5 @@
 
 </script>
 </body>
-<div th:insert="~{/layout/footer :: footerFragment}"></div>
+<div th:insert="~{layout/footer :: footerFragment}"></div>
 </html>

@@ -42,7 +42,7 @@ public class NavbarController {
         model.addAttribute("endPage", getEndPage(searchGoods, startPage));
         model.addAttribute("searchGoods", searchGoods);
 
-        return "/goods/searchGoods";
+        return "goods/searchGoods";
     }
 
     // 페이지네이션 - 첫 페이지 구하기

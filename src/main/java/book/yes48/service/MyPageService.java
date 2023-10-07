@@ -58,6 +58,8 @@ public class MyPageService {
                 .phone(findMember.getPhone())
                 .build();
 
+        log.info("form.getBasicAddress() = {}", form.getBasicAddress());
+
         return form;
     }
 
@@ -95,11 +97,13 @@ public class MyPageService {
      */
     private static String getUserId(Member findMember) {
         String userId = findMember.getUserId();
+        String fixUserId = userId.substring(0, 10);
 
         if (userId.contains("naver")) {
-            userId = "네이버 로그인";
+
+            userId = fixUserId;
         } else if (userId.contains("google")) {
-            userId = "구글 로그인";
+            userId = fixUserId;
         }
 
         return userId;

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <div th:replace="~{/layout/header :: headFragment}"></div>
+  <div th:replace="~{layout/header :: headFragment}"></div>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"
           integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
-<div th:replace="~{/layout/navbar :: navFragment}"></div>
+<div th:replace="~{layout/navbar :: navFragment}"></div>
   <div class="container">
     <div class="mb-3 mt-3">
       <p class="fw-bold fs-4" style="vertical-align:middle">주문 배송</p>
@@ -59,7 +59,7 @@
               <p class="ms-3 me-3 mt-3">주문자</p>
             </th>
             <td>
-              <p id="order" th:field="${findMember.name}" class="mt-3 ms-3" style="width: 1000px;">홍길동</p>
+              <p id="order" th:text="${findMember.name}" class="mt-3 ms-3" style="width: 1000px;"></p>
             </td>
           </tr>
           <tr class="border-bottom">
@@ -67,7 +67,7 @@
               <p class="ms-3 me-3 mt-3">주소</p>
             </th>
             <td>
-              <p id="address" th:if="${findMember.basicAddress}" th:field="${findMember.basicAddress}" class="mt-3 ms-3">12345 서울특별시 xx동 12-34번지 123동 456호</p>
+              <p id="address" th:if="${findMember.basicAddress}" th:text="${findMember.basicAddress}" class="mt-3 ms-3"></p>
               <span class="mt-3" th:if="${#strings.isEmpty(findMember.basicAddress)}">
                   <h6 class="ms-2 fw-bold">내 정보 수정에서 배송 주소를 등록해주세요.</h6>
               </span>
@@ -78,7 +78,7 @@
               <p class="ms-3 me-3 mt-3">휴대전화번호</p>
             </th>
             <td>
-              <p id="phone" class="mt-3 ms-3" th:if="${findMember.phone}" th:field="${findMember.phone}">010-1234-5678</p>
+              <p id="phone" class="mt-3 ms-3" th:if="${findMember.phone}" th:text="${findMember.phone}"></p>
               <span class="mt-3" th:if="${#strings.isEmpty(findMember.phone)}">
                   <h6 class="ms-2 fw-bold">내 정보 수정에서 휴대폰 번호를 등록해주세요.</h6>
               </span>
@@ -89,7 +89,6 @@
       <div class="mt-2 text-center">
         <button th:attr="onclick=|createOrder('${findMember.basicAddress}')|" type="button" class="btn btn-primary btn-lg">결제하기</button> <!--   -->
       </div>
-<!--    </form>-->
   </div>
 <script>
 // 합계 계산
@@ -137,5 +136,5 @@ $.ajax ({
   }
 </script>
 </body>
-<div th:insert="~{/layout/footer :: footerFragment}"></div>
+<div th:insert="~{layout/footer :: footerFragment}"></div>
 </html>

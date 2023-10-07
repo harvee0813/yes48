@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <div th:replace="~{/layout/header :: headFragment}"></div>
+  <div th:replace="~{layout/header :: headFragment}"></div>
   <style>
     li {
           float: left;
@@ -9,7 +9,7 @@
   </style>
 </head>
 <body>
-<div th:replace="~{/layout/navbar :: navFragment}"></div>
+<div th:replace="~{layout/navbar :: navFragment}"></div>
   <div class="container">
     <div class="row mb-4 ms-5 mt-3">
       <div class="border-bottom mb-4">
@@ -57,5 +57,5 @@
     </div>
   </div>
 </body>
-<div th:insert="~{/layout/footer :: footerFragment}"></div>
+<div th:insert="~{layout/footer :: footerFragment}"></div>
 </html>

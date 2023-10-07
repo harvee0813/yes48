@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:float="http://www.w3.org/1999/xhtml">
 <head>
-  <div th:replace="~{/layout/header :: headFragment}"></div>
+  <div th:replace="~{layout/header :: headFragment}"></div>
 </head>
 <body>
-<div th:replace="~{/layout/navbar :: navFragment}"></div>
+<div th:replace="~{layout/navbar :: navFragment}"></div>
 <div class="container">
   <div class="row mt-3">
     <div class="col-6 offset-3">
@@ -66,5 +66,5 @@
   </div>
 </div>
 </body>
-<div th:insert="~{/layout/footer :: footerFragment}"></div>
+<div th:insert="~{layout/footer :: footerFragment}"></div>
 </html>
