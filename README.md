@@ -17,3 +17,8 @@
 |장바구니|- 상품 개수 변경 </br> - 상품 삭제 </br> - 총 구매 가격 계산|
 |주문|- 주문 완료시 상품 개수 차감|
 |오류|- 403, 500 오류페이지 제작|
+
+# 핵심 기능 Sequence diagram
+  ![관리자](https://github.com/harvee0813/yes48/assets/116448571/7fe1fc6c-cd5f-4286-a10a-d6a4e0e40610)
+  ![회원가입](https://github.com/harvee0813/yes48/assets/116448571/c842afc9-c02b-4426-9a61-2969ce3c07e3)
+  ![상품 주문](https://github.com/harvee0813/yes48/assets/116448571/dff9e881-e48b-4c80-9a40-426ce9374655)
