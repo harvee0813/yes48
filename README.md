@@ -1,8 +1,14 @@
 # yes48
 - 장바구니/주문/상품 관리 기능을 포함한 도서 쇼핑몰입니다.
-
+- 쇼핑몰 바로가기 : http://yes48.store
 
 ## Skill
+|분야|사용 스킬|
+|:--:|:--:|
+|프론트엔드|<img src="https://img.shields.io/badge/BootStrap-7952B3?style=flat&logo=bootstrap&logoColor=white"/> <img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=flat&logo=thymeleaf&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=white"/> <img src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jQuery&logoColor=white"/>|
+|백엔드|<img src="https://img.shields.io/badge/Spring Boot 3.0.9-6DB33F?style=flat&logo=springboot&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat&logo=springsecurity&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Data JPA-007054?style=flat&logo=jpa&logoColor=white"/> <img src="https://img.shields.io/badge/QueryDSL-007054?style=flat&logo=QueryDSL&logoColor=white"/> <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/H2-E50010?style=flat&logo=h2&logoColor=white"/>|
+|AWS|<img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=flat&logo=amazonec2&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon S3-569A31?style=flat&logo=amazons3&logoColor=white"/>|
+|그외|<img src="https://img.shields.io/badge/OAuth2.0-EB5424?style=flat&logo=OAuth2.0&logoColor=white"/> <img src="https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=postman&logoColor=white"/> <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white"/>|
 
 
 ## Architecture
