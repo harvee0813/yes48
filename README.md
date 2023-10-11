@@ -1,6 +1,19 @@
 # yes48
 - 장바구니/주문/상품 관리 기능을 포함한 도서 쇼핑몰입니다.
-- 쇼핑몰 바로가기 : http://yes48.store
+  - 쇼핑몰 바로가기 : http://yes48.store
+- 1인 프로젝트
+- 2023.08.09 ~ 2023.10.03 (약 2개월 소요)
+- 프로젝트 설명
+  - Tyhmelef와 Javasciprt, JQuery, Bootstrap을 사용한 Front 구현
+  - 객체의 일관성 유지를 위한 Builder 패턴 사용 지향
+  - View Layer와 DB Layer 분리를 위한 DTO 사용 지향
+  - @ManyToOne, @OneToOne 사용 시 N+1 방지를 위한 fetch.Lazy 적용
+  - QueryDSL을 사용한 검색 및 페이징 처리
+  - Bean Validation을 이용한 검증
+  - Amazon S3를 이용하여 상품 이미지 파일 별도 저장
+  - Spring Security를 적용한 일반 로그인 & OAuth2 소셜 로그인 구현 (구글/네이버)
+  - H2 Database Engine을 사용한 독립 테스트 환경 구축 및 unit test 작성
+  - Amazon EC2 + 탄력적 IP를 이용한 배포
 
 ## Skill
 |분야|사용 스킬|
