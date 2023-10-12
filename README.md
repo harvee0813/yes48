@@ -46,7 +46,7 @@
 
 
 ## 핵심 기능 Sequence diagram
-  ![관리자](https://github.com/harvee0813/yes48/assets/116448571/7fe1fc6c-cd5f-4286-a10a-d6a4e0e40610)
+  ![관리자 (수정)](https://github.com/harvee0813/yes48/assets/116448571/72d9127e-45b5-4a51-bbdd-45c33847a866)
   ![회원가입](https://github.com/harvee0813/yes48/assets/116448571/c842afc9-c02b-4426-9a61-2969ce3c07e3)
   ![상품 주문](https://github.com/harvee0813/yes48/assets/116448571/dff9e881-e48b-4c80-9a40-426ce9374655)
 
