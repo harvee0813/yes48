@@ -12,8 +12,10 @@
   - Bean Validation을 이용한 검증
   - Amazon S3를 이용하여 상품 이미지 파일 별도 저장
   - Spring Security를 적용한 일반 로그인 & OAuth2 소셜 로그인 구현 (구글/네이버)
-  - H2 Database Engine을 사용한 독립 테스트 환경 구축 및 unit test 작성
+  - H2 Database Engine을 사용한 독립 테스트 환경 구축
+  - Junit5를 이용한 Unit Test 작성
   - Amazon EC2 + 탄력적 IP를 이용한 배포
+  - Git branch 관리 및 코드 주석 적극 활용
 
 ## Skill
 |분야|사용 스킬|
