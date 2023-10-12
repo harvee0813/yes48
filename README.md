@@ -15,7 +15,7 @@
   - H2 Database Engine을 사용한 독립 테스트 환경 구축
   - Junit5를 이용한 Unit Test 작성
   - Amazon EC2 + 탄력적 IP를 이용한 배포
-  - Git branch 관리 및 코드 주석 적극 활용
+  - Git branch 관리 및 코드 주석 활용
 
 ## Skill
 |분야|사용 스킬|
