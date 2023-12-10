@@ -25,6 +25,28 @@
 |AWS|<img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=flat&logo=amazonec2&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon S3-569A31?style=flat&logo=amazons3&logoColor=white"/>|
 |그외|<img src="https://img.shields.io/badge/OAuth2.0-EB5424?style=flat&logo=OAuth2.0&logoColor=white"/> <img src="https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=postman&logoColor=white"/> <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white"/>|
 
+## 쇼핑몰 화면
+#### <메인 화면>
+![스크린샷 2023-12-10 232631](https://github.com/harvee0813/yes48/assets/116448571/d7566409-184a-4fab-be9c-f15c3f67fccf)
+#### <카테고리 별 상품 화면 및 상품 상세>
+![스크린샷 2023-12-10 232637](https://github.com/harvee0813/yes48/assets/116448571/2dc0560f-1b85-4775-b57a-efd9ef4b0ab6)
+![스크린샷 2023-12-10 232650](https://github.com/harvee0813/yes48/assets/116448571/740a905e-2b38-4ef9-a587-0c50616c65f3)
+#### <장바구니>
+![스크린샷 2023-12-10 232707](https://github.com/harvee0813/yes48/assets/116448571/f1a40a2a-0c7c-4f86-b89c-923ea5213ab7)
+#### <주문>
+![스크린샷 2023-12-10 232716](https://github.com/harvee0813/yes48/assets/116448571/03e24211-a8c5-42be-940c-edd11e28bbd2)
+#### <로그인>
+![스크린샷 2023-12-10 233951](https://github.com/harvee0813/yes48/assets/116448571/efd74b51-1ffb-4246-917a-a556a3969e7d)
+#### <회원가입 및 아이디 찾기/비밀번호 변경>
+![스크린샷 2023-12-10 232736](https://github.com/harvee0813/yes48/assets/116448571/b725a686-463d-4ff2-b4d2-a390ef1892fb)
+![스크린샷 2023-12-10 232746](https://github.com/harvee0813/yes48/assets/116448571/689b23cf-50ca-4b1a-8dc9-26b213707c8d)
+![스크린샷 2023-12-10 232752](https://github.com/harvee0813/yes48/assets/116448571/715a7a7a-8352-4ffb-b049-3750f3089b80)
+#### <마이페이지>
+![스크린샷 2023-12-10 234730](https://github.com/harvee0813/yes48/assets/116448571/de53263b-03b7-444d-8575-479a7bd64225)
+#### <관리자 페이지 - 상품 등록/수정>
+![스크린샷 2023-12-10 234755](https://github.com/harvee0813/yes48/assets/116448571/5b348eaa-41f0-4640-8c83-19fe9125678c)
+![스크린샷 2023-12-10 234800](https://github.com/harvee0813/yes48/assets/116448571/cefd9e19-6997-42de-a9c7-bc83e9631d88)
+
 
 ## Architecture
 ![아키텍쳐](https://github.com/harvee0813/yes48/assets/116448571/3b27be2b-630d-4b32-9831-ec463b47a7be)
